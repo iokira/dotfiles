@@ -605,6 +605,16 @@ return require("packer").startup({function(use)
         end
     }
 
+    -- nvim-colorizer
+    -- The fastest Neovim colorizer
+    use {
+        "norcalli/nvim-colorizer.lua",
+        event = { "BufRead", "BufNewFile" },
+        config = function ()
+            require("colorizer").setup()
+        end
+    }
+
     if packer_bootstrap then
         require("packer").sync()
     end
