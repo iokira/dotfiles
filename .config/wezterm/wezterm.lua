@@ -2,6 +2,15 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 local config = {}
 
+-- launch target
+local mac = wezterm.target_triple:find("darwin")
+config.default_prog = { 'tmux' }
+if mac then
+    config.default_prog = { '/opt/homebrew/bin/tmux' }
+else
+    config.default_prog = { 'tmux' }
+end
+
 -- font
 config.font = wezterm.font "JetBrainsMono Nerd Font"
 config.font_size = 15
