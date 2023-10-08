@@ -7,8 +7,6 @@ local mac = wezterm.target_triple:find("darwin")
 config.default_prog = { 'tmux' }
 if mac then
     config.default_prog = { '/opt/homebrew/bin/tmux' }
-else
-    config.default_prog = { 'tmux' }
 end
 
 -- font
