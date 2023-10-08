@@ -1,0 +1,39 @@
+set number relativenumber
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set inccommand=split
+set wrapscan
+set showmatch matchtime=1
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set guioptions+=a
+set title
+set display=lastline
+set scrolloff=10
+set pumheight=10
+set cursorline
+set autoindent
+set smartindent
+set cindent
+set showcmd
+set regexpengine=1
+set list listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
+set nobackup
+set wildmenu wildmode=list:longest,full
+set clipboard+=unnamed
+set redrawtime=10000
+set re=0
+set hidden
+set fileformat=unix
+set fileencodings=utf-8,sjis
+set spell
+inoremap jk <esc>
+nnoremap U <c-r>
+nnoremap + <C-a>
+nnoremap - <C-x>
+set easymotion
+let mapleader=","
