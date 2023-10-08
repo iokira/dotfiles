@@ -13,6 +13,16 @@ wezterm.on("gui-startup", function()
     local tab, pane, window = mux.spawn_window(cmd or {})
     window:gui_window():toggle_fullscreen()
 end)
+wezterm.on('toggle-opacity', function(window)
+    local overrides = window:get_config_overrides() or {}
+    if not overrides.window_background_opacity then
+        overrides.window_background_opacity = 1
+    else
+        overrides.window_background_opacity = nil
+    end
+    window:set_config_overrides(overrides)
+end)
+
 
 -- tab bar
 config.hide_tab_bar_if_only_one_tab = true
@@ -46,6 +56,11 @@ config.keys = {
         key = ' ',
         mods = "LEADER",
         action = act.QuickSelect,
+    },
+    {
+        key = "o",
+        mods = "LEADER",
+        action = act.EmitEvent "toggle-opacity",
     }
 }
 
