@@ -309,7 +309,6 @@ local function init()
         module = { "cmp" },
         requires = {
             { "neovim/nvim-lspconfig", event = { "InsertEnter"} },
-            { "hrsh7th/cmp-nvim-lsp", event = { "InsertEnter" } },
             { "hrsh7th/cmp-buffer", event = { "InsertEnter" } },
             { "hrsh7th/cmp-path", event = { "InsertEnter" } },
             { "hrsh7th/cmp-cmdline", event = { "InsertEnter" } },
@@ -375,6 +374,7 @@ local function init()
     -- Quickstart configs for Nvim LSP
     use { "neovim/nvim-lspconfig", module = { "lspconfig" } }
     use { "williamboman/mason.nvim", module = { "mason" } }
+    use { "hrsh7th/cmp-nvim-lsp", module = { "cmp_nvim_lsp" } }
     use {
         "williamboman/mason-lspconfig.nvim",
         event = { "BufRead", "BufNewFile", "CmdlineEnter" },
@@ -391,6 +391,8 @@ local function init()
                 end
             end
 
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
             mason.setup()
             mason_lspconfig.setup({
                 ensure_installed = { "lua_ls", "rust_analyzer" },
@@ -398,7 +400,8 @@ local function init()
             mason_lspconfig.setup_handlers({
                 function(server_name)
                     lspconfig[server_name].setup({
-                        on_attach = on_attach
+                        on_attach = on_attach,
+                        capabilities = capabilities,
                     })
                 end,
             })
