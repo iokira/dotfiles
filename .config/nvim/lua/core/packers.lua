@@ -122,7 +122,7 @@ local function init()
 
     -- hop.nvim
     -- Hop is an EasyMotion-like plugin allowing you to jump anywhere in a document with as few as keystrokes as possible.
-    -- `<Leader>w`
+    -- `<Leader>w` - Hop word
     use {
         "phaazon/hop.nvim",
         branch = "v2",
@@ -250,6 +250,43 @@ local function init()
                 },
             }
         end,
+    }
+
+    -- nvim-tree.lua
+    -- A File Explorer For Neovim Written In Lua
+    -- `<Leader>t` - Toggle tree
+    use {
+        "nvim-tree/nvim-tree.lua",
+        module = { "nvim-tree" },
+        setup = function ()
+            vim.keymap.set("n", "<Leader>t", function ()
+                require("nvim-tree.api").tree.toggle()
+            end)
+        end,
+        config = function ()
+            local function on_attach(bufnr)
+                local api = require("nvim-tree.api")
+
+                local function opts(desc)
+                    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+                end
+
+                vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
+                vim.keymap.set("n", "e", api.tree.expand_all, opts("Expand All"))
+                vim.keymap.set("n", "q", api.tree.close, opts("Close"))
+                vim.keymap.set("n", "i", api.tree.change_root_to_node, opts("CD"))
+                vim.keymap.set("n", "<CR>", api.node.open.edit, opts("Open"))
+                vim.keymap.set("n", "<Tab>", api.node.open.preview, opts("Open Preview"))
+                vim.keymap.set("n", "t", api.node.open.tab, opts("Open: New Tab"))
+                vim.keymap.set("n", "os", api.node.open.horizontal, opts("Open: Horizontal Split"))
+                vim.keymap.set("n", "ov", api.node.open.vertical, opts("Open: Vertical Split"))
+                vim.keymap.set("n", "c", api.fs.create, opts("Create"))
+                vim.keymap.set("n", "r", api.fs.rename, opts("Rename"))
+            end
+            require("nvim-tree").setup({
+                on_attach = on_attach,
+            })
+        end
     }
 
     -- nvim-treesitter
@@ -548,7 +585,7 @@ local function init()
     -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
     use {
         "folke/noice.nvim",
-        event = { "BufRead", "BufNewFile", "InsertEnter", "CmdlineEnter" },
+        event = { "VimEnter" },
         requires = {
             { "MunifTanjim/nui.nvim" },
         },

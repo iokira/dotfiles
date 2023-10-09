@@ -24,7 +24,6 @@ local disable_distribution_plugins = function()
     vim.g.did_install_syntax_menu = 1
     vim.g.loaded_syntax_completion = 1
     vim.g.loaded_spellfile_plugin = 1
-    vim.g.netrw_liststyle = 3
     vim.g.loaded_2html_plugin = 1
     vim.g.loaded_gzip = 1
     vim.g.loaded_tar = 1
@@ -40,6 +39,8 @@ local disable_distribution_plugins = function()
     vim.g.loaded_ruby_provider = 0
     vim.g.loaded_node_provider = 0
     vim.g.loaded_perl_provider = 0
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
 end
 
 local leader_map = function ()
