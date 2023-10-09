@@ -16,7 +16,7 @@ wezterm.on("toggle-opacity", function(window)
     end
     window:set_config_overrides(overrides)
 end)
-wezterm.on("format-window-title", function () return "wezterm" end)
+config.window_decorations = "NONE"
 config.hide_tab_bar_if_only_one_tab = true
 
 return config
