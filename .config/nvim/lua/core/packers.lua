@@ -327,6 +327,10 @@ local function init()
                         vim.fn["vsnip#anonymous"](args.body)
                     end,
                 },
+                window = {
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered(),
+                },
                 mapping = cmp.mapping.preset.insert({
                     ["<C-p>"] = cmp.mapping.select_prev_item(),
                     ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -339,9 +343,10 @@ local function init()
                 }),
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
-                    { name = "buffer" },
                     { name = "path" },
                     { name = "vsnip" },
+                }, {
+                    { name = "buffer" },
                 }),
             }
             cmp.setup.cmdline({ "/", "?" }, {
