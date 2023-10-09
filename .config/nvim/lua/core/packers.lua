@@ -144,6 +144,14 @@ local function init()
     use {
         "numToStr/Comment.nvim",
         event = { "BufRead", "BufNewFile" },
+        setup = function ()
+            vim.keymap.set("n", "gc", function ()
+                require("Comment.api").call("toggle.linewise", "g@")
+            end, { expr = true } )
+            vim.keymap.set("n", "gcc", function ()
+                require("Comment.api").call("toggle.linewise.current", "g@$")
+            end, { expr = true } )
+        end,
         config = function ()
             require("Comment").setup {}
         end
@@ -552,7 +560,6 @@ local function init()
     -- Named after the Indian setellite nevigation system.
     use {
         "SmiteshP/nvim-navic",
-        requires = { "neovim/nvim-lspconfig", module = { "lspconfig" } },
         module = { "nvim-navic" },
         config = function()
             require("nvim-navic").setup {
@@ -591,13 +598,23 @@ local function init()
         end
     }
 
+    -- nvim-navbuddy
+    -- A simple popup display that provides breadcrumbs like navigation feature but in keyboard centric manner inspired by ranger file manager.
+    -- use {
+    --     "SmiteshP/nvim-navbuddy",
+    --     requires = {
+    --         { "numToStr/Comment.nvim" },
+    --         { "nvim-telescope/telescope.nvim" },
+    --     },
+    -- }
+
     -- noice.nvim
     -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
     use {
         "folke/noice.nvim",
         event = { "VimEnter" },
         requires = {
-            { "MunifTanjim/nui.nvim" },
+            { "MunifTanjim/nui.nvim", module = { "nui" } },
         },
         config = function ()
             require("noice").setup {
