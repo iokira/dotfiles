@@ -353,10 +353,13 @@ local function init()
             -- For vsnip user
             { "hrsh7th/cmp-vsnip", event = { "InsertEnter" } },
             { "hrsh7th/vim-vsnip", event = { "InsertEnter" } },
+            -- pictograms for neovim lsp completion items
+            { "onsails/lspkind.nvim", module = { "lspkind" } },
         },
         config = function()
             vim.opt.completeopt = "menu,menuone,noselect"
             local cmp = require("cmp")
+            local lspkind = require("lspkind")
             cmp.setup {
                 snippet = {
                     expand = function(args)
@@ -384,6 +387,13 @@ local function init()
                 }, {
                     { name = "buffer" },
                 }),
+                formatting = {
+                    format = lspkind.cmp_format({
+                        mode = "symbol",
+                        maxwidth = 50,
+                        ellipsis_char = "...",
+                    })
+                }
             }
             cmp.setup.cmdline({ "/", "?" }, {
                 mapping = cmp.mapping.preset.cmdline(),
