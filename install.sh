@@ -128,6 +128,7 @@ install_wezterm_for_mac() {
     install "wezterm" "$BREW_PATH_MAC/brew install --cask wezterm"
     mkdir -p $HOME/.config/wezterm
     ln -snfv $DOTFILES_PATH/.config/wezterm/wezterm.lua $HOME/.config/wezterm/wezterm.lua
+    ln -snfv $DOTFILES_PATH/.config/wezterm/lua $HOME/.config/wezterm/lua
 }
 
 # Ubuntu
@@ -137,6 +138,7 @@ install_wezterm_for_ubuntu() {
     sudo apt install -y ./wezterm-20230712-072601-f4abf8fd.Ubuntu20.04.deb | true
     mkdir -p $HOME/.config/wezterm
     ln -snfv $DOTFILES_PATH/.config/wezterm/wezterm.lua $HOME/.config/wezterm/wezterm.lua
+    ln -snfv $DOTFILES_PATH/.config/wezterm/lua $HOME/.config/wezterm/lua
     rm wezterm-20230712-072601-f4abf8fd.Ubuntu20.04.deb
 }
 
