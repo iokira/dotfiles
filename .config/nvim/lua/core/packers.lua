@@ -310,8 +310,8 @@ local function init()
         requires = {
             { "neovim/nvim-lspconfig", event = { "InsertEnter"} },
             { "hrsh7th/cmp-buffer", event = { "InsertEnter" } },
-            { "hrsh7th/cmp-path", event = { "InsertEnter" } },
-            { "hrsh7th/cmp-cmdline", event = { "InsertEnter" } },
+            { "hrsh7th/cmp-path", event = { "InsertEnter", "CmdlineEnter" } },
+            { "hrsh7th/cmp-cmdline", event = { "InsertEnter", "CmdlineEnter" } },
             { "hrsh7th/nvim-cmp", event = { "InsertEnter" } },
             -- For vsnip user
             { "hrsh7th/cmp-vsnip", event = { "InsertEnter" } },
