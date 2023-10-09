@@ -2,7 +2,6 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 local config = {}
 
-config.disable_default_key_bindings = true
 config.leader = {
     key = "k",
     mods = "CTRL",
