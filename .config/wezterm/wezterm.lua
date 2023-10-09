@@ -44,6 +44,7 @@ end)
 config.hide_tab_bar_if_only_one_tab = true
 
 -- key assignments
+config.disable_default_key_bindings = true
 config.leader = {
     key = "k",
     mods = "CTRL",
