@@ -439,11 +439,13 @@ local function init()
             local lspconfig = require("lspconfig")
 
             local navic = require("nvim-navic")
+            local navbuddy = require("nvim-navbuddy")
 
             local on_attach = function(client, bufnr)
                 if client.server_capabilities.documentSymbolProvider then
                     navic.attach(client, bufnr)
                 end
+                navbuddy.attach(client, bufnr)
             end
 
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -600,13 +602,24 @@ local function init()
 
     -- nvim-navbuddy
     -- A simple popup display that provides breadcrumbs like navigation feature but in keyboard centric manner inspired by ranger file manager.
-    -- use {
-    --     "SmiteshP/nvim-navbuddy",
-    --     requires = {
-    --         { "numToStr/Comment.nvim" },
-    --         { "nvim-telescope/telescope.nvim" },
-    --     },
-    -- }
+    -- `<Leader>g` - Open Navbuddy
+    use {
+        "SmiteshP/nvim-navbuddy",
+        module = { "nvim-navbuddy" },
+        setup = function ()
+            vim.keymap.set("n", "<Leader>g", function ()
+                require("nvim-navbuddy").open()
+            end)
+        end,
+        config = function ()
+            require("nvim-navbuddy").setup({
+                window = {
+                    size = { height = "40%", width = "100%" },
+                    position = { row = "96%", col = "50%" },
+                },
+            })
+        end
+    }
 
     -- noice.nvim
     -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
