@@ -625,7 +625,7 @@ local function init()
     -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
     use {
         "folke/noice.nvim",
-        event = { "VimEnter" },
+        event = { "VimEnter", "BufRead", "BufNewFile" },
         requires = {
             { "MunifTanjim/nui.nvim", module = { "nui" } },
         },
