@@ -71,3 +71,16 @@ map("n", "<C-a>", "gg<S-v>G")
 
 map("t", "<Esc>", "<C-\\><C-n>")
 map("t", "jk", "<C-\\><C-n>")
+
+---- disable left mouse
+
+map("n", "<LeftMouse>", "<Nop>")
+map("v", "<LeftMouse>", "<Nop>")
+map("n", "<2-LeftMouse>", "<Nop>")
+map("v", "<2-LeftMouse>", "<Nop>")
+map("n", "<3-LeftMouse>", "<Nop>")
+map("v", "<3-LeftMouse>", "<Nop>")
+map("n", "<4-LeftMouse>", "<Nop>")
+map("v", "<4-LeftMouse>", "<Nop>")
+map("n", "<RightMouse>", "<Nop>")
+map("v", "<RightMouse>", "<Nop>")
