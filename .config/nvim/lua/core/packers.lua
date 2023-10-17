@@ -180,6 +180,7 @@ local function init()
     -- `<Leader>h` - Help tags
     -- `<Leader>d` - Diagnostics
     -- `<Leader>f` - File browser
+    -- `<Leader>k` - Noice history
     use {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
