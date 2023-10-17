@@ -59,6 +59,21 @@ local function init()
                     },
                     lualine_c = {
                         "filename",
+                    },
+                    lualine_x = {
+                        {
+                            require("noice").api.status.search.get,
+                            cond = require("noice").api.status.search.has,
+                            color = { fg = "#ff9e64" },
+                        },
+                        {
+                            require("noice").api.status.command.get,
+                            cond = require("noice").api.status.command.has,
+                            color = { fg = "#ff9e64" },
+                        },
+                        "encoding",
+                        "fileformat",
+                        "filetype",
                     }
                 },
                 winbar = {
@@ -210,10 +225,14 @@ local function init()
                     layout_config = { height = 40 }
                 })
             end)
+            vim.keymap.set("n", "<Leader>k", function ()
+                require("telescope").extensions.noice.noice({})
+            end)
         end,
         config = function()
             local actions = require("telescope.actions")
             local fb_actions = require("telescope").extensions.file_browser.actions
+            local noice = require("telescope").load_extension("noice")
             require("telescope").setup {
                 defaults = {
                     mappings = {
@@ -626,6 +645,7 @@ local function init()
     use {
         "folke/noice.nvim",
         event = { "VimEnter", "BufRead", "BufNewFile" },
+        module = { "noice" },
         requires = {
             { "MunifTanjim/nui.nvim", module = { "nui" } },
         },
@@ -651,6 +671,7 @@ local function init()
                 messages = {
                     enabled = true,
                     view = "mini",
+                    view_search = false,
                 },
                 views = {
                     mini = {
