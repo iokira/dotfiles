@@ -256,24 +256,26 @@ install_starship() {
 install_go_for_mac() {
     arrow_message "Installing go..."
     install "go" "$BREW_PATH_MAC/brew install go"
+    $BREW_PATH_MAC/brew link go
 }
 
 # Ubuntu
 install_go_for_ubuntu() {
     arrow_message "Installing go..."
     install "go" "$BREW_PATH_UBUNTU/brew install go"
+    $BREW_PATH_UBUNTU/brew link go
 }
 
 # macOS
 install_vim_startuptime_for_mac() {
     arrow_message "Installing vim_startuptime..."
-    install "vim_startuptime" "go install github.com/rhysd/vim-startuptime@latest"
+    install "vim_startuptime" "$BREW_PATH_MAC/go install github.com/rhysd/vim-startuptime@latest"
 }
 
 # Ubuntu
 install_vim_startuptime_for_ubuntu() {
     arrow_message "Installing vim_startuptime..."
-    install "vim_startuptime" "go install github.com/rhysd/vim-startuptime@latest"
+    install "vim_startuptime" "$BREW_PATH_UBUNTU/go install github.com/rhysd/vim-startuptime@latest"
 }
 
 # macOS
