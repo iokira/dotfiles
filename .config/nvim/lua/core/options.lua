@@ -46,7 +46,6 @@ local function load_options()
         softtabstop = 4,
         swapfile = true,
         tabstop = 4,
-        termdebugger="rust-lldb",
         termguicolors = true,
         title = true,
         undodir = global.cache_dir .. "undo/",
