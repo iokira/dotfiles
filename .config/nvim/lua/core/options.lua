@@ -37,7 +37,7 @@ local function load_options()
         shell = "fish",
         shiftwidth = 4,
         showcmd = true,
-        showmatch = 1,
+        showmatch = true,
         showtabline = 1,
         shortmess = 'I',
         sidescrolloff = 5,
