@@ -194,6 +194,8 @@ install_nvim_for_mac() {
 # Ubuntu
 install_nvim_for_ubuntu() {
     arrow_message "Installing and linking NeoVim and syncing packer..."
+	sudo add-apt-repository ppa:neovim-ppa/unstable
+	sudo apt update
     install "nvim" "sudo apt install neovim -y"
     mkdir -pv $HOME/.config/nvim
     ln -snfv $DOTFILES_PATH/.config/nvim/init.lua $HOME/.config/nvim/init.lua
