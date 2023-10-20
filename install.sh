@@ -206,6 +206,18 @@ install_nvim_for_ubuntu() {
 }
 
 # macOS
+install_ripgrep_for_mac() {
+		arrow_message "Installing ripgrep..."
+		install "ripgrep" "$BREW_PATH_MAC/brew install ripgrep"
+}
+
+# Ubuntu
+install_ripgrep_for_ubuntu() {
+		arrow_message "Installing ripgrep..."
+		install "ripgrep" "sudo apt install ripgrep"
+}
+
+# macOS
 install_exa_for_mac() {
     arrow_message "Installing exa..."
     install "exa" "$BREW_PATH_MAC/brew install exa"
@@ -307,6 +319,7 @@ install_softwares_for_mac() {
     install_tmux_for_mac
     link_zsh
     install_zsh_plugins
+	install_ripgrep_for_mac
     install_nvim_for_mac
     install_exa_for_mac
     install_bat_for_mac
@@ -329,6 +342,7 @@ install_softwares_for_ubuntu() {
     link_zsh
     install_zsh_plugins
     install_nvim_for_ubuntu
+	install_ripgrep_for_ubuntu
     install_exa_for_ubuntu
     install_bat_for_ubuntu
     install_httpie_for_ubuntu
