@@ -180,6 +180,7 @@ local function init()
     -- `<Leader>b` - Buffers
     -- `<Leader>h` - Help tags
     -- `<Leader>d` - Diagnostics
+    -- `<Leader>o` - Lists previously open files
     -- `<Leader>f` - File browser
     -- `:History` - Noice history
     use {
@@ -218,6 +219,9 @@ local function init()
             vim.keymap.set("n", "<Leader>d", function()
                 require("telescope.builtin").diagnostics()
             end)
+            vim.keymap.set("n", "<Leader>o", function ()
+                require("telescope.builtin").oldfiles()
+            end)
             vim.keymap.set("n", "<Leader>f", function()
                 require("telescope").extensions.file_browser.file_browser({
                     path = "%:p:h",
@@ -232,7 +236,7 @@ local function init()
             end)
             vim.api.nvim_create_user_command('History', function ()
                 require("telescope").extensions.noice.noice({})
-            end, { bang = true })
+            end, { bang = false })
         end,
         config = function()
             local actions = require("telescope.actions")
