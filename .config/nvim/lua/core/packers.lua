@@ -175,6 +175,7 @@ local function init()
     -- telescope.nvim
     -- Gaze deeply into unknown regions using the power of the moon.
     -- `<Leader>s` - Find files
+    -- `<Leader>g` - Git ls-files
     -- `<Leader>l` - Live grep
     -- `<Leader>b` - Buffers
     -- `<Leader>h` - Help tags
@@ -202,6 +203,9 @@ local function init()
                         hidden = true
                     })
                 end)
+            vim.keymap.set("n", "<Leader>g", function ()
+                require("telescope.builtin").git_files()
+            end)
             vim.keymap.set("n", "<Leader>l", function()
                 require("telescope.builtin").live_grep()
             end)
@@ -585,12 +589,12 @@ local function init()
 
     -- nvim-navbuddy
     -- A simple popup display that provides breadcrumbs like navigation feature but in keyboard centric manner inspired by ranger file manager.
-    -- `<Leader>g` - Open Navbuddy
+    -- `<Leader>v` - Open Navbuddy
     use {
         "SmiteshP/nvim-navbuddy",
         module = { "nvim-navbuddy" },
         setup = function ()
-            vim.keymap.set("n", "<Leader>g", function ()
+            vim.keymap.set("n", "<Leader>v", function ()
                 require("nvim-navbuddy").open()
             end)
         end,
