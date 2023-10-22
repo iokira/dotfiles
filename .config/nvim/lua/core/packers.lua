@@ -180,7 +180,7 @@ local function init()
     -- `<Leader>h` - Help tags
     -- `<Leader>d` - Diagnostics
     -- `<Leader>f` - File browser
-    -- `<Leader>k` - Noice history
+    -- `:History` - Noice history
     use {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
@@ -226,9 +226,9 @@ local function init()
                     layout_config = { height = 40 }
                 })
             end)
-            vim.keymap.set("n", "<Leader>k", function ()
+            vim.api.nvim_create_user_command('History', function ()
                 require("telescope").extensions.noice.noice({})
-            end)
+            end, { bang = true })
         end,
         config = function()
             local actions = require("telescope.actions")
