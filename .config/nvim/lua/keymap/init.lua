@@ -84,3 +84,7 @@ map("n", "<4-LeftMouse>", "<Nop>")
 map("v", "<4-LeftMouse>", "<Nop>")
 map("n", "<RightMouse>", "<Nop>")
 map("v", "<RightMouse>", "<Nop>")
+
+---- insert enter
+
+map("n", "<Leader><CR>", "o<ESC>")
