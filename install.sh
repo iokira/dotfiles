@@ -128,6 +128,7 @@ install_wezterm_for_mac() {
     install "wezterm" "$BREW_PATH_MAC/brew install --cask wezterm"
     mkdir -p $HOME/.config/wezterm
     ln -snfv $DOTFILES_PATH/.config/wezterm/wezterm.lua $HOME/.config/wezterm/wezterm.lua
+    ln -snfv $DOTFILES_PATH/.config/wezterm/lua $HOME/.config/wezterm/lua
 }
 
 # Ubuntu
@@ -137,6 +138,8 @@ install_wezterm_for_ubuntu() {
     sudo apt install -y ./wezterm-20230712-072601-f4abf8fd.Ubuntu20.04.deb | true
     mkdir -p $HOME/.config/wezterm
     ln -snfv $DOTFILES_PATH/.config/wezterm/wezterm.lua $HOME/.config/wezterm/wezterm.lua
+    ln -snfv $DOTFILES_PATH/.config/wezterm/lua $HOME/.config/wezterm/lua
+    rm wezterm-20230712-072601-f4abf8fd.Ubuntu20.04.deb
 }
 
 # macOS
@@ -191,6 +194,8 @@ install_nvim_for_mac() {
 # Ubuntu
 install_nvim_for_ubuntu() {
     arrow_message "Installing and linking NeoVim and syncing packer..."
+	sudo add-apt-repository ppa:neovim-ppa/unstable
+	sudo apt update
     install "nvim" "sudo apt install neovim -y"
     mkdir -pv $HOME/.config/nvim
     ln -snfv $DOTFILES_PATH/.config/nvim/init.lua $HOME/.config/nvim/init.lua
@@ -198,6 +203,18 @@ install_nvim_for_ubuntu() {
     ln -snfv $DOTFILES_PATH/.config/nvim/.luarc.json $HOME/.config/nvim/.luarc.json
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
     successfully_link_message "nvim"
+}
+
+# macOS
+install_ripgrep_for_mac() {
+		arrow_message "Installing ripgrep..."
+		install "ripgrep" "$BREW_PATH_MAC/brew install ripgrep"
+}
+
+# Ubuntu
+install_ripgrep_for_ubuntu() {
+		arrow_message "Installing ripgrep..."
+		install "ripgrep" "sudo apt install ripgrep"
 }
 
 # macOS
@@ -253,24 +270,26 @@ install_starship() {
 install_go_for_mac() {
     arrow_message "Installing go..."
     install "go" "$BREW_PATH_MAC/brew install go"
+    $BREW_PATH_MAC/brew link go
 }
 
 # Ubuntu
 install_go_for_ubuntu() {
     arrow_message "Installing go..."
     install "go" "$BREW_PATH_UBUNTU/brew install go"
+    $BREW_PATH_UBUNTU/brew link go
 }
 
 # macOS
 install_vim_startuptime_for_mac() {
     arrow_message "Installing vim_startuptime..."
-    install "vim_startuptime" "go install github.com/rhysd/vim-startuptime@latest"
+    install "vim_startuptime" "$BREW_PATH_MAC/go install github.com/rhysd/vim-startuptime@latest"
 }
 
 # Ubuntu
 install_vim_startuptime_for_ubuntu() {
     arrow_message "Installing vim_startuptime..."
-    install "vim_startuptime" "go install github.com/rhysd/vim-startuptime@latest"
+    install "vim_startuptime" "$BREW_PATH_UBUNTU/go install github.com/rhysd/vim-startuptime@latest"
 }
 
 # macOS
@@ -300,6 +319,7 @@ install_softwares_for_mac() {
     install_tmux_for_mac
     link_zsh
     install_zsh_plugins
+	install_ripgrep_for_mac
     install_nvim_for_mac
     install_exa_for_mac
     install_bat_for_mac
@@ -322,6 +342,7 @@ install_softwares_for_ubuntu() {
     link_zsh
     install_zsh_plugins
     install_nvim_for_ubuntu
+	install_ripgrep_for_ubuntu
     install_exa_for_ubuntu
     install_bat_for_ubuntu
     install_httpie_for_ubuntu
