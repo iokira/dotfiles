@@ -323,6 +323,7 @@ local function init()
     use {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
+        module = { "nvim-autopairs" },
         config = function()
             require"nvim-autopairs".setup {}
         end,
@@ -358,7 +359,12 @@ local function init()
         config = function()
             vim.opt.completeopt = "menu,menuone,noselect"
             local cmp = require("cmp")
+            local cmp_autopairs = require("nvim-autopairs.completion.cmp")
             local lspkind = require("lspkind")
+            cmp.event:on(
+                "confirm_done",
+                cmp_autopairs.on_confirm_done()
+            )
             cmp.setup {
                 snippet = {
                     expand = function(args)
