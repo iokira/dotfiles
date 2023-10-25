@@ -252,23 +252,6 @@ local function init()
                         },
                     },
                 },
-                pickers = {
-                    find_files = {
-                        theme = "dropdown",
-                    },
-                    live_grep = {
-                        theme = "dropdown",
-                    },
-                    buffers = {
-                        theme = "dropdown",
-                    },
-                    help_tags = {
-                        theme = "dropdown",
-                    },
-                    diagnostics = {
-                        theme = "dropdown",
-                    },
-                },
                 extensions = {
                     file_browser = {
                         hijack_netrw = true,
