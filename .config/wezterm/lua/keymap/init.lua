@@ -93,6 +93,26 @@ config.keys = {
         mods = "LEADER",
         action = act.ActivatePaneDirection "Down",
     },
+    {
+        key = "LeftArrow",
+        mods = "LEADER",
+        action = act.AdjustPaneSize { "Left", 5 },
+    },
+    {
+        key = "DownArrow",
+        mods = "LEADER",
+        action = act.AdjustPaneSize { "Down", 5 },
+    },
+    {
+        key = "UpArrow",
+        mods = "LEADER",
+        action = act.AdjustPaneSize { "Up", 5 },
+    },
+    {
+        key = "RightArrow",
+        mods = "LEADER",
+        action = act.AdjustPaneSize { "Right", 5 },
+    },
 }
 
 for i = 1, 8 do
