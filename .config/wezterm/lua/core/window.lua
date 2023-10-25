@@ -16,6 +16,29 @@ wezterm.on("toggle-opacity", function(window)
     end
     window:set_config_overrides(overrides)
 end)
+wezterm.on("update-right-status", function(window, pane)
+    local leader = ''
+    if window:leader_is_active() then
+        leader = "LEADER"
+    end
+    window:set_right_status(leader)
+end)
+function basename(s)
+    return string.gsub(s, '(.*[/\\])(.*)', '%2')
+end
+wezterm.on(
+    'format-tab-title',
+    function(tab, tabs, panes, config, hover, max_width)
+        local pane = tab.active_pane
+        local title = basename(pane.foreground_process_name) .. ' ' .. tab.tab_index
+        if pane.is_zoomed then
+            title = basename(pane.foreground_process_name) .. ' ' .. tab.tab_index .. ' Z'
+        end
+        return {
+            { Text = ' ' .. title .. ' ' },
+        }
+    end
+)
 config.window_decorations = "NONE"
 config.tab_bar_at_bottom = true
 
