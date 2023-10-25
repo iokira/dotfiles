@@ -59,6 +59,7 @@ local function init()
                     },
                     lualine_c = {
                         "filename",
+                        "navic",
                     },
                     lualine_x = {
                         {
@@ -74,13 +75,6 @@ local function init()
                         "encoding",
                         "fileformat",
                         "filetype",
-                    }
-                },
-                winbar = {
-                    lualine_c = {
-                        {
-                            "navic",
-                        }
                     }
                 },
                 options = {
