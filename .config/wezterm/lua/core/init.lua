@@ -11,5 +11,6 @@ setValue("lua.core.start")
 setValue("lua.core.font")
 setValue("lua.core.window")
 setValue("lua.keymap")
+setValue("lua.core.colors")
 
 return core

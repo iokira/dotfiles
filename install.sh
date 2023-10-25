@@ -188,33 +188,41 @@ install_nvim_for_mac() {
     ln -snfv $DOTFILES_PATH/.config/nvim/lua $HOME/.config/nvim/lua
     ln -snfv $DOTFILES_PATH/.config/nvim/.luarc.json $HOME/.config/nvim/.luarc.json
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+    tempfile=$(mktemp) \
+        && curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/master/termwiz/data/wezterm.terminfo \
+        && tic -x -o ~/.terminfo $tempfile \
+        && rm $tempfile
     successfully_link_message "nvim"
 }
 
 # Ubuntu
 install_nvim_for_ubuntu() {
     arrow_message "Installing and linking NeoVim and syncing packer..."
-	sudo add-apt-repository ppa:neovim-ppa/unstable
-	sudo apt update
+    sudo add-apt-repository ppa:neovim-ppa/unstable
+    sudo apt update
     install "nvim" "sudo apt install neovim -y"
     mkdir -pv $HOME/.config/nvim
     ln -snfv $DOTFILES_PATH/.config/nvim/init.lua $HOME/.config/nvim/init.lua
     ln -snfv $DOTFILES_PATH/.config/nvim/lua $HOME/.config/nvim/lua
     ln -snfv $DOTFILES_PATH/.config/nvim/.luarc.json $HOME/.config/nvim/.luarc.json
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+    tempfile=$(mktemp) \
+        && curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/master/termwiz/data/wezterm.terminfo \
+        && tic -x -o ~/.terminfo $tempfile \
+        && rm $tempfile
     successfully_link_message "nvim"
 }
 
 # macOS
 install_ripgrep_for_mac() {
-		arrow_message "Installing ripgrep..."
-		install "ripgrep" "$BREW_PATH_MAC/brew install ripgrep"
+    arrow_message "Installing ripgrep..."
+    install "ripgrep" "$BREW_PATH_MAC/brew install ripgrep"
 }
 
 # Ubuntu
 install_ripgrep_for_ubuntu() {
-		arrow_message "Installing ripgrep..."
-		install "ripgrep" "sudo apt install ripgrep"
+    arrow_message "Installing ripgrep..."
+    install "ripgrep" "sudo apt install ripgrep"
 }
 
 # macOS
@@ -319,7 +327,7 @@ install_softwares_for_mac() {
     install_tmux_for_mac
     link_zsh
     install_zsh_plugins
-	install_ripgrep_for_mac
+    install_ripgrep_for_mac
     install_nvim_for_mac
     install_exa_for_mac
     install_bat_for_mac
@@ -342,7 +350,7 @@ install_softwares_for_ubuntu() {
     link_zsh
     install_zsh_plugins
     install_nvim_for_ubuntu
-	install_ripgrep_for_ubuntu
+    install_ripgrep_for_ubuntu
     install_exa_for_ubuntu
     install_bat_for_ubuntu
     install_httpie_for_ubuntu

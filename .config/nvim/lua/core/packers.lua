@@ -59,6 +59,7 @@ local function init()
                     },
                     lualine_c = {
                         "filename",
+                        "navic",
                     },
                     lualine_x = {
                         {
@@ -74,13 +75,6 @@ local function init()
                         "encoding",
                         "fileformat",
                         "filetype",
-                    }
-                },
-                winbar = {
-                    lualine_c = {
-                        {
-                            "navic",
-                        }
                     }
                 },
                 options = {
@@ -178,10 +172,17 @@ local function init()
     -- `<Leader>g` - Git ls-files
     -- `<Leader>l` - Live grep
     -- `<Leader>b` - Buffers
-    -- `<Leader>h` - Help tags
     -- `<Leader>d` - Diagnostics
+    -- `<Leader>o` - Lists previously open files
     -- `<Leader>f` - File browser
+    -- `:Help` - Help tags
     -- `:History` - Noice history
+    -- `:Commits` - Git commits
+    -- `:Status` - Git status
+    -- `:Commands` - Commands
+    -- `:CommandHistory` - Command history
+    -- `:SearchHistory` - Search history
+    -- `:JumpList` - Vim's jumplist
     use {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
@@ -212,11 +213,11 @@ local function init()
             vim.keymap.set("n", "<Leader>b", function()
                 require("telescope.builtin").buffers()
             end)
-            vim.keymap.set("n", "<Leader>h", function()
-                require("telescope.builtin").help_tags()
-            end)
             vim.keymap.set("n", "<Leader>d", function()
                 require("telescope.builtin").diagnostics()
+            end)
+            vim.keymap.set("n", "<Leader>o", function ()
+                require("telescope.builtin").oldfiles()
             end)
             vim.keymap.set("n", "<Leader>f", function()
                 require("telescope").extensions.file_browser.file_browser({
@@ -230,14 +231,35 @@ local function init()
                     layout_config = { height = 40 }
                 })
             end)
-            vim.api.nvim_create_user_command('History', function ()
+            vim.api.nvim_create_user_command("Help", function()
+                require("telescope.builtin").help_tags()
+            end, { desc = "Lists available help tags and opens a new window with the relevant help info on `<cr>`" })
+            vim.api.nvim_create_user_command("History", function ()
                 require("telescope").extensions.noice.noice({})
-            end, { bang = true })
+            end, { desc = "Shows the message history" })
+            vim.api.nvim_create_user_command("Commits", function ()
+                require("telescope.builtin").git_commits()
+            end, { desc = "Lists commits for current directory with diff preview" })
+            vim.api.nvim_create_user_command("Status", function ()
+                require("telescope.builtin").git_status()
+            end, { desc = "Lists git status for current directory" })
+            vim.api.nvim_create_user_command("Commands", function ()
+                require("telescope.builtin").commands()
+            end, { desc = "Lists available plugin/user commands and runs them on `<cr>`" })
+            vim.api.nvim_create_user_command("CommandHistory", function ()
+                require("telescope.builtin").command_history()
+            end, { desc = "Lists commands that were excuted recently, and reruns them on `<cr>`" })
+            vim.api.nvim_create_user_command("SearchHistory", function ()
+                require("telescope.builtin").search_history()
+            end, { desc = "Lists searches that were excuted recently, and reruns them on `<cr>`" })
+            vim.api.nvim_create_user_command("JumpList", function ()
+                require("telescope.builtin").jumplist()
+            end, { desc = "Lists items from Vim's jumplist, jumps to location on `<cr>`" })
         end,
         config = function()
             local actions = require("telescope.actions")
             local fb_actions = require("telescope").extensions.file_browser.actions
-            local noice = require("telescope").load_extension("noice")
+            require("telescope").load_extension("noice")
             require("telescope").setup {
                 defaults = {
                     mappings = {
@@ -246,27 +268,9 @@ local function init()
                         },
                     },
                 },
-                pickers = {
-                    find_files = {
-                        theme = "dropdown",
-                    },
-                    live_grep = {
-                        theme = "dropdown",
-                    },
-                    buffers = {
-                        theme = "dropdown",
-                    },
-                    help_tags = {
-                        theme = "dropdown",
-                    },
-                    diagnostics = {
-                        theme = "dropdown",
-                    },
-                },
                 extensions = {
                     file_browser = {
                         hijack_netrw = true,
-                        theme = "dropdown",
                         mappings = {
                             ["i"] = {
                                 ["<C-w>"] = function() vim.cmd("normal vbd") end,
