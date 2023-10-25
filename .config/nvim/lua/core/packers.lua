@@ -443,7 +443,11 @@ local function init()
                 navbuddy.attach(client, bufnr)
             end
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
-            mason.setup()
+            mason.setup({
+                ui = {
+                    border = "single",
+                }
+            })
             mason_lspconfig.setup({
                 ensure_installed = { "lua_ls", "rust_analyzer" },
             })
