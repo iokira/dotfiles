@@ -34,7 +34,7 @@ local function load_options()
         scrolloff = 7,
         sessionoptions = "curdir,help,tabpages,winsize",
         shada = "!,'300,<50,@100,s10,h",
-        shell = "fish",
+        shell = "zsh",
         shiftwidth = 4,
         showcmd = true,
         showmatch = true,
