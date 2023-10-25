@@ -2,6 +2,8 @@ local MODULE_NAME = "myintro"
 
 local vim = vim
 
+local colors = { "#83A1F1", "#9ECE6A", "#FF9E64" }
+
 local intro = {
     text = {
         "███▄▄▄▄       ▄████████   ▄██████▄    ▄█    █▄    ▄█     ▄▄▄▄███▄▄▄▄  ",
@@ -15,7 +17,7 @@ local intro = {
     },
     width = 70,
     height = 8,
-    color = "#83A1F1",
+    color = colors[os.time() % 3 + 1]
 }
 
 local autocmd_group = vim.api.nvim_create_augroup(MODULE_NAME, {})
