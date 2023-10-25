@@ -28,7 +28,7 @@ config.keys = {
         }
     },
     {
-        key = ' ',
+        key = " ",
         mods = "LEADER",
         action = act.QuickSelect,
     },
