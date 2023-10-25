@@ -179,6 +179,7 @@ local function init()
     -- `:History` - Noice history
     -- `:Commits` - Git commits
     -- `:Status` - Git status
+    -- `:Commands` - Commands
     use {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
@@ -238,6 +239,9 @@ local function init()
             end, { bang = false })
             vim.api.nvim_create_user_command("Status", function ()
                 require("telescope.builtin").git_status()
+            end, { bang = false })
+            vim.api.nvim_create_user_command("Commands", function ()
+                require("telescope.builtin").commands()
             end, { bang = false })
         end,
         config = function()
