@@ -271,7 +271,6 @@ local function init()
                 extensions = {
                     file_browser = {
                         hijack_netrw = true,
-                        theme = "dropdown",
                         mappings = {
                             ["i"] = {
                                 ["<C-w>"] = function() vim.cmd("normal vbd") end,
