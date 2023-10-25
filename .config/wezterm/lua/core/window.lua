@@ -47,5 +47,6 @@ config.window_padding = {
     top = 0,
     bottom = 0,
 }
+config.show_new_tab_button_in_tab_bar = false
 
 return config
