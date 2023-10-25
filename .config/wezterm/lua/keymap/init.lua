@@ -9,11 +9,11 @@ config.leader = {
 }
 
 wezterm.on("update-right-status", function(window, pane)
-  local leader = ''
-  if window:leader_is_active() then
-    leader = "LEADER"
-  end
-  window:set_right_status(leader)
+    local leader = ''
+    if window:leader_is_active() then
+        leader = "LEADER"
+    end
+    window:set_right_status(leader)
 end)
 
 config.keys = {
@@ -121,6 +121,11 @@ config.keys = {
         mods = "LEADER",
         action = act.AdjustPaneSize { "Right", 5 },
     },
+    {
+        key = "z",
+        mods = "LEADER",
+        action = act.TogglePaneZoomState,
+    }
 }
 
 for i = 1, 8 do
