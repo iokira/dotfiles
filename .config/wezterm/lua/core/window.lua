@@ -21,7 +21,11 @@ wezterm.on("update-right-status", function(window, pane)
     if window:leader_is_active() then
         leader = "LEADER"
     end
-    window:set_right_status(leader)
+    window:set_right_status(wezterm.format {
+        { Foreground = { Color = "orange" } },
+        { Background = { Color = "#000000" } },
+        { Text = leader },
+    })
 end)
 function basename(s)
     return string.gsub(s, "(.*[/\\])(.*)", "%2")
