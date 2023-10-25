@@ -180,6 +180,9 @@ local function init()
     -- `:Commits` - Git commits
     -- `:Status` - Git status
     -- `:Commands` - Commands
+    -- `:CommandHistory` - Command history
+    -- `:SearchHistory` - Search history
+    -- `:JumpList` - Vim's jumplist
     use {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
@@ -230,19 +233,28 @@ local function init()
             end)
             vim.api.nvim_create_user_command("Help", function()
                 require("telescope.builtin").help_tags()
-            end, { bang = false })
+            end, { desc = "Lists available help tags and opens a new window with the relevant help info on `<cr>`" })
             vim.api.nvim_create_user_command("History", function ()
                 require("telescope").extensions.noice.noice({})
-            end, { bang = false })
+            end, { desc = "Shows the message history" })
             vim.api.nvim_create_user_command("Commits", function ()
                 require("telescope.builtin").git_commits()
-            end, { bang = false })
+            end, { desc = "Lists commits for current directory with diff preview" })
             vim.api.nvim_create_user_command("Status", function ()
                 require("telescope.builtin").git_status()
-            end, { bang = false })
+            end, { desc = "Lists git status for current directory" })
             vim.api.nvim_create_user_command("Commands", function ()
                 require("telescope.builtin").commands()
-            end, { bang = false })
+            end, { desc = "Lists available plugin/user commands and runs them on `<cr>`" })
+            vim.api.nvim_create_user_command("CommandHistory", function ()
+                require("telescope.builtin").command_history()
+            end, { desc = "Lists commands that were excuted recently, and reruns them on `<cr>`" })
+            vim.api.nvim_create_user_command("SearchHistory", function ()
+                require("telescope.builtin").search_history()
+            end, { desc = "Lists searches that were excuted recently, and reruns them on `<cr>`" })
+            vim.api.nvim_create_user_command("JumpList", function ()
+                require("telescope.builtin").jumplist()
+            end, { desc = "Lists items from Vim's jumplist, jumps to location on `<cr>`" })
         end,
         config = function()
             local actions = require("telescope.actions")
