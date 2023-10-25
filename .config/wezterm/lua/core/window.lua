@@ -17,7 +17,6 @@ wezterm.on("toggle-opacity", function(window)
     window:set_config_overrides(overrides)
 end)
 config.window_decorations = "NONE"
-config.hide_tab_bar_if_only_one_tab = true
 config.tab_bar_at_bottom = true
 
 return config
