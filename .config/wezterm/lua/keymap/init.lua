@@ -3,7 +3,7 @@ local act = wezterm.action
 local config = {}
 
 config.leader = {
-    key = "k",
+    key = "j",
     mods = "CTRL",
     timeout_milliseconds = 1000,
 }
