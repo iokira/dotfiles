@@ -172,11 +172,13 @@ local function init()
     -- `<Leader>g` - Git ls-files
     -- `<Leader>l` - Live grep
     -- `<Leader>b` - Buffers
-    -- `<Leader>h` - Help tags
     -- `<Leader>d` - Diagnostics
     -- `<Leader>o` - Lists previously open files
     -- `<Leader>f` - File browser
+    -- `:Help` - Help tags
     -- `:History` - Noice history
+    -- `:Commits` - Git commits
+    -- `:Status` - Git status
     use {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
@@ -207,9 +209,6 @@ local function init()
             vim.keymap.set("n", "<Leader>b", function()
                 require("telescope.builtin").buffers()
             end)
-            vim.keymap.set("n", "<Leader>h", function()
-                require("telescope.builtin").help_tags()
-            end)
             vim.keymap.set("n", "<Leader>d", function()
                 require("telescope.builtin").diagnostics()
             end)
@@ -228,14 +227,23 @@ local function init()
                     layout_config = { height = 40 }
                 })
             end)
-            vim.api.nvim_create_user_command('History', function ()
+            vim.api.nvim_create_user_command("Help", function()
+                require("telescope.builtin").help_tags()
+            end, { bang = false })
+            vim.api.nvim_create_user_command("History", function ()
                 require("telescope").extensions.noice.noice({})
+            end, { bang = false })
+            vim.api.nvim_create_user_command("Commits", function ()
+                require("telescope.builtin").git_commits()
+            end, { bang = false })
+            vim.api.nvim_create_user_command("Status", function ()
+                require("telescope.builtin").git_status()
             end, { bang = false })
         end,
         config = function()
             local actions = require("telescope.actions")
             local fb_actions = require("telescope").extensions.file_browser.actions
-            local noice = require("telescope").load_extension("noice")
+            require("telescope").load_extension("noice")
             require("telescope").setup {
                 defaults = {
                     mappings = {
