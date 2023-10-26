@@ -46,6 +46,14 @@ local function init()
         config = function()
             -- winbar
             require("nvim-navic")
+            local function show_macro_recording()
+                local recording_register = vim.fn.reg_recording()
+                if recording_register == "" then
+                    return ""
+                else
+                    return "Recording @" .. recording_register
+                end
+            end
             require"lualine".setup {
                 sections = {
                     lualine_a = {"mode"},
@@ -70,6 +78,11 @@ local function init()
                         {
                             require("noice").api.status.command.get,
                             cond = require("noice").api.status.command.has,
+                            color = { fg = "#ff9e64" },
+                        },
+                        {
+                            "macro_recording",
+                            fmt = show_macro_recording,
                             color = { fg = "#ff9e64" },
                         },
                         "encoding",
