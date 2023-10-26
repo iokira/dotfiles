@@ -184,6 +184,7 @@ local function init()
     -- `:CommandHistory` - Command history
     -- `:SearchHistory` - Search history
     -- `:JumpList` - Vim's jumplist
+    -- `:Reg` - :reg
     use {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
@@ -259,6 +260,9 @@ local function init()
             vim.api.nvim_create_user_command("JumpList", function ()
                 require("telescope.builtin").jumplist()
             end, { desc = "Lists items from Vim's jumplist, jumps to location on `<cr>`" })
+            vim.api.nvim_create_user_command("Reg", function ()
+                require("telescope.builtin").registers()
+            end, { desc = "Lists vim registers, pastes the contents of the register on `<cr>`" })
         end,
         config = function()
             local actions = require("telescope.actions")
