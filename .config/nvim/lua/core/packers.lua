@@ -175,6 +175,7 @@ local function init()
     -- `<Leader>d` - Diagnostics
     -- `<Leader>o` - Lists previously open files
     -- `<Leader>f` - File browser
+    -- `<Leader>m` - Lists vim marks and their value, jumps to the mark on `<cr>`
     -- `:Help` - Help tags
     -- `:History` - Noice history
     -- `:Commits` - Git commits
@@ -230,6 +231,9 @@ local function init()
                     initial_mode = "normal",
                     layout_config = { height = 40 }
                 })
+            end)
+            vim.keymap.set("n", "<Leader>m", function ()
+                require("telescope.builtin").marks()
             end)
             vim.api.nvim_create_user_command("Help", function()
                 require("telescope.builtin").help_tags()
