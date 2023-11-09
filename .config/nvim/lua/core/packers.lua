@@ -467,6 +467,9 @@ local function init()
                 navbuddy.attach(client, bufnr)
             end
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            lspconfig["satysfi-ls"].setup({
+                autostart = true
+            })
             mason.setup({
                 ui = {
                     border = "single",
