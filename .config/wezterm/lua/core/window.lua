@@ -3,9 +3,13 @@ local config = {}
 
 config.window_background_opacity = 1
 local mux = wezterm.mux
+-- wezterm.on("gui-startup", function()
+--     local _, _, window = mux.spawn_window({})
+--     window:gui_window():toggle_fullscreen()
+-- end)
 wezterm.on("gui-startup", function()
     local _, _, window = mux.spawn_window({})
-    window:gui_window():toggle_fullscreen()
+    window:gui_window():maximize()
 end)
 wezterm.on("toggle-opacity", function(window)
     local overrides = window:get_config_overrides() or {}
@@ -43,7 +47,7 @@ wezterm.on(
         }
     end
 )
-config.window_decorations = "NONE"
+-- config.window_decorations = "NONE"
 -- config.native_macos_fullscreen_mode = true
 config.tab_bar_at_bottom = true
 config.window_padding = {
