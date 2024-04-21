@@ -106,6 +106,12 @@ function zsh-startuptime() {
     echo "\naverage: ${average_msec} [ms]"
 }
 
+# c++ run
+function rung++() {
+    g++ $1.cc -o $1.out
+    ./file.out
+}
+
 function zsh-profiler() {
 ZSHRC_PROFILE=1 zsh -i -c zprof
 }
