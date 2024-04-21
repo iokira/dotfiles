@@ -109,7 +109,7 @@ function zsh-startuptime() {
 # c++ run
 function rung++() {
     g++ $1.cc -o $1.out
-    ./file.out
+    ./$1.out
 }
 
 function zsh-profiler() {
