@@ -50,7 +50,7 @@ install() {
         if [ $? = 0 ]; then
             success "Successfully installed ${1}."
         else
-            error "An unexpected error occured when trying to install ${1}."
+            error "An unexpected error occurred when trying to install ${1}."
         fi
     fi
 }
