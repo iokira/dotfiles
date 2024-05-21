@@ -41,7 +41,21 @@ has() {
     type "$1" > /dev/null 2>&1
 }
 
-download() {
+install() {
+    if has "$1"; then
+        bold "${1} is already exists."
+    else
+        arrow "Installing ${1}"
+        ${@:2}
+        if [ $? = 0 ]; then
+            success "Successfully installed ${1}."
+        else
+            error "An unexpected error occurred when trying to install ${1}."
+        fi
+    fi
+}
+
+download_dotfiles() {
     arrow "Downloading dotfiles"
     cd $HOME
     if [ ! -d $DOTFILES_PATH ]; then
@@ -61,8 +75,13 @@ download() {
     fi
 }
 
+install_brew() {
+    install brew /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile; eval "$(/opt/homebrew/bin/brew shellenv)"
+}
+
 main() {
-    download
+    download_dotfiles
+    install_brew
 }
 
 main
