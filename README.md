@@ -1,5 +1,9 @@
 # IO's dotfiles
 
+## Requirements
+
+* curl
+
 ## Installation
 
 ```sh
