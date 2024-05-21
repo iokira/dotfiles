@@ -75,8 +75,13 @@ download_dotfiles() {
     fi
 }
 
+install_brew() {
+    install brew /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile; eval "$(/opt/homebrew/bin/brew shellenv)"
+}
+
 main() {
     download_dotfiles
+    install_brew
 }
 
 main
