@@ -41,7 +41,21 @@ has() {
     type "$1" > /dev/null 2>&1
 }
 
-download() {
+install() {
+    if has "$1"; then
+        bold "${1} is already exists."
+    else
+        arrow "Installing ${1}"
+        $2
+        if [ $? = 0 ]; then
+            success "Successfully installed ${1}."
+        else
+            error "An unexpected error occured when trying to install ${1}."
+        fi
+    fi
+}
+
+download_dotfiles() {
     arrow "Downloading dotfiles"
     cd $HOME
     if [ ! -d $DOTFILES_PATH ]; then
@@ -62,7 +76,7 @@ download() {
 }
 
 main() {
-    download
+    download_dotfiles
 }
 
 main
