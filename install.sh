@@ -42,6 +42,7 @@ has() {
 }
 
 install() {
+    arrow "Installing ${1}"
     if has "$1"; then
         bold "${1} is already exists."
     else
