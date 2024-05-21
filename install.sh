@@ -15,3 +15,11 @@ install() {
         fi
     fi
 }
+
+main() {
+    install
+}
+
+main
+
+exit 0
