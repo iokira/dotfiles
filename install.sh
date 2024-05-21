@@ -20,6 +20,11 @@ else
     NORMAL=""
 fi
 
+helpmsg() {
+    echo "Usage: $0 [--help | -h]" 0>&2
+    echo ""
+}
+
 arrow() {
     echo "${BLUE}==>${NORMAL} ${BOLD}${1}${NORMAL}"
 }
@@ -77,7 +82,9 @@ download_dotfiles() {
 }
 
 install_brew() {
-    install brew /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile; eval "$(/opt/homebrew/bin/brew shellenv)"
+    install brew /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 }
 
 install_git() {
@@ -88,7 +95,23 @@ main() {
     download_dotfiles
     install_brew
     install_git
+    success "Install completed!"
 }
+
+while [ $# -gt 0 ]; do
+    case ${1} in
+        --debug|-d)
+            set -uex
+            ;;
+        --help|-h)
+            helpmsg
+            exit 1
+            ;;
+        *)
+            ;;
+    esac
+    shift
+done
 
 main
 
