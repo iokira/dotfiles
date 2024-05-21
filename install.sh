@@ -46,7 +46,7 @@ install() {
         bold "${1} is already exists."
     else
         arrow "Installing ${1}"
-        $2
+        ${@:2}
         if [ $? = 0 ]; then
             success "Successfully installed ${1}."
         else
