@@ -163,6 +163,11 @@ install_ripgrep() {
     install rg brew install ripgrep
 }
 
+# install exa
+install_eza() {
+    install eza brew install eza
+}
+
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
@@ -178,6 +183,7 @@ main() {
         link_zsh
         install_neovim
         install_ripgrep
+        install_eza
         success "Install completed!"
     else
         error 'not supported os'

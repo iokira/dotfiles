@@ -27,7 +27,7 @@ cursor_mode() {
 cursor_mode
 
 # alias
-alias l='exa -la --icons'
+alias l='eza -la --icons'
 alias p='cd ~/projects'
 alias d='cd ~/dotfiles'
 alias ..='cd ..'
