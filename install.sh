@@ -116,6 +116,18 @@ install_git() {
     install git brew install git
 }
 
+# install wezterm
+install_wezterm() {
+    install wezterm brew install --cask wezterm
+}
+
+# link wezterm config
+link_wezterm() {
+    mkdir -p $HOME/.config/wezterm
+    ln -snfv $DOTFILES_PATH/.config/wezterm/wezterm.lua $HOME/.config/wezterm/wezterm.lua
+    ln -snfv $DOTFILES_PATH/.config/wezterm/lua $HOME/.config/wezterm/lua
+}
+
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
@@ -124,6 +136,8 @@ main() {
         download_dotfiles
         install_brew
         install_git
+        install_wezterm
+        link_wezterm
         success "Install completed!"
     else
         error 'not supported os'
