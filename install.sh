@@ -46,6 +46,18 @@ has() {
     type "$1" > /dev/null 2>&1
 }
 
+detect_os() {
+    UNAME=$(uname)
+    if [ $UNAME == 'Darwin' ]; then
+        OS='macOS'
+    elif [ $UNAME == 'Linux' ]; then
+        OS='Linux'
+    else
+        echo 'Who are you?'
+        exit 1
+    fi
+}
+
 install() {
     arrow "Installing ${1}"
     if has "$1"; then
@@ -92,10 +104,16 @@ install_git() {
 }
 
 main() {
-    download_dotfiles
-    install_brew
-    install_git
-    success "Install completed!"
+    sudo echo ''
+    detect_os
+    if [ $OS = 'macOS' ]; then
+        download_dotfiles
+        install_brew
+        install_git
+        success "Install completed!"
+    else
+        error 'not supported os'
+    fi
 }
 
 while [ $# -gt 0 ]; do
