@@ -158,6 +158,11 @@ install_neovim() {
         && rm $tempfile
 }
 
+# install ripgrep
+install_ripgrep() {
+    install rg brew install ripgrep
+}
+
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
@@ -172,6 +177,7 @@ main() {
         link_tmux
         link_zsh
         install_neovim
+        install_ripgrep
         success "Install completed!"
     else
         error 'not supported os'
