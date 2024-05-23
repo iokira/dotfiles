@@ -1,6 +1,8 @@
+# const
 readonly DOTFILES_PATH=$HOME/dotfiles
 readonly REMOTE_URL="https://github.com/iokira/dotfiles.git"
 
+# color settings
 if which tput >/dev/null 2>&1; then
     ncolors=$(tput colors)
 fi
@@ -20,32 +22,39 @@ else
     NORMAL=""
 fi
 
+# displaying help messages
 helpmsg() {
     echo "Usage: $0 [--help | -h]" 0>&2
     echo ""
 }
 
+# arrowhead message
 arrow() {
     echo "${BLUE}==>${NORMAL} ${BOLD}${1}${NORMAL}"
 }
 
+# success message
 success() {
     echo "${GREEN}${1}${NORMAL}"
 }
 
+# error message
 error() {
     echo "${RED}${1}${NORMAL}"
     exit 1
 }
 
+# bold message
 bold() {
     echo "${BOLD}${1}${NORMAL}"
 }
 
+# check for the existence #1
 has() {
     type "$1" > /dev/null 2>&1
 }
 
+# detect os type
 detect_os() {
     UNAME=$(uname)
     if [ $UNAME == 'Darwin' ]; then
@@ -58,6 +67,7 @@ detect_os() {
     fi
 }
 
+# if $1 does not exist, run $2
 install() {
     arrow "Installing ${1}"
     if has "$1"; then
@@ -73,6 +83,7 @@ install() {
     fi
 }
 
+# download dotfiles
 download_dotfiles() {
     arrow "Downloading dotfiles"
     cd $HOME
@@ -93,16 +104,19 @@ download_dotfiles() {
     fi
 }
 
+# install brew
 install_brew() {
     install brew /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
     eval "$(/opt/homebrew/bin/brew shellenv)"
 }
 
+# install git
 install_git() {
     install git brew install git
 }
 
+# first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
     detect_os
@@ -116,6 +130,7 @@ main() {
     fi
 }
 
+# argument handling
 while [ $# -gt 0 ]; do
     case ${1} in
         --debug|-d)
