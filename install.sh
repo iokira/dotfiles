@@ -128,6 +128,17 @@ link_wezterm() {
     ln -snfv $DOTFILES_PATH/.config/wezterm/lua $HOME/.config/wezterm/lua
 }
 
+# install tmux
+install_tmux() {
+    install tmux brew install tmux
+}
+
+# link tmux config
+link_tmux() {
+    mkdir -p $HOME/.config/tmux
+    ln -snfv $DOTFILES_PATH/.config/tmux/tmux.conf $HOME/.config/tmux/tmux.conf
+}
+
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
@@ -138,6 +149,8 @@ main() {
         install_git
         install_wezterm
         link_wezterm
+        install_tmux
+        link_tmux
         success "Install completed!"
     else
         error 'not supported os'
