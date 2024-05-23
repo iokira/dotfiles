@@ -114,6 +114,7 @@ install_brew() {
 # install git
 install_git() {
     install git brew install git
+    ln -snfv $DOTFILES_PATH/.gitconfig $HOME/.gitconfig
 }
 
 # install wezterm
