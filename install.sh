@@ -144,6 +144,20 @@ link_zsh() {
     ln -snfv $DOTFILES_PATH/.config/zsh/.zshrc $HOME/.zshrc
 }
 
+# install neovim
+install_neovim() {
+    install nvim brew install neovim
+    mkdir -p $HOME/.config/nvim
+    ln -snfv $DOTFILES_PATH/.config/nvim/init.lua $HOME/.config/nvim/init.lua
+    ln -snfv $DOTFILES_PATH/.config/nvim/lua $HOME/.config/nvim/lua
+    ln -snfv $DOTFILES_PATH/.config/nvim/.luarc.json $HOME/.config/nvim/.luarc.json
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+    tempfile=$(mktemp) \
+        && curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/master/termwiz/data/wezterm.terminfo \
+        && tic -x -o ~/.terminfo $tempfile \
+        && rm $tempfile
+}
+
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
@@ -157,6 +171,7 @@ main() {
         install_tmux
         link_tmux
         link_zsh
+        install_neovim
         success "Install completed!"
     else
         error 'not supported os'
