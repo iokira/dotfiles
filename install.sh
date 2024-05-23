@@ -139,6 +139,11 @@ link_tmux() {
     ln -snfv $DOTFILES_PATH/.config/tmux/tmux.conf $HOME/.config/tmux/tmux.conf
 }
 
+# link zsh config
+link_zsh() {
+    ln -snfv $DOTFILES_PATH/.config/zsh/.zshrc $HOME/.zshrc
+}
+
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
@@ -151,6 +156,7 @@ main() {
         link_wezterm
         install_tmux
         link_tmux
+        link_zsh
         success "Install completed!"
     else
         error 'not supported os'
