@@ -4,6 +4,7 @@ local function load_options()
     local global_local = {
         ambiwidth = "single",
         autoindent = true,
+        autowrite = true,
         backup = true,
         backupdir = global.cache_dir .. "backup/",
         backupskip = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim",
