@@ -5,8 +5,7 @@ compinit
 # prompt
 prompt_precmd() {
     local branch="$(git branch --show-current)"
-    local git_status="$(git status -z)"
-    export PS1="%3d (${branch}) ${git_status}
+    export PS1="%3d (${branch})
 [%?] > "
 }
 autoload -Uz add-zsh-hook
