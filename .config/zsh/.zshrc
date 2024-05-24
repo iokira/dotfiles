@@ -36,7 +36,7 @@ cursor_mode() {
 }
 cursor_mode
 
-# fzf history
+# fzf functions
 function fzf-select-history() {
     BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER" --reverse)
     CURSOR=$#BUFFER
@@ -44,6 +44,14 @@ function fzf-select-history() {
 }
 zle -N fzf-select-history
 bindkey '^p' fzf-select-history
+
+fb() {
+    local branches branch
+    branches=$(git branch -vv --all | grep -v HEAD) &&
+        branch=$(echo "$branches" |
+        fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+    git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
 
 # alias
 alias l='eza -la --icons'
