@@ -195,6 +195,15 @@ install_vim_startuptime() {
     install vim-startuptime go install github.com/rhysd/vim-startuptime@latest
 }
 
+# install jetbrains mono
+install_jetbrains_mono() {
+    arrow "Installing jetbrains mono"
+    mkdir -p $HOME/Library/Fonts/JetBrainsMono
+    curl -fLO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip
+    unzip JetBrainsMono.zip -d $HOME/Library/Fonts/JetBrainsMono
+    rm -f JetBrainsMono.zip
+}
+
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
@@ -216,6 +225,7 @@ main() {
         install_httpie
         install_go
         install_vim_startuptime
+        install_jetbrains_mono
         success "Install completed!"
     else
         error 'not supported os'
