@@ -358,6 +358,22 @@ local function init()
     use {
         "lewis6991/gitsigns.nvim",
         event = { "BufRead", "BufNewFile" },
+        setup = function ()
+            vim.keymap.set("n", "]c", function ()
+                if vim.wo.diff then
+                    vim.cmd.normal({"]c", bang = true})
+                else
+                    require("gitsigns").nav_hunk("next")
+                end
+            end)
+            vim.keymap.set("n", "[c", function ()
+                if vim.wo.diff then
+                    vim.cmd.normal({"[c", bang = true})
+                else
+                    require("gitsigns").nav_hunk("prev")
+                end
+            end)
+        end,
         config = function()
             require"gitsigns".setup {}
         end,

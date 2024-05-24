@@ -1,48 +1,58 @@
-# Dotfiles
-===
-**wezterm + tmux + zsh + neovim**
+# dotfiles
 
-## Main software
+The best I could think of dotfiles.
 
-- brew
-- git
-- wezterm
-- tmux
-- zsh
-- neovim
-- starship
-- exa
-- bat
-- httpie
-- go
-- vim-startuptime
+## Features
+
+* Editor: Neovim;
+* Prompt: starship;
+* Shell: zsh;
+* Terminal: wezterm;
 
 ## Contents
 
-- wezterm config
-- tmux config
-- zsh config
-- nvim config
-- starship config
-- ideavimrc
-- JetBrainsMono font
+* Homebrew installer
+* git installer
+* wezterm config and installer
+* tmux config and installer
+* zsh config
+* zplug installer
+* neovim config and installer
+* packer installer
+* ripgrep installer
+* eza installer
+* starship config and installer
+* bat installer
+* httpie installer
+* go installer
+* vim-startuptime installer
+* jetbrains mono installer
+* fzf installer
 
 ## Supported OS
 
-- Mac OS(M1)
-- Ubuntu22.04
+* macOS (Apple silicon only)
 
-## Requirements
+## Install (for me)
 
-- curl
+### Requirements
 
-## Install
+* curl
 
-```shell
+```sh
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/iokira/dotfiles/main/install.sh)"
 ```
 
-## LICENSE
+## Inspiration
 
-MIT
+https://github.com/yutkat/dotfiles
+
+https://github.com/craftzdog/dotfiles-public
+
+https://github.com/ayamir/nvimdots
+
+## License
+
+Copyright (c) 2021 - 2024 iokira
+License under the MIT license.
 

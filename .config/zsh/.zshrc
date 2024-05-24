@@ -1,30 +1,12 @@
-# Caution! This config should be written at the beginning of the file :) by io
+# Caution! This config should be written at the beginning of the file :) by iokira
 # profiler
 if [ "$ZSHRC_PROFILE" != "" ]; then
-  zmodload zsh/zprof && zprof > /dev/null
+    zmodload zsh/zprof && zprof > /dev/null
 fi
 
 # comp
 autoload -Uz compinit
 compinit
-
-zstyle ':completion:*' menu true
-zstyle ':completion:*:rm:*' menu false
-zstyle ':completion:*:(cd):*' matcher 'm:{a-z}={A-Z}'
-zstyle ':completion:*:default' list-colors ''
-zstyle ':completion:*' completer _complete _approximate
-zstyle ':completion:*:default' menu select=1
-zstyle ':completion::complete:*' use-cache true
-setopt correct
-SPROMPT="correct: $RED%R$DEFAULT -> $GREEN%r$DEFAULT ? [Yes/No/Abort/Edit] => "
-
-# dir stack
-setopt AUTO_PUSHD
-setopt PUSHD_IGNORE_DUPS
-setopt PUSHD_SILENT
-
-alias di='dirs -v'
-for index ({1..9}) alias "$index"="cd +${index}"; unset index
 
 # vi mode
 bindkey -v
@@ -54,8 +36,35 @@ cursor_mode() {
 }
 cursor_mode
 
+# fzf functions
+function fzf-select-history() {
+    BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER" --reverse)
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+zle -N fzf-select-history
+bindkey '^p' fzf-select-history
+
+fb() {
+    local branches branch
+    branches=$(git branch -vv) &&
+    branch=$(echo "$branches" | fzf +m) &&
+    git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}
+
+fl() {
+    git log --graph --color=always \
+        --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+    fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+        --bind "ctrl-m:execute:
+            (grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+
 # alias
-alias l='exa -la --icons'
+alias l='eza -la --icons'
 alias p='cd ~/projects'
 alias d='cd ~/dotfiles'
 alias ..='cd ..'
@@ -75,7 +84,7 @@ alias gl='git pull'
 alias gd='git diff'
 alias gco='git checkout'
 alias gcob='git checkout -b'
-alias gb='git branch'
+alias gb='git branch -vv'
 alias dp='docker ps'
 alias dc='docker compose'
 alias dcu='docker compose up'
@@ -86,9 +95,6 @@ alias dcb='docker compose build'
 alias nvim-startuptime='vim-startuptime -vimpath nvim'
 alias shutnow='shutdown -h now'
 alias relogin='exec zsh -l'
-
-# starship
-eval "$(starship init zsh)"
 
 # startuptime
 function zsh-startuptime() {
@@ -106,15 +112,9 @@ function zsh-startuptime() {
     echo "\naverage: ${average_msec} [ms]"
 }
 
-# c++ run
-function rung++() {
-    g++ $1.cc -o $1.out
-    ./$1.out
-}
-
-function zsh-profiler() {
-ZSHRC_PROFILE=1 zsh -i -c zprof
-}
+# starship
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(starship init zsh)"
 
 # plugins
 source $HOME/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
