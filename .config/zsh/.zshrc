@@ -1,3 +1,9 @@
+# Caution! This config should be written at the beginning of the file :) by iokira
+# profiler
+if [ "$ZSHRC_PROFILE" != "" ]; then
+    zmodload zsh/zprof && zprof > /dev/null
+fi
+
 # comp
 autoload -Uz compinit
 compinit
@@ -83,3 +89,6 @@ function zsh-startuptime() {
 # starship
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
+
+# plugins
+source $HOME/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

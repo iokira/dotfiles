@@ -142,9 +142,17 @@ link_tmux() {
     ln -snfv $DOTFILES_PATH/.config/tmux/tmux.conf $HOME/.config/tmux/tmux.conf
 }
 
-# link zsh config
-link_zsh() {
+# install zsh plugins and link zsh config
+install_zsh() {
+    arrow "Installing zsh plugins and linking zsh config."
     ln -snfv $DOTFILES_PATH/.config/zsh/.zshrc $HOME/.zshrc
+    mkdir -p $HOME/.config/zsh/plugins
+    if [ ! -d $HOME/.config/zsh/plugins/zsh-syntax-highlighting ]; then
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.config/zsh/plugins/zsh-syntax-highlighting
+        success "Successfully install zsh plugins."
+    else
+        bold "zsh plugins already installed."
+    fi
 }
 
 # install neovim
@@ -225,7 +233,7 @@ main() {
         link_wezterm
         install_tmux
         link_tmux
-        link_zsh
+        install_zsh
         install_neovim
         install_ripgrep
         install_eza
