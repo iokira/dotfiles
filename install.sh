@@ -185,6 +185,11 @@ install_httpie() {
     install httpie brew install httpie
 }
 
+# install go
+install_go() {
+    install go brew install go
+}
+
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
@@ -204,6 +209,7 @@ main() {
         install_starship
         install_bat
         install_httpie
+        install_go
         success "Install completed!"
     else
         error 'not supported os'
