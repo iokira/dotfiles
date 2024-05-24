@@ -169,6 +169,12 @@ install_eza() {
     install eza brew install eza
 }
 
+# install starship
+install_starship() {
+    install starship brew install starship
+    ln -snfv $DOTFILES_PATH/.config/starship/starship.toml $HOME/.config/starship.toml
+}
+
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
@@ -185,6 +191,7 @@ main() {
         install_neovim
         install_ripgrep
         install_eza
+        install_starship
         success "Install completed!"
     else
         error 'not supported os'

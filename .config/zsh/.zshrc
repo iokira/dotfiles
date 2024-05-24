@@ -2,15 +2,6 @@
 autoload -Uz compinit
 compinit
 
-# prompt
-prompt_precmd() {
-    local branch="$(git branch --show-current)"
-    export PS1="%3d (${branch})
-[%?] > "
-}
-autoload -Uz add-zsh-hook
-add-zsh-hook precmd prompt_precmd
-
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
@@ -87,3 +78,6 @@ function zsh-startuptime() {
     average_msec=$(( ${total_msec} / 10 ))
     echo "\naverage: ${average_msec} [ms]"
 }
+
+# starship
+eval "$(starship init zsh)"
