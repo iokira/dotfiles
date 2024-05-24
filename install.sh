@@ -122,10 +122,6 @@ install_git() {
 # install wezterm
 install_wezterm() {
     install wezterm brew install --cask wezterm
-}
-
-# link wezterm config
-link_wezterm() {
     mkdir -p $HOME/.config/wezterm
     ln -snfv $DOTFILES_PATH/.config/wezterm/wezterm.lua $HOME/.config/wezterm/wezterm.lua
     ln -snfv $DOTFILES_PATH/.config/wezterm/lua $HOME/.config/wezterm/lua
@@ -134,10 +130,6 @@ link_wezterm() {
 # install tmux
 install_tmux() {
     install tmux brew install tmux
-}
-
-# link tmux config
-link_tmux() {
     mkdir -p $HOME/.config/tmux
     ln -snfv $DOTFILES_PATH/.config/tmux/tmux.conf $HOME/.config/tmux/tmux.conf
 }
@@ -225,6 +217,11 @@ install_jetbrains_mono() {
     success "Successfully installed JetBrainsMono"
 }
 
+# install fzf
+install_fzf() {
+    install fzf brew install fzf
+}
+
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
@@ -234,9 +231,7 @@ main() {
         install_brew
         install_git
         install_wezterm
-        link_wezterm
         install_tmux
-        link_tmux
         install_zsh
         install_neovim
         install_ripgrep
@@ -247,6 +242,7 @@ main() {
         install_go
         install_vim_startuptime
         install_jetbrains_mono
+        install_fzf
         success "Install completed!"
     else
         error 'not supported os'
