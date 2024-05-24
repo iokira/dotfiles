@@ -45,6 +45,11 @@ function fzf-select-history() {
 zle -N fzf-select-history
 bindkey '^p' fzf-select-history
 
+fd() {
+    local dir
+    dir=$(find ${1:-.} -path '*/\.git*' -prune -o -type d -print 2> /dev/null | fzf +m) && cd "$dir"
+}
+
 fb() {
     local branches branch
     branches=$(git branch -vv) &&
