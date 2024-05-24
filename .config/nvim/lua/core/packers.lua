@@ -291,6 +291,20 @@ local function init()
                             ["q"] = actions.close
                         },
                     },
+                    file_ignore_patterns = {
+                        "^.git/",
+                        "^node_modules/",
+                    },
+                    vimgrep_arguments = {
+                        "rg",
+                        "--color=never",
+                        "--no-heading",
+                        "--with-filename",
+                        "--line-number",
+                        "--column",
+                        "--smart-case",
+                        "-uu",
+                    },
                 },
                 extensions = {
                     file_browser = {
