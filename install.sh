@@ -107,7 +107,9 @@ download_dotfiles() {
 # install brew
 install_brew() {
     install brew /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null
-    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
+    if [ `grep 'eval "$(/opt/homebrew/bin/brew shellenv)"' ~/.zprofile | wc -l` -eq 0 ]; then
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
+    fi
     eval "$(/opt/homebrew/bin/brew shellenv)"
 }
 
@@ -152,7 +154,9 @@ install_neovim() {
     ln -snfv $DOTFILES_PATH/.config/nvim/init.lua $HOME/.config/nvim/init.lua
     ln -snfv $DOTFILES_PATH/.config/nvim/lua $HOME/.config/nvim/lua
     ln -snfv $DOTFILES_PATH/.config/nvim/.luarc.json $HOME/.config/nvim/.luarc.json
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+    if [ ! -d $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim ]; then
+        git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+    fi
     tempfile=$(mktemp) \
         && curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/master/termwiz/data/wezterm.terminfo \
         && tic -x -o ~/.terminfo $tempfile \
@@ -197,11 +201,16 @@ install_vim_startuptime() {
 
 # install jetbrains mono
 install_jetbrains_mono() {
-    arrow "Installing jetbrains mono"
-    mkdir -p $HOME/Library/Fonts/JetBrainsMono
-    curl -fLO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip
-    unzip JetBrainsMono.zip -d $HOME/Library/Fonts/JetBrainsMono
-    rm -f JetBrainsMono.zip
+    arrow "Installing JetBrainsMono"
+    if [ ! -d $HOME/Library/Fonts/JetBrainsMono ]; then
+        mkdir -p $HOME/Library/Fonts/JetBrainsMono
+        curl -fLO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip
+        unzip JetBrainsMono.zip -d $HOME/Library/Fonts/JetBrainsMono
+        rm -f JetBrainsMono.zip
+    else
+        bold "JetBrainsMono is already exists."
+    fi
+    success "Successfully installed JetBrainsMono"
 }
 
 # first get sudo, then for macos, do the installation process
