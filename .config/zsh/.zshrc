@@ -36,6 +36,15 @@ cursor_mode() {
 }
 cursor_mode
 
+# fzf history
+function fzf-select-history() {
+    BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER" --reverse)
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+zle -N fzf-select-history
+bindkey '^p' fzf-select-history
+
 # alias
 alias l='eza -la --icons'
 alias p='cd ~/projects'
