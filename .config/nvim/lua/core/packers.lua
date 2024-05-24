@@ -41,7 +41,7 @@ local function init()
     -- A blazing fast and easy to configure Neovim statusline written in Lua.
     use {
         "nvim-lualine/lualine.nvim",
-        event = { "InsertEnter", "CursorHold", "FocusLost", "BufRead", "BufNewFile" },
+        event = { "VimEnter" },
         requires = { "kyazdani42/nvim-web-devicons", module = { "nvim-web-devicons" } },
         config = function()
             -- winbar
