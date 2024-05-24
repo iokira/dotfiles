@@ -175,6 +175,11 @@ install_starship() {
     ln -snfv $DOTFILES_PATH/.config/starship/starship.toml $HOME/.config/starship.toml
 }
 
+# install bat
+install_bat() {
+    install bat brew install bat
+}
+
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
@@ -192,6 +197,7 @@ main() {
         install_ripgrep
         install_eza
         install_starship
+        install_bat
         success "Install completed!"
     else
         error 'not supported os'
