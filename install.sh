@@ -180,6 +180,11 @@ install_bat() {
     install bat brew install bat
 }
 
+# install httpie
+install_httpie() {
+    install httpie brew install httpie
+}
+
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
@@ -198,6 +203,7 @@ main() {
         install_eza
         install_starship
         install_bat
+        install_httpie
         success "Install completed!"
     else
         error 'not supported os'
