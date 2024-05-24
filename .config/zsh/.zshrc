@@ -59,6 +59,7 @@ alias dcd='docker compose down'
 alias dcl='docker compose logs -f'
 alias dce-'docker compose exec'
 alias dcb='docker compose build'
+alias vim-startuptime='$HOME/go/bin/vim-startuptime'
 alias nvim-startuptime='vim-startuptime -vimpath nvim'
 alias shutnow='shutdown -h now'
 alias relogin='exec zsh -l'
@@ -80,4 +81,5 @@ function zsh-startuptime() {
 }
 
 # starship
+eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
