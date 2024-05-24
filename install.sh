@@ -200,6 +200,10 @@ install_httpie() {
 # install go
 install_go() {
     install go brew install go
+    if [ `grep 'export PATH=$HOME/go/bin:$PATH' ~/.zprofile | wc -l` -eq 0 ]; then
+        echo 'export PATH=$HOME/go/bin:$PATH' >> $HOME/.zprofile
+    fi
+    export PATH=$HOME/go/bin:$PATH
 }
 
 # install vim-startuptime
