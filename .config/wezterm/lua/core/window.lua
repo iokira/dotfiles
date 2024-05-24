@@ -5,16 +5,7 @@ config.window_background_opacity = 1
 local mux = wezterm.mux
 wezterm.on("gui-startup", function()
     local _, _, window = mux.spawn_window({})
-    window:gui_window():toggle_fullscreen()
-end)
-wezterm.on("toggle-opacity", function(window)
-    local overrides = window:get_config_overrides() or {}
-    if not overrides.window_background_opacity then
-        overrides.window_background_opacity = 0.85
-    else
-        overrides.window_background_opacity = nil
-    end
-    window:set_config_overrides(overrides)
+    window:gui_window():maximize()
 end)
 wezterm.on("update-right-status", function(window, pane)
     local leader = ""
@@ -43,7 +34,6 @@ wezterm.on(
         }
     end
 )
-config.window_decorations = "NONE"
 config.tab_bar_at_bottom = true
 config.window_padding = {
     left = 0,

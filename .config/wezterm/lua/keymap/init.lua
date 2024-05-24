@@ -33,16 +33,6 @@ config.keys = {
         action = act.QuickSelect,
     },
     {
-        key = "o",
-        mods = "LEADER",
-        action = act.EmitEvent "toggle-opacity",
-    },
-    {
-        key = "+",
-        mods = "LEADER",
-        action = act.EmitEvent "toggle-font-size"
-    },
-    {
         key = "v",
         mods = "LEADER",
         action = act.SplitPane {

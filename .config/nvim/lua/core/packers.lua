@@ -46,6 +46,14 @@ local function init()
         config = function()
             -- winbar
             require("nvim-navic")
+            local function show_macro_recording()
+                local recording_register = vim.fn.reg_recording()
+                if recording_register == "" then
+                    return ""
+                else
+                    return "Recording @" .. recording_register
+                end
+            end
             require"lualine".setup {
                 sections = {
                     lualine_a = {"mode"},
@@ -70,6 +78,11 @@ local function init()
                         {
                             require("noice").api.status.command.get,
                             cond = require("noice").api.status.command.has,
+                            color = { fg = "#ff9e64" },
+                        },
+                        {
+                            "macro_recording",
+                            fmt = show_macro_recording,
                             color = { fg = "#ff9e64" },
                         },
                         "encoding",
@@ -175,6 +188,7 @@ local function init()
     -- `<Leader>d` - Diagnostics
     -- `<Leader>o` - Lists previously open files
     -- `<Leader>f` - File browser
+    -- `<Leader>m` - Lists vim marks and their value, jumps to the mark on `<cr>`
     -- `:Help` - Help tags
     -- `:History` - Noice history
     -- `:Commits` - Git commits
@@ -183,6 +197,7 @@ local function init()
     -- `:CommandHistory` - Command history
     -- `:SearchHistory` - Search history
     -- `:JumpList` - Vim's jumplist
+    -- `:Reg` - :reg
     use {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
@@ -231,6 +246,9 @@ local function init()
                     layout_config = { height = 40 }
                 })
             end)
+            vim.keymap.set("n", "<Leader>m", function ()
+                require("telescope.builtin").marks()
+            end)
             vim.api.nvim_create_user_command("Help", function()
                 require("telescope.builtin").help_tags()
             end, { desc = "Lists available help tags and opens a new window with the relevant help info on `<cr>`" })
@@ -249,12 +267,18 @@ local function init()
             vim.api.nvim_create_user_command("CommandHistory", function ()
                 require("telescope.builtin").command_history()
             end, { desc = "Lists commands that were excuted recently, and reruns them on `<cr>`" })
+            vim.keymap.set("n", "q:", function ()
+                require("telescope.builtin").command_history()
+            end)
             vim.api.nvim_create_user_command("SearchHistory", function ()
                 require("telescope.builtin").search_history()
             end, { desc = "Lists searches that were excuted recently, and reruns them on `<cr>`" })
             vim.api.nvim_create_user_command("JumpList", function ()
                 require("telescope.builtin").jumplist()
             end, { desc = "Lists items from Vim's jumplist, jumps to location on `<cr>`" })
+            vim.api.nvim_create_user_command("Reg", function ()
+                require("telescope.builtin").registers()
+            end, { desc = "Lists vim registers, pastes the contents of the register on `<cr>`" })
         end,
         config = function()
             local actions = require("telescope.actions")
@@ -323,6 +347,7 @@ local function init()
     use {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
+        module = { "nvim-autopairs" },
         config = function()
             require"nvim-autopairs".setup {}
         end,
@@ -333,6 +358,22 @@ local function init()
     use {
         "lewis6991/gitsigns.nvim",
         event = { "BufRead", "BufNewFile" },
+        setup = function ()
+            vim.keymap.set("n", "]c", function ()
+                if vim.wo.diff then
+                    vim.cmd.normal({"]c", bang = true})
+                else
+                    require("gitsigns").nav_hunk("next")
+                end
+            end)
+            vim.keymap.set("n", "[c", function ()
+                if vim.wo.diff then
+                    vim.cmd.normal({"[c", bang = true})
+                else
+                    require("gitsigns").nav_hunk("prev")
+                end
+            end)
+        end,
         config = function()
             require"gitsigns".setup {}
         end,
@@ -358,7 +399,12 @@ local function init()
         config = function()
             vim.opt.completeopt = "menu,menuone,noselect"
             local cmp = require("cmp")
+            local cmp_autopairs = require("nvim-autopairs.completion.cmp")
             local lspkind = require("lspkind")
+            cmp.event:on(
+                "confirm_done",
+                cmp_autopairs.on_confirm_done()
+            )
             cmp.setup {
                 snippet = {
                     expand = function(args)
@@ -428,20 +474,23 @@ local function init()
             local mason = require("mason")
             local mason_lspconfig = require("mason-lspconfig")
             local lspconfig = require("lspconfig")
-
             local navic = require("nvim-navic")
             local navbuddy = require("nvim-navbuddy")
-
             local on_attach = function(client, bufnr)
                 if client.server_capabilities.documentSymbolProvider then
                     navic.attach(client, bufnr)
                 end
                 navbuddy.attach(client, bufnr)
             end
-
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-            mason.setup()
+            lspconfig["satysfi-ls"].setup({
+                autostart = true
+            })
+            mason.setup({
+                ui = {
+                    border = "single",
+                }
+            })
             mason_lspconfig.setup({
                 ensure_installed = { "lua_ls", "rust_analyzer" },
             })
