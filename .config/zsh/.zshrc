@@ -63,6 +63,13 @@ fl() {
 FZF-EOF"
 }
 
+z() {
+    local dir
+    dir=$(find ${1:-.} -path '*/\.*' -prune \
+        -o -type d -print 2> /dev/null | fzf +m) &&
+    cd "$dir"
+}
+
 # alias
 alias l='eza -la --icons'
 alias p='cd ~/projects'
