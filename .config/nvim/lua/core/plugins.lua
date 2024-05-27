@@ -16,6 +16,8 @@ require("lazy").setup {
     -- A clean, dark Neovim theme written in Lua, with support for lsp, treesitter and lots of plugins.
     {
         "folke/tokyonight.nvim",
+        lazy = true,
+        event = { "BufReadPost", "BufAdd", "BufNewFile" },
         config = function()
             require("tokyonight").setup {
                 transparent = true,
@@ -33,6 +35,8 @@ require("lazy").setup {
     -- A blazing fast and easy to configure Neovim statusline written in Lua.
     {
         "nvim-lualine/lualine.nvim",
+        lazy = true,
+        event = { "BufReadPost", "BufAdd", "BufNewFile" },
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             require("nvim-navic")
@@ -137,6 +141,7 @@ require("lazy").setup {
     -- `<Leader>w` - Hop word
     {
         "smoka7/hop.nvim",
+        lazy = true,
         init = function()
             vim.keymap.set({ "n", "v" }, "<Leader>w", function()
                 require("hop").hint_words()
@@ -153,6 +158,7 @@ require("lazy").setup {
     -- `gc` - Toggles the region using linewise comment
     {
         "numToStr/Comment.nvim",
+        lazy = true,
         init = function ()
             vim.keymap.set("n", "gc", function ()
                 require("Comment.api").call("toggle.linewise", "g@")
@@ -187,6 +193,7 @@ require("lazy").setup {
     -- `:Reg` - :reg
     {
         "nvim-telescope/telescope.nvim",
+        lazy = true,
         dependencies = {
             { "nvim-lua/plenary.nvim" },
             { "nvim-telescope/telescope-file-browser.nvim" },
@@ -319,7 +326,13 @@ require("lazy").setup {
     -- Treesitter configuratios and abstraction layer for Neovim.
     {
         "nvim-treesitter/nvim-treesitter",
-        build = { ":TSUpdate" },
+        lazy = true,
+        build = function()
+            if #vim.api.nvim_list_uis() ~= 0 then
+                vim.api.nvim_command([[TSUpdate]])
+            end
+        end,
+        event = "BufReadPre",
         config = function()
             require"nvim-treesitter.configs".setup {
                 autoinstall = true,
@@ -348,6 +361,8 @@ require("lazy").setup {
     -- A super powerful autopair plugin for Neovim that supports multiple characters.
     {
         "windwp/nvim-autopairs",
+        lazy = true,
+        event = "InsertEnter",
         config = function()
             require"nvim-autopairs".setup {}
         end,
@@ -357,6 +372,8 @@ require("lazy").setup {
     -- Super fast git decorations implemented purely in Lua.
     {
         "lewis6991/gitsigns.nvim",
+        lazy = true,
+        event = { "CursorHold", "CursorHoldI" },
         init = function ()
             vim.keymap.set("n", "]c", function ()
                 if vim.wo.diff then
@@ -382,18 +399,17 @@ require("lazy").setup {
     -- A completion engine plugin for neovim written in Lua. Completion sources are installed from external repositories and "sourced".
     {
         "hrsh7th/nvim-cmp",
+        lazy = true,
+        event = "InsertEnter",
         dependencies = {
             { "neovim/nvim-lspconfig" },
             { "hrsh7th/cmp-buffer" },
             { "hrsh7th/cmp-path" },
             { "hrsh7th/cmp-cmdline" },
             { "hrsh7th/nvim-cmp" },
-            -- For vsnip user
             { "hrsh7th/cmp-vsnip" },
             { "hrsh7th/vim-vsnip" },
-            -- pictograms for neovim lsp completion items
             { "onsails/lspkind.nvim" },
-            -- LuaSnip
             { "L3MON4D3/LuaSnip" },
             { "saadparwaiz1/cmp_luasnip" },
         },
@@ -487,41 +503,47 @@ require("lazy").setup {
 
     -- lspconfig
     -- Quickstart configs for Nvim LSP
-    { "neovim/nvim-lspconfig" },
-    { "williamboman/mason.nvim" },
-    { "hrsh7th/cmp-nvim-lsp" },
     {
-        "williamboman/mason-lspconfig.nvim",
-        config = function()
-            local mason = require("mason")
-            local mason_lspconfig = require("mason-lspconfig")
-            local lspconfig = require("lspconfig")
-            local navic = require("nvim-navic")
-            local navbuddy = require("nvim-navbuddy")
-            local on_attach = function(client, bufnr)
-                if client.server_capabilities.documentSymbolProvider then
-                    navic.attach(client, bufnr)
-                end
-                navbuddy.attach(client, bufnr)
-            end
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
-            mason.setup({
-                ui = {
-                    border = "single",
-                }
-            })
-            mason_lspconfig.setup({
-                ensure_installed = { "lua_ls", "rust_analyzer" },
-            })
-            mason_lspconfig.setup_handlers({
-                function(server_name)
-                    lspconfig[server_name].setup({
-                        on_attach = on_attach,
-                        capabilities = capabilities,
+        "neovim/nvim-lspconfig",
+        lazy = true,
+        event = { "CursorHold", "CursorHoldI" },
+        dependencies = {
+            { "williamboman/mason.nvim" },
+            {
+                "williamboman/mason-lspconfig.nvim",
+                config = function()
+                    local mason = require("mason")
+                    local mason_lspconfig = require("mason-lspconfig")
+                    local lspconfig = require("lspconfig")
+                    local navic = require("nvim-navic")
+                    local navbuddy = require("nvim-navbuddy")
+                    local on_attach = function(client, bufnr)
+                        if client.server_capabilities.documentSymbolProvider then
+                            navic.attach(client, bufnr)
+                        end
+                        navbuddy.attach(client, bufnr)
+                    end
+                    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+                    mason.setup({
+                        ui = {
+                            border = "single",
+                        }
+                    })
+                    mason_lspconfig.setup({
+                        ensure_installed = { "lua_ls", "rust_analyzer" },
+                    })
+                    mason_lspconfig.setup_handlers({
+                        function(server_name)
+                            lspconfig[server_name].setup({
+                                on_attach = on_attach,
+                                capabilities = capabilities,
+                            })
+                        end,
                     })
                 end,
-            })
-        end,
+            },
+            { "hrsh7th/cmp-nvim-lsp" },
+        }
     },
 
     -- nvim-navic
@@ -529,6 +551,8 @@ require("lazy").setup {
     -- Named after the Indian setellite nevigation system.
     {
         "SmiteshP/nvim-navic",
+        lazy = true,
+        event = { "CursorHold", "CursorHoldI" },
         config = function()
             require("nvim-navic").setup {
                 lsp = {
@@ -571,6 +595,8 @@ require("lazy").setup {
     -- `<Leader>v` - Open Navbuddy
     {
         "SmiteshP/nvim-navbuddy",
+        lazy = true,
+        event = { "CursorHold", "CursorHoldI" },
         init = function ()
             vim.keymap.set("n", "<Leader>v", function ()
                 require("nvim-navbuddy").open()
@@ -590,6 +616,7 @@ require("lazy").setup {
     -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
     {
         "folke/noice.nvim",
+        lazy = true,
         dependencies = {
             { "MunifTanjim/nui.nvim" },
         },
@@ -640,6 +667,7 @@ require("lazy").setup {
     -- This is a Vim plugin that provides Rust file detection, syntax highlighting, formatting, Syntastic intefration, and more.
     {
         "rust-lang/rust.vim",
+        lazy = true,
         ft = { "rust" },
         config = function ()
             vim.g.rustfmt_autosave = 1
@@ -650,6 +678,7 @@ require("lazy").setup {
     -- This is a Vim plugin which provides syntax highlighting and indentation fuctionally for SATySFi programs/documents.
     {
         "qnighy/satysfi.vim",
+        lazy = true,
         ft = { "satyh", "saty", "satyg" }
     },
 
@@ -666,6 +695,8 @@ require("lazy").setup {
     --     delete(functi*on calls)     dsf             function calls
     {
         "kylechui/nvim-surround",
+        lazy = true,
+        event = "InsertEnter",
         config = function ()
             require("nvim-surround").setup()
         end
@@ -675,8 +706,21 @@ require("lazy").setup {
     -- The fastest Neovim colorizer
     {
         "norcalli/nvim-colorizer.lua",
+        lazy = true,
+        event = { "BufReadPre", "BufAdd", "BufNewFile" },
         config = function ()
             require("colorizer").setup()
+        end
+    },
+
+    -- nvim-ts-autotag
+    -- Use treesitter to autoclose and autorename html tag
+    {
+        "windwp/nvim-ts-autotag",
+        lazy = true,
+        event = "InsertEnter",
+        config = function ()
+            require("nvim-ts-autotag").setup()
         end
     },
 
@@ -684,6 +728,8 @@ require("lazy").setup {
     -- This is the lua implementation of nvim-hlchunk, you can use this neovim plugin to highlight your indent line and the current chunk you cursor stayed
     {
         "shellRaining/hlchunk.nvim",
+        lazy = true,
+        event = { "BufReadPre", "BufAdd", "BufNewFile" },
         config = function ()
             require("hlchunk").setup {
                 chunk = {
@@ -700,6 +746,8 @@ require("lazy").setup {
     -- WhichKey is a lua plugin for Neovim 0.5 that displays a popup with possible key bindings of the command you started typing.
     {
         "folke/which-key.nvim",
+        lazy = true,
+        event = { "CursorHold", "CursorHoldI" },
         config = function ()
             vim.o.timeout = true
             vim.o.timeoutlen = 300
@@ -711,6 +759,8 @@ require("lazy").setup {
     -- improve lsp experience in neovim
     {
         "nvimdev/lspsaga.nvim",
+        lazy = true,
+        event = { "LspAttach" },
         dependencies = { "neovim/nvim-lspconfig" },
         init = function()
             vim.keymap.set("n", "gr", function()
@@ -737,9 +787,10 @@ require("lazy").setup {
     -- Extensible UI for Neovim notifications and LSP progress messages.
     {
         "j-hui/fidget.nvim",
+        lazy = true,
+        event = { "LspAttach" },
         config = function ()
             require("fidget").setup()
         end
     },
-
 }
