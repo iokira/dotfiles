@@ -12,22 +12,17 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup {
-    -- tokyonight.nvim
-    -- A clean, dark Neovim theme written in Lua, with support for lsp, treesitter and lots of plugins.
+    -- nightfox
+    -- A highly customizable theme for vim and neovim with support for lsp, treesitter and a variety of plugins.
     {
-        "folke/tokyonight.nvim",
+        "EdenEast/nightfox.nvim",
         lazy = true,
         event = { "BufReadPost", "BufAdd", "BufNewFile" },
-        config = function()
-            require("tokyonight").setup {
+        config = function ()
+            require("nightfox").setup {
                 transparent = true,
-                styles = {
-                    sidebars = "transparent",
-                    floats = "transparent",
-                }
             }
-            vim.opt.background = "dark"
-            vim.cmd.colorscheme "tokyonight"
+            vim.cmd.colorscheme "carbonfox"
         end
     },
 
@@ -261,6 +256,7 @@ require("lazy").setup {
     {
         "nvim-telescope/telescope.nvim",
         lazy = true,
+        event = { "InsertEnter", "CmdLineEnter" },
         dependencies = {
             { "nvim-lua/plenary.nvim" },
             { "nvim-telescope/telescope-file-browser.nvim" },
@@ -440,7 +436,7 @@ require("lazy").setup {
     {
         "hrsh7th/nvim-cmp",
         lazy = true,
-        event = "InsertEnter",
+        event = { "InsertEnter", "CmdLineEnter" },
         dependencies = {
             { "neovim/nvim-lspconfig" },
             { "hrsh7th/cmp-buffer" },
