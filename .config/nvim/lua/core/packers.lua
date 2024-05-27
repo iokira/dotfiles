@@ -147,7 +147,6 @@ local function init()
     -- `<Leader>w` - Hop word
     use {
         "smoka7/hop.nvim",
-        branch = "v2",
         module = { "hop" },
         setup = function()
             vim.keymap.set({ "n", "v" }, "<Leader>w", function()
