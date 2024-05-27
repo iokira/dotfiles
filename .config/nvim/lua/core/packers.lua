@@ -516,6 +516,7 @@ local function init()
             mason_lspconfig.setup_handlers({
                 function(server_name)
                     lspconfig[server_name].setup({
+                        autostart = true,
                         on_attach = on_attach,
                         capabilities = capabilities,
                     })
@@ -713,6 +714,32 @@ local function init()
             vim.o.timeoutlen = 300
             require("which-key").setup()
         end
+    }
+
+    -- lspsaga.nvim
+    -- improve lsp experience in neovim
+    use {
+        "nvimdev/lspsaga.nvim",
+        branch = "main",
+        module = { "lspsaga" },
+        requires = { "neovim/nvim-lspconfig", module = { "lspconfig" } },
+        setup = function()
+            vim.keymap.set("n", "gr", function()
+                require('lspsaga.rename'):lsp_rename()
+            end, { silent = true })
+            vim.keymap.set("n", "K", function()
+                require("lspsaga.hover"):render_hover_doc()
+            end, { silent = true })
+            vim.keymap.set("n", "ge", function()
+                require('lspsaga.diagnostic.show'):show_diagnostics({ line = true })
+            end, { silent = true })
+            vim.keymap.set("n", "gx", function()
+                require('lspsaga.codeaction'):code_action()
+            end, {silent = true})
+        end,
+        config = function()
+            require("lspsaga").setup()
+        end,
     }
 
 end
