@@ -7,7 +7,7 @@ wezterm.on("gui-startup", function()
     local _, _, window = mux.spawn_window({})
     window:gui_window():maximize()
 end)
-wezterm.on("update-right-status", function(window, pane)
+wezterm.on("update-right-status", function(window, _)
     local leader = ""
     if window:leader_is_active() then
         leader = "LEADER"
@@ -23,7 +23,7 @@ function basename(s)
 end
 wezterm.on(
     "format-tab-title",
-    function(tab, tabs, panes, config, hover, max_width)
+    function(tab, _, _, _, _, _)
         local pane = tab.active_pane
         local title = basename(pane.foreground_process_name) .. " " .. tab.tab_index + 1
         if pane.is_zoomed then
