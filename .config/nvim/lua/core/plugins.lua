@@ -136,6 +136,73 @@ require("lazy").setup {
         end
     },
 
+    -- gitsigns
+    -- Super fast git decorations implemented purely in Lua.
+    {
+        "lewis6991/gitsigns.nvim",
+        lazy = true,
+        event = { "CursorHold", "CursorHoldI" },
+        init = function ()
+            vim.keymap.set("n", "]c", function ()
+                if vim.wo.diff then
+                    vim.cmd.normal({"]c", bang = true})
+                else
+                    require("gitsigns").nav_hunk("next")
+                end
+            end)
+            vim.keymap.set("n", "[c", function ()
+                if vim.wo.diff then
+                    vim.cmd.normal({"[c", bang = true})
+                else
+                    require("gitsigns").nav_hunk("prev")
+                end
+            end)
+        end,
+        config = function()
+            require"gitsigns".setup {}
+        end,
+    },
+
+    -- fidget.nvim
+    -- Extensible UI for Neovim notifications and LSP progress messages.
+    {
+        "j-hui/fidget.nvim",
+        lazy = true,
+        event = { "LspAttach" },
+        config = function ()
+            require("fidget").setup()
+        end
+    },
+
+    -- hlchunk.nvim
+    -- This is the lua implementation of nvim-hlchunk, you can use this neovim plugin to highlight your indent line and the current chunk you cursor stayed
+    {
+        "shellRaining/hlchunk.nvim",
+        lazy = true,
+        event = { "BufReadPre", "BufAdd", "BufNewFile" },
+        config = function ()
+            require("hlchunk").setup {
+                chunk = {
+                    enable = true,
+                },
+                indent = {
+                    enable = true,
+                }
+            }
+        end
+    },
+
+    -- nvim-colorizer
+    -- The fastest Neovim colorizer
+    {
+        "norcalli/nvim-colorizer.lua",
+        lazy = true,
+        event = { "BufReadPre", "BufAdd", "BufNewFile" },
+        config = function ()
+            require("colorizer").setup()
+        end
+    },
+
     -- hop.nvim
     -- Hop is an EasyMotion-like plugin allowing you to jump anywhere in a document with as few as keystrokes as possible.
     -- `<Leader>w` - Hop word
@@ -365,33 +432,6 @@ require("lazy").setup {
         event = "InsertEnter",
         config = function()
             require"nvim-autopairs".setup {}
-        end,
-    },
-
-    -- gitsigns
-    -- Super fast git decorations implemented purely in Lua.
-    {
-        "lewis6991/gitsigns.nvim",
-        lazy = true,
-        event = { "CursorHold", "CursorHoldI" },
-        init = function ()
-            vim.keymap.set("n", "]c", function ()
-                if vim.wo.diff then
-                    vim.cmd.normal({"]c", bang = true})
-                else
-                    require("gitsigns").nav_hunk("next")
-                end
-            end)
-            vim.keymap.set("n", "[c", function ()
-                if vim.wo.diff then
-                    vim.cmd.normal({"[c", bang = true})
-                else
-                    require("gitsigns").nav_hunk("prev")
-                end
-            end)
-        end,
-        config = function()
-            require"gitsigns".setup {}
         end,
     },
 
@@ -702,17 +742,6 @@ require("lazy").setup {
         end
     },
 
-    -- nvim-colorizer
-    -- The fastest Neovim colorizer
-    {
-        "norcalli/nvim-colorizer.lua",
-        lazy = true,
-        event = { "BufReadPre", "BufAdd", "BufNewFile" },
-        config = function ()
-            require("colorizer").setup()
-        end
-    },
-
     -- nvim-ts-autotag
     -- Use treesitter to autoclose and autorename html tag
     {
@@ -721,24 +750,6 @@ require("lazy").setup {
         event = "InsertEnter",
         config = function ()
             require("nvim-ts-autotag").setup()
-        end
-    },
-
-    -- hlchunk.nvim
-    -- This is the lua implementation of nvim-hlchunk, you can use this neovim plugin to highlight your indent line and the current chunk you cursor stayed
-    {
-        "shellRaining/hlchunk.nvim",
-        lazy = true,
-        event = { "BufReadPre", "BufAdd", "BufNewFile" },
-        config = function ()
-            require("hlchunk").setup {
-                chunk = {
-                    enable = true,
-                },
-                indent = {
-                    enable = true,
-                }
-            }
         end
     },
 
@@ -781,16 +792,5 @@ require("lazy").setup {
             if (not status) then return end
             saga.setup()
         end,
-    },
-
-    -- fidget.nvim
-    -- Extensible UI for Neovim notifications and LSP progress messages.
-    {
-        "j-hui/fidget.nvim",
-        lazy = true,
-        event = { "LspAttach" },
-        config = function ()
-            require("fidget").setup()
-        end
     },
 }
