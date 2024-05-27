@@ -653,6 +653,7 @@ require("lazy").setup {
     {
         "folke/noice.nvim",
         lazy = true,
+        event = { "BufReadPre", "BufAdd", "BufNewFile" },
         dependencies = {
             { "MunifTanjim/nui.nvim" },
         },
