@@ -431,7 +431,6 @@ local function init()
             cmp.setup {
                 snippet = {
                     expand = function(args)
-                        vim.fn["vsnip#anonymous"](args.body)
                         luasnip.lsp_expand(args.body)
                     end,
                 },
@@ -495,7 +494,7 @@ local function init()
             local text = luasnip.text_node
             local insert = luasnip.insert_node
             luasnip.add_snippets(nil, {
-                cc = {
+                cpp = {
                     snip({
                         trig = 'std',
                     }, {
@@ -760,7 +759,9 @@ local function init()
             end, {silent = true})
         end,
         config = function()
-            require("lspsaga").setup()
+            local status, saga = pcall(require, "lspsaga")
+            if (not status) then return end
+            saga.setup()
         end,
     }
 
