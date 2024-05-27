@@ -742,6 +742,16 @@ local function init()
         end,
     }
 
+    -- fidget.nvim
+    -- Extensible UI for Neovim notifications and LSP progress messages.
+    use {
+        "j-hui/fidget.nvim",
+        event = { "BufRead", "BufNewFile" },
+        config = function ()
+            require("fidget").setup()
+        end
+    }
+
 end
 
 local plugins = setmetatable({}, {
