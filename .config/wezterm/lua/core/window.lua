@@ -18,16 +18,16 @@ wezterm.on("update-right-status", function(window, _)
         { Text = leader },
     })
 end)
-function basename(s)
+function Basename(s)
     return string.gsub(s, "(.*[/\\])(.*)", "%2")
 end
 wezterm.on(
     "format-tab-title",
     function(tab, _, _, _, _, _)
         local pane = tab.active_pane
-        local title = basename(pane.foreground_process_name) .. " " .. tab.tab_index + 1
+        local title = Basename(pane.foreground_process_name) .. " " .. tab.tab_index + 1
         if pane.is_zoomed then
-            title = basename(pane.foreground_process_name) .. " " .. tab.tab_index + 1 .. " Z"
+            title = Basename(pane.foreground_process_name) .. " " .. tab.tab_index + 1 .. " Z"
         end
         return {
             { Text = " " .. title .. " " },
