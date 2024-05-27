@@ -414,12 +414,16 @@ local function init()
             { "hrsh7th/vim-vsnip", event = { "InsertEnter" } },
             -- pictograms for neovim lsp completion items
             { "onsails/lspkind.nvim", module = { "lspkind" } },
+            -- LuaSnip
+            { "L3MON4D3/LuaSnip", module = { "luasnip" } },
+            { "saadparwaiz1/cmp_luasnip", event = { "InsertEnter" } },
         },
         config = function()
             vim.opt.completeopt = "menu,menuone,noselect"
             local cmp = require("cmp")
             local cmp_autopairs = require("nvim-autopairs.completion.cmp")
             local lspkind = require("lspkind")
+            local luasnip = require("luasnip")
             cmp.event:on(
                 "confirm_done",
                 cmp_autopairs.on_confirm_done()
@@ -428,6 +432,7 @@ local function init()
                 snippet = {
                     expand = function(args)
                         vim.fn["vsnip#anonymous"](args.body)
+                        luasnip.lsp_expand(args.body)
                     end,
                 },
                 window = {
@@ -439,6 +444,13 @@ local function init()
                     ["<C-n>"] = cmp.mapping.select_next_item(),
                     ["<C-f>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.close(),
+                    ["<C-k>"] = cmp.mapping(function (fallback)
+                        if luasnip.expand_or_jumpable() then
+                            luasnip.expand_or_jump()
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
                     ["<CR>"] = cmp.mapping.confirm({
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true
@@ -450,6 +462,7 @@ local function init()
                     { name = "vsnip" },
                 }, {
                     { name = "buffer" },
+                    { name = "luasnip" },
                 }),
                 formatting = {
                     format = lspkind.cmp_format({
@@ -477,6 +490,19 @@ local function init()
                             }
                         }
                     })
+            })
+            local snip = luasnip.snippet
+            local text = luasnip.text_node
+            local insert = luasnip.insert_node
+            luasnip.add_snippets(nil, {
+                cc = {
+                    snip({
+                        trig = 'std',
+                    }, {
+                            text({'#include <bits/stdc++.h>', 'using namespace std;', ''}),
+                            insert(0),
+                        }),
+                },
             })
         end,
     }
