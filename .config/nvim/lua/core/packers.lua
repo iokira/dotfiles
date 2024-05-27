@@ -146,7 +146,7 @@ local function init()
     -- Hop is an EasyMotion-like plugin allowing you to jump anywhere in a document with as few as keystrokes as possible.
     -- `<Leader>w` - Hop word
     use {
-        "phaazon/hop.nvim",
+        "smoka7/hop.nvim",
         branch = "v2",
         module = { "hop" },
         setup = function()
