@@ -65,7 +65,14 @@ fl() {
             (grep -o '[a-f0-9]\{7\}' | head -1 |
                 xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
                 {}
-FZF-EOF"
+FZF-EOF" --preview 'f() {
+        set -- $(echo "$@" | grep -o "[a-f0-9]\{7\}" | head -1);
+        if [ $1 ]; then
+            git show --color $1
+        else
+            echo ""
+        fi
+    }; f {}' | grep -o "[a-f0-9]\{7\}" | tr '\n' ' '
 }
 
 fv() {
