@@ -88,3 +88,18 @@ map("v", "<RightMouse>", "<Nop>")
 ---- insert enter
 
 map("n", "<Leader><CR>", "o<ESC>")
+
+---- lsp
+
+vim.keymap.set("n", "gj", function ()
+    vim.diagnostic.goto_next()
+end)
+vim.keymap.set("n", "gk", function ()
+    vim.diagnostic.goto_prev()
+end)
+vim.keymap.set("n", "gd", function ()
+    vim.lsp.buf.definition()
+end)
+vim.keymap.set("n", "gf", function ()
+    vim.lsp.buf.references()
+end)

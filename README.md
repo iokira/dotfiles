@@ -18,7 +18,6 @@ The best I could think of dotfiles.
 * zsh config
 * zplug installer
 * neovim config and installer
-* packer installer
 * ripgrep installer
 * eza installer
 * starship config and installer
