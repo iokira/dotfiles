@@ -70,7 +70,7 @@ FZF-EOF"
 
 fv() {
     local file
-    file=$(find ${1:-.} -path '*/\.git*' -prune -o -type f -print 2> /dev/null | fzf +m) && env TERM=wezterm nvim "$file"
+    file=$(find ${1:-.} -path '*/\.git*' -prune -o -type f -print 2> /dev/null | fzf +m --preview "bat -f {}") && env TERM=wezterm nvim "$file"
 }
 
 # alias
