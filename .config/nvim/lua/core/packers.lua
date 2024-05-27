@@ -704,6 +704,17 @@ local function init()
         end
     }
 
+    -- which-key.nvim
+    -- WhichKey is a lua plugin for Neovim 0.5 that displays a popup with possible key bindings of the command you started typing.
+    use {
+        "folke/which-key.nvim",
+        config = function ()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+            require("which-key").setup()
+        end
+    }
+
 end
 
 local plugins = setmetatable({}, {
