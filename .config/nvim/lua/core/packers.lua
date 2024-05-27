@@ -687,6 +687,23 @@ local function init()
         end
     }
 
+    -- hlchunk.nvim
+    -- This is the lua implementation of nvim-hlchunk, you can use this neovim plugin to highlight your indent line and the current chunk you cursor stayed
+    use {
+        "shellRaining/hlchunk.nvim",
+        event = { "BufReadPre", "BufNewFile" },
+        config = function ()
+            require("hlchunk").setup {
+                chunk = {
+                    enable = true,
+                },
+                indent = {
+                    enable = true,
+                }
+            }
+        end
+    }
+
 end
 
 local plugins = setmetatable({}, {
