@@ -17,7 +17,7 @@ require("lazy").setup {
     {
         "EdenEast/nightfox.nvim",
         lazy = true,
-        event = { "BufReadPost", "BufAdd", "BufNewFile" },
+        event = "VimEnter",
         config = function ()
             require("nightfox").setup {
                 transparent = true,
@@ -31,7 +31,7 @@ require("lazy").setup {
     {
         "nvim-lualine/lualine.nvim",
         lazy = true,
-        event = { "BufReadPost", "BufAdd", "BufNewFile" },
+        event = "VimEnter",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             require("nvim-navic")
