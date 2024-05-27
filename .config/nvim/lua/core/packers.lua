@@ -488,7 +488,7 @@ local function init()
     use { "hrsh7th/cmp-nvim-lsp", module = { "cmp_nvim_lsp" } }
     use {
         "williamboman/mason-lspconfig.nvim",
-        event = { "BufRead", "BufNewFile", "CmdlineEnter" },
+        event = { "BufReadPre", "BufNewFile", "CmdlineEnter" },
         config = function()
             local mason = require("mason")
             local mason_lspconfig = require("mason-lspconfig")
@@ -502,9 +502,6 @@ local function init()
                 navbuddy.attach(client, bufnr)
             end
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
-            lspconfig["satysfi-ls"].setup({
-                autostart = true
-            })
             mason.setup({
                 ui = {
                     border = "single",
@@ -516,7 +513,6 @@ local function init()
             mason_lspconfig.setup_handlers({
                 function(server_name)
                     lspconfig[server_name].setup({
-                        autostart = true,
                         on_attach = on_attach,
                         capabilities = capabilities,
                     })
