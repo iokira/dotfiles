@@ -1,4 +1,4 @@
-local packer = nil
+local packer
 local function init()
     if packer == nil then
         packer = require("packer")
