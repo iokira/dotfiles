@@ -154,9 +154,6 @@ install_neovim() {
     ln -snfv $DOTFILES_PATH/.config/nvim/init.lua $HOME/.config/nvim/init.lua
     ln -snfv $DOTFILES_PATH/.config/nvim/lua $HOME/.config/nvim/lua
     ln -snfv $DOTFILES_PATH/.config/nvim/.luarc.json $HOME/.config/nvim/.luarc.json
-    if [ ! -d $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim ]; then
-        git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-    fi
     tempfile=$(mktemp) \
         && curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/master/termwiz/data/wezterm.terminfo \
         && tic -x -o ~/.terminfo $tempfile \
