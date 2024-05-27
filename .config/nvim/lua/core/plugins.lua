@@ -256,6 +256,7 @@ require("lazy").setup {
     {
         "nvim-telescope/telescope.nvim",
         lazy = true,
+        event = { "InsertEnter", "CmdLineEnter" },
         dependencies = {
             { "nvim-lua/plenary.nvim" },
             { "nvim-telescope/telescope-file-browser.nvim" },
@@ -435,7 +436,7 @@ require("lazy").setup {
     {
         "hrsh7th/nvim-cmp",
         lazy = true,
-        event = "InsertEnter",
+        event = { "InsertEnter", "CmdLineEnter" },
         dependencies = {
             { "neovim/nvim-lspconfig" },
             { "hrsh7th/cmp-buffer" },
