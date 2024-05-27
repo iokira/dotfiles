@@ -68,6 +68,11 @@ fl() {
 FZF-EOF"
 }
 
+fv() {
+    local file
+    file=$(find ${1:-.} -path '*/\.git*' -prune -o -type f -print 2> /dev/null | fzf +m) && env TERM=wezterm nvim "$file"
+}
+
 # alias
 alias l='eza -la --icons'
 alias p='cd ~/projects'
