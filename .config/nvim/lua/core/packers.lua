@@ -631,7 +631,7 @@ local function init()
                 routes = {
                     {
                         filter = {
-                            find = ".*lines --.*%--"
+                            find = ".*line --.*%--"
                         },
                         opts = { skip = true }
                     }
