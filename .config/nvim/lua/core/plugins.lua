@@ -420,6 +420,14 @@ require("lazy").setup {
         end
     },
 
+    -- nvim-bqf
+    -- The goal of nvim-bqf is to make Neovim's quickfix window better
+    {
+        "kevinhwang91/nvim-bqf",
+        lazy = true,
+        event = { "CursorHold", "CursorHoldI" },
+    },
+
     -- nvim-autopairs
     -- A super powerful autopair plugin for Neovim that supports multiple characters.
     {
