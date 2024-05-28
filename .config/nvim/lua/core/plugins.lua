@@ -723,6 +723,14 @@ require("lazy").setup {
         end
     },
 
+    -- rustaceanvim
+    -- Supercharge your Rust experience in Neovim!
+    {
+        "mrcjkb/rustaceanvim",
+        version = "^4",
+        lazy = false,
+    },
+
     -- satysfi.vim
     -- This is a Vim plugin which provides syntax highlighting and indentation fuctionally for SATySFi programs/documents.
     {
