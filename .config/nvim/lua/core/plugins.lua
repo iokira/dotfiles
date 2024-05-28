@@ -448,6 +448,7 @@ require("lazy").setup {
             { "onsails/lspkind.nvim" },
             { "L3MON4D3/LuaSnip" },
             { "saadparwaiz1/cmp_luasnip" },
+            { "hrsh7th/cmp-nvim-lsp-signature-help" },
         },
         config = function()
             vim.opt.completeopt = "menu,menuone,noselect"
@@ -490,6 +491,7 @@ require("lazy").setup {
                     { name = "nvim_lsp" },
                     { name = "path" },
                     { name = "vsnip" },
+                    { name = "nvim_lsp_signature_help" },
                 }, {
                     { name = "buffer" },
                     { name = "luasnip" },
