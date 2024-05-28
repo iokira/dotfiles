@@ -754,19 +754,6 @@ require("lazy").setup {
         end
     },
 
-    -- which-key.nvim
-    -- WhichKey is a lua plugin for Neovim 0.5 that displays a popup with possible key bindings of the command you started typing.
-    {
-        "folke/which-key.nvim",
-        lazy = true,
-        event = { "CursorHold", "CursorHoldI" },
-        config = function ()
-            vim.o.timeout = true
-            vim.o.timeoutlen = 300
-            require("which-key").setup()
-        end
-    },
-
     -- lspsaga.nvim
     -- improve lsp experience in neovim
     {
