@@ -10,7 +10,7 @@ config.window_frame = {
 config.colors = {
     tab_bar = {
         active_tab = {
-            fg_color = "orange",
+            fg_color = "#7e9cd8",
             bg_color = "#000000",
         },
         inactive_tab = {

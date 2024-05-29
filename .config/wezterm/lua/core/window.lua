@@ -13,7 +13,7 @@ wezterm.on("update-right-status", function(window, _)
         leader = "LEADER"
     end
     window:set_right_status(wezterm.format {
-        { Foreground = { Color = "orange" } },
+        { Foreground = { Color = "#7e9cd8" } },
         { Background = { Color = "#000000" } },
         { Text = leader },
     })
