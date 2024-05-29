@@ -3,3 +3,6 @@ style = 'bold #7e9cd8'
 
 [git_branch]
 style = 'bold #e46876'
+
+[cmd_duration]
+style = 'bold #ffa066'
