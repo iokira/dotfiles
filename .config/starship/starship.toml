@@ -1,2 +1,5 @@
 [directory]
-style = '#7e9cd8'
+style = 'bold #7e9cd8'
+
+[git_branch]
+style = 'bold #e46876'
