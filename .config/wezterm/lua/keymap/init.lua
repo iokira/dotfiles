@@ -20,14 +20,6 @@ config.keys = {
         action = act.ActivateCopyMode,
     },
     {
-        key = "Backspace",
-        mods = "CTRL",
-        action = act.SendKey {
-            key = "w",
-            mods = "CTRL",
-        }
-    },
-    {
         key = " ",
         mods = "LEADER",
         action = act.QuickSelect,
