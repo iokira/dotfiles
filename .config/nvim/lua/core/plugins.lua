@@ -797,4 +797,12 @@ require("lazy").setup {
             saga.setup()
         end,
     },
+
+    -- copilot.vim
+    -- GitHub Copilot for Vim and Neovim
+    {
+        "github/copilot.vim",
+        lazy = true,
+        event = { "InsertEnter", "CursorHoldI", "CursorHold" },
+    },
 }
