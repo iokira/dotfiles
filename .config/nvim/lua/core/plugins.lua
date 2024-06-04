@@ -805,4 +805,20 @@ require("lazy").setup {
         lazy = true,
         event = { "InsertEnter", "CursorHoldI", "CursorHold" },
     },
+
+    -- CopilotChat.nvim
+    -- Copilot Chat for Neovim
+    {
+        "CopilotC-Nvim/CopilotChat.nvim",
+        lazy = true,
+        event = { "CursorHoldI", "CursorHold" },
+        branch = "canary",
+        dependencies = {
+            { "github/copilot.vim" },
+            { "nvim-lua/plenary.nvim" },
+        },
+        opts = {
+            debug = true,
+        }
+    },
 }
