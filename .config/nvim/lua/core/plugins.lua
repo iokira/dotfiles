@@ -503,9 +503,9 @@ require("lazy").setup {
                     { name = "nvim_lsp_signature_help" },
                     { name = "treesitter " },
                 }, {
-                    { name = "buffer" },
-                    { name = "luasnip" },
-                }),
+                        { name = "buffer" },
+                        { name = "luasnip" },
+                    }),
                 formatting = {
                     format = lspkind.cmp_format({
                         mode = "symbol_text",
@@ -808,6 +808,8 @@ require("lazy").setup {
 
     -- CopilotChat.nvim
     -- Copilot Chat for Neovim
+    -- `<Leader>ch` - Copilot Chat
+    -- `<Leader>ca` - Copilot Chat Prompt Action List
     {
         "CopilotC-Nvim/CopilotChat.nvim",
         lazy = true,
@@ -817,8 +819,52 @@ require("lazy").setup {
             { "github/copilot.vim" },
             { "nvim-lua/plenary.nvim" },
         },
-        opts = {
-            debug = true,
-        }
+        init = function ()
+            vim.keymap.set("n", "<Leader>ch", function ()
+                require("CopilotChat").open({
+                    window = {
+                        layout = "float",
+                        relative = "cursor",
+                        width = 1,
+                        height = 0.4,
+                        row = 1,
+                    }
+                })
+            end)
+            vim.keymap.set("n", "<leader>ca", function ()
+                local actions = require("CopilotChat.actions")
+                require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+            end)
+            vim.keymap.set("v", "<Leader>ch", function ()
+                require("CopilotChat").open()
+            end)
+            vim.keymap.set("v", "<leader>ca", function ()
+                local actions = require("CopilotChat.actions")
+                require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+            end)
+        end,
+        config = function ()
+            require("CopilotChat.integrations.cmp").setup()
+            require("CopilotChat").setup {
+                mappings = {
+                    complete = {
+                        insert = '',
+                    }
+                },
+                debug = true,
+                window = {
+                    layout = "float",
+                    relative = "cursor",
+                    width = 1,
+                    height = 0.4,
+                    row = 1,
+                },
+                prompts = {
+                    Docs = {
+                        prompt = '/COPILOT_REFACTOR 選択したコードのドキュメントを書いてください。ドキュメントをコメントとして追加した元のコードを含むコードブロックで回答してください。使用するプログラミング言語に最も適したドキュメントスタイルを使用してください(例:JavaScriptのJSDoc、Pythonのdocstringなど)。行番号は出力しないでください。'
+                    }
+                },
+            }
+        end,
     },
 }
