@@ -221,6 +221,7 @@ require("lazy").setup {
     {
         "numToStr/Comment.nvim",
         lazy = true,
+        event = { "CursorHold", "CursorHoldI"},
         init = function ()
             vim.keymap.set("n", "gc", function ()
                 require("Comment.api").call("toggle.linewise", "g@")
