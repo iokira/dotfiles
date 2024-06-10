@@ -413,6 +413,7 @@ require("lazy").setup {
                     "fish",
                     "lua",
                     "rust",
+                    "tsx",
                 },
                 autotag = {
                     enable = true,
