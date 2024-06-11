@@ -158,17 +158,6 @@ require("lazy").setup {
         end,
     },
 
-    -- fidget.nvim
-    -- Extensible UI for Neovim notifications and LSP progress messages.
-    {
-        "j-hui/fidget.nvim",
-        lazy = true,
-        event = { "LspAttach" },
-        config = function ()
-            require("fidget").setup()
-        end
-    },
-
     -- hlchunk.nvim
     -- This is the lua implementation of nvim-hlchunk, you can use this neovim plugin to highlight your indent line and the current chunk you cursor stayed
     {
