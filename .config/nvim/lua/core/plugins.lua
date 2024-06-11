@@ -566,7 +566,7 @@ require("lazy").setup {
                         }
                     })
                     mason_lspconfig.setup({
-                        ensure_installed = { "lua_ls", "rust_analyzer" },
+                        ensure_installed = { "lua_ls", "rust_analyzer", "tsserver" },
                     })
                     mason_lspconfig.setup_handlers({
                         function(server_name)
