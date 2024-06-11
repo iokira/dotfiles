@@ -831,7 +831,7 @@ require("lazy").setup {
                         insert = '',
                     }
                 },
-                debug = true,
+                debug = false,
                 window = {
                     layout = "float",
                     relative = "cursor",
