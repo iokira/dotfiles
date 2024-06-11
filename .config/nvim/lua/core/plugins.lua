@@ -404,9 +404,6 @@ require("lazy").setup {
                     "rust",
                     "tsx",
                 },
-                autotag = {
-                    enable = true,
-                },
             }
         end
     },
