@@ -38,7 +38,7 @@ cursor_mode
 
 # fzf functions
 function fzf-select-history() {
-    BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER" --reverse)
+    BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER")
     CURSOR=$#BUFFER
     zle reset-prompt
 }
