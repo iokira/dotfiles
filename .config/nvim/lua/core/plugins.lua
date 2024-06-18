@@ -146,14 +146,20 @@ require("lazy").setup {
                 else
                     require("gitsigns").nav_hunk("next")
                 end
-            end)
+            end, {
+                    desc = "Jump to next git hunk",
+                    silent = true
+                })
             vim.keymap.set("n", "[c", function ()
                 if vim.wo.diff then
                     vim.cmd.normal({"[c", bang = true})
                 else
                     require("gitsigns").nav_hunk("prev")
                 end
-            end)
+            end, {
+                    desc = "Jump to previous git hunk",
+                    silent = true
+                })
         end,
         config = function()
             require"gitsigns".setup {}
@@ -198,7 +204,11 @@ require("lazy").setup {
         init = function()
             vim.keymap.set({ "n", "v" }, "<Leader>w", function()
                 require("hop").hint_words()
-            end, { remap = false })
+            end, {
+                    desc = "Hop to word",
+                    silent = true,
+                    remap = false
+                })
         end,
         config = function()
             require"hop".setup()
@@ -216,10 +226,18 @@ require("lazy").setup {
         init = function ()
             vim.keymap.set("n", "gc", function ()
                 require("Comment.api").call("toggle.linewise", "g@")
-            end, { expr = true } )
+            end, {
+                    desc = "Toggle comment on current line",
+                    silent = true,
+                    expr = true
+                })
             vim.keymap.set("n", "gcc", function ()
                 require("Comment.api").call("toggle.linewise.current", "g@$")
-            end, { expr = true } )
+            end, {
+                    desc = "Toggle comment on current line",
+                    silent = true,
+                    expr = true
+                })
         end,
         config = function ()
             require("Comment").setup {}
@@ -258,28 +276,44 @@ require("lazy").setup {
             local function telescope_buffer_dir()
                 return vim.fn.expand("%:p:h")
             end
-            vim.keymap.set("n", "<Leader>s",
-                function()
-                    require("telescope.builtin").find_files({
-                        no_ignore = false,
-                        hidden = true
-                    })
-                end)
+            vim.keymap.set("n", "<Leader>s", function()
+                require("telescope.builtin").find_files({
+                    no_ignore = false,
+                    hidden = true
+                }) end, {
+                    desc = "Find files",
+                    silent = true
+                })
             vim.keymap.set("n", "<Leader>g", function ()
                 require("telescope.builtin").git_files()
-            end)
+            end,{
+                    desc = "Git ls-files",
+                    silent = true
+                })
             vim.keymap.set("n", "<Leader>l", function()
                 require("telescope.builtin").live_grep()
-            end)
+            end, {
+                    desc = "Live grep",
+                    silent = true
+                })
             vim.keymap.set("n", "<Leader>b", function()
                 require("telescope.builtin").buffers()
-            end)
+            end, {
+                    desc = "Buffers",
+                    silent = true
+                })
             vim.keymap.set("n", "<Leader>d", function()
                 require("telescope.builtin").diagnostics()
-            end)
+            end, {
+                    desc = "Diagnostics",
+                    silent = true
+                })
             vim.keymap.set("n", "<Leader>o", function ()
                 require("telescope.builtin").oldfiles()
-            end)
+            end, {
+                    desc = "Lists previously open files",
+                    silent = true
+                })
             vim.keymap.set("n", "<Leader>f", function()
                 require("telescope").extensions.file_browser.file_browser({
                     path = "%:p:h",
@@ -291,10 +325,16 @@ require("lazy").setup {
                     initial_mode = "insert",
                     layout_config = { height = 40 }
                 })
-            end)
+            end, {
+                    desc = "File browser",
+                    silent = true
+                })
             vim.keymap.set("n", "<Leader>m", function ()
                 require("telescope.builtin").marks()
-            end)
+            end, {
+                    desc = "Lists vim marks and their value, jumps to the mark on `<cr>`",
+                    silent = true
+                })
             vim.api.nvim_create_user_command("Help", function()
                 require("telescope.builtin").help_tags()
             end, { desc = "Lists available help tags and opens a new window with the relevant help info on `<cr>`" })
@@ -315,7 +355,10 @@ require("lazy").setup {
             end, { desc = "Lists commands that were excuted recently, and reruns them on `<cr>`" })
             vim.keymap.set("n", "q:", function ()
                 require("telescope.builtin").command_history()
-            end)
+            end, {
+                    desc = "Lists commands that were excuted recently, and reruns them on `<cr>`",
+                    silent = true
+                })
             vim.api.nvim_create_user_command("SearchHistory", function ()
                 require("telescope.builtin").search_history()
             end, { desc = "Lists searches that were excuted recently, and reruns them on `<cr>`" })
@@ -639,7 +682,10 @@ require("lazy").setup {
         init = function ()
             vim.keymap.set("n", "<Leader>v", function ()
                 require("nvim-navbuddy").open()
-            end)
+            end, {
+                    desc = "Open Navbuddy",
+                    silent = true
+                })
         end,
         config = function ()
             require("nvim-navbuddy").setup({
@@ -763,16 +809,28 @@ require("lazy").setup {
         init = function()
             vim.keymap.set("n", "gr", function()
                 require('lspsaga.rename'):lsp_rename()
-            end, { silent = true })
+            end, {
+                    desc = "Rename symbol under cursor",
+                    silent = true
+                })
             vim.keymap.set("n", "K", function()
                 require("lspsaga.hover"):render_hover_doc()
-            end, { silent = true })
+            end, {
+                    desc = "Show hover doc",
+                    silent = true
+                })
             vim.keymap.set("n", "ge", function()
                 require('lspsaga.diagnostic.show'):show_diagnostics({ line = true })
-            end, { silent = true })
+            end, {
+                    desc = "Show diagnostics",
+                    silent = true
+                })
             vim.keymap.set("n", "gx", function()
                 require('lspsaga.codeaction'):code_action()
-            end, {silent = true})
+            end, {
+                    desc = "Run code actions",
+                    silent = true
+                })
         end,
         config = function()
             local status, saga = pcall(require, "lspsaga")
@@ -817,14 +875,23 @@ require("lazy").setup {
             vim.keymap.set("n", "<leader>ca", function ()
                 local actions = require("CopilotChat.actions")
                 require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-            end)
+            end, {
+                    desc = "Copilot Chat Prompt Action List",
+                    silent = true
+                })
             vim.keymap.set("v", "<Leader>ch", function ()
                 require("CopilotChat").open()
-            end)
+            end, {
+                    desc = "Copilot Chat",
+                    silent = true
+                })
             vim.keymap.set("v", "<leader>ca", function ()
                 local actions = require("CopilotChat.actions")
                 require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-            end)
+            end, {
+                    desc = "Copilot Chat Prompt Action List",
+                    silent = true
+                })
         end,
         config = function ()
             require("CopilotChat.integrations.cmp").setup()
