@@ -20,7 +20,9 @@ require("lazy").setup {
         event = "VimEnter",
         config = function ()
             require("nightfox").setup {
-                transparent = true,
+                options = {
+                    transparent = true,
+                }
             }
             vim.cmd.colorscheme "carbonfox"
         end
