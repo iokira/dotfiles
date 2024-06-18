@@ -403,6 +403,7 @@ require("lazy").setup {
                     "lua",
                     "rust",
                     "tsx",
+                    "vimdoc",
                 },
             }
         end
