@@ -99,7 +99,17 @@ config.keys = {
         key = "z",
         mods = "LEADER",
         action = act.TogglePaneZoomState,
-    }
+    },
+    {
+        key = "o",
+        mods = "LEADER",
+        action = act.EmitEvent "toggle-opacity",
+    },
+    {
+        key = "+",
+        mods = "LEADER",
+        action = act.EmitEvent "toggle-font-size"
+    },
 }
 
 for i = 1, 8 do
