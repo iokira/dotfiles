@@ -93,13 +93,21 @@ map("n", "<Leader><CR>", "o<ESC>")
 
 vim.keymap.set("n", "gj", function ()
     vim.diagnostic.goto_next()
-end)
+end, {
+        desc = "Go to next diagnostic",
+    })
 vim.keymap.set("n", "gk", function ()
     vim.diagnostic.goto_prev()
-end)
+end, {
+        desc = "Go to previous diagnostic",
+    })
 vim.keymap.set("n", "gd", function ()
     vim.lsp.buf.definition()
-end)
+end, {
+        desc = "Go to definition",
+    })
 vim.keymap.set("n", "gf", function ()
     vim.lsp.buf.references()
-end)
+end, {
+        desc = "Go to references",
+    })
