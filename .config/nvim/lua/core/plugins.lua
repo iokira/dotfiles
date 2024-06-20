@@ -663,6 +663,17 @@ require("lazy").setup({
                     },
                 }
             end
+            local shfmt = function()
+                local util = require("formatter.util")
+                return {
+                    exe = "shfmt",
+                    args = {
+                        "-i",
+                        "4",
+                    },
+                    stdin = true,
+                }
+            end
             require("formatter").setup({
                 filetype = {
                     javascript = { biome },
@@ -670,6 +681,7 @@ require("lazy").setup({
                     typescript = { biome },
                     typescriptreact = { biome },
                     lua = { stylua },
+                    sh = { shfmt },
                     ["*"] = {
                         require("formatter.filetypes.any").remove_trainling_whitespace,
                     },
