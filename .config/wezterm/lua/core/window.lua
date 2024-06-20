@@ -22,28 +22,25 @@ wezterm.on("update-right-status", function(window, _)
     if window:leader_is_active() then
         leader = "LEADER"
     end
-    window:set_right_status(wezterm.format {
+    window:set_right_status(wezterm.format({
         { Foreground = { Color = "#7e9cd8" } },
         { Background = { Color = "#000000" } },
         { Text = leader },
-    })
+    }))
 end)
 function Basename(s)
     return string.gsub(s, "(.*[/\\])(.*)", "%2")
 end
-wezterm.on(
-    "format-tab-title",
-    function(tab, _, _, _, _, _)
-        local pane = tab.active_pane
-        local title = Basename(pane.foreground_process_name) .. " " .. tab.tab_index + 1
-        if pane.is_zoomed then
-            title = Basename(pane.foreground_process_name) .. " " .. tab.tab_index + 1 .. " Z"
-        end
-        return {
-            { Text = " " .. title .. " " },
-        }
+wezterm.on("format-tab-title", function(tab, _, _, _, _, _)
+    local pane = tab.active_pane
+    local title = Basename(pane.foreground_process_name) .. " " .. tab.tab_index + 1
+    if pane.is_zoomed then
+        title = Basename(pane.foreground_process_name) .. " " .. tab.tab_index + 1 .. " Z"
     end
-)
+    return {
+        { Text = " " .. title .. " " },
+    }
+end)
 config.tab_bar_at_bottom = true
 config.window_padding = {
     left = 0,
