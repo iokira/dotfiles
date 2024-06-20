@@ -51,7 +51,7 @@ bold() {
 
 # check for the existence #1
 has() {
-    type "$1" > /dev/null 2>&1
+    type "$1" >/dev/null 2>&1
 }
 
 # detect os type
@@ -106,9 +106,9 @@ download_dotfiles() {
 
 # install brew
 install_brew() {
-    install brew /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null
-    if [ `grep 'eval "$(/opt/homebrew/bin/brew shellenv)"' ~/.zprofile | wc -l` -eq 0 ]; then
-        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
+    install brew /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" </dev/null
+    if [ $(grep 'eval "$(/opt/homebrew/bin/brew shellenv)"' ~/.zprofile | wc -l) -eq 0 ]; then
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>$HOME/.zprofile
     fi
     eval "$(/opt/homebrew/bin/brew shellenv)"
 }
@@ -154,10 +154,10 @@ install_neovim() {
     ln -snfv $DOTFILES_PATH/.config/nvim/init.lua $HOME/.config/nvim/init.lua
     ln -snfv $DOTFILES_PATH/.config/nvim/lua $HOME/.config/nvim/lua
     ln -snfv $DOTFILES_PATH/.config/nvim/.luarc.json $HOME/.config/nvim/.luarc.json
-    tempfile=$(mktemp) \
-        && curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/master/termwiz/data/wezterm.terminfo \
-        && tic -x -o ~/.terminfo $tempfile \
-        && rm $tempfile
+    tempfile=$(mktemp) &&
+        curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/master/termwiz/data/wezterm.terminfo &&
+        tic -x -o ~/.terminfo $tempfile &&
+        rm $tempfile
 }
 
 # install ripgrep
@@ -189,8 +189,8 @@ install_httpie() {
 # install go
 install_go() {
     install go brew install go
-    if [ `grep 'export PATH=$HOME/go/bin:$PATH' ~/.zprofile | wc -l` -eq 0 ]; then
-        echo 'export PATH=$HOME/go/bin:$PATH' >> $HOME/.zprofile
+    if [ $(grep 'export PATH=$HOME/go/bin:$PATH' ~/.zprofile | wc -l) -eq 0 ]; then
+        echo 'export PATH=$HOME/go/bin:$PATH' >>$HOME/.zprofile
     fi
     export PATH=$HOME/go/bin:$PATH
 }
@@ -249,15 +249,14 @@ main() {
 # argument handling
 while [ $# -gt 0 ]; do
     case ${1} in
-        --debug|-d)
-            set -uex
-            ;;
-        --help|-h)
-            helpmsg
-            exit 1
-            ;;
-        *)
-            ;;
+    --debug | -d)
+        set -uex
+        ;;
+    --help | -h)
+        helpmsg
+        exit 1
+        ;;
+    *) ;;
     esac
     shift
 done
