@@ -146,9 +146,9 @@ require("lazy").setup({
                 else
                     require("gitsigns").nav_hunk("next")
                 end
-                end, {
-                    desc = "Jump to next git hunk",
-                    silent = true,
+            end, {
+                desc = "Jump to next git hunk",
+                silent = true,
             })
             vim.keymap.set("n", "[c", function()
                 if vim.wo.diff then
@@ -156,9 +156,9 @@ require("lazy").setup({
                 else
                     require("gitsigns").nav_hunk("prev")
                 end
-                end, {
-                    desc = "Jump to previous git hunk",
-                    silent = true,
+            end, {
+                desc = "Jump to previous git hunk",
+                silent = true,
             })
         end,
         config = function()
@@ -204,10 +204,10 @@ require("lazy").setup({
         init = function()
             vim.keymap.set({ "n", "v" }, "<Leader>w", function()
                 require("hop").hint_words()
-                end, {
-                    desc = "Hop to word",
-                    silent = true,
-                    remap = false,
+            end, {
+                desc = "Hop to word",
+                silent = true,
+                remap = false,
             })
         end,
         config = function()
@@ -226,17 +226,17 @@ require("lazy").setup({
         init = function()
             vim.keymap.set("n", "gc", function()
                 require("Comment.api").call("toggle.linewise", "g@")
-                end, {
-                    desc = "Toggle comment on current line",
-                    silent = true,
-                    expr = true,
+            end, {
+                desc = "Toggle comment on current line",
+                silent = true,
+                expr = true,
             })
             vim.keymap.set("n", "gcc", function()
                 require("Comment.api").call("toggle.linewise.current", "g@$")
-                end, {
-                    desc = "Toggle comment on current line",
-                    silent = true,
-                    expr = true,
+            end, {
+                desc = "Toggle comment on current line",
+                silent = true,
+                expr = true,
             })
         end,
         config = function()
@@ -281,39 +281,39 @@ require("lazy").setup({
                     no_ignore = false,
                     hidden = true,
                 })
-                end, {
-                    desc = "Find files",
-                    silent = true,
+            end, {
+                desc = "Find files",
+                silent = true,
             })
             vim.keymap.set("n", "<Leader>g", function()
                 require("telescope.builtin").git_files()
-                end, {
-                    desc = "Git ls-files",
-                    silent = true,
+            end, {
+                desc = "Git ls-files",
+                silent = true,
             })
             vim.keymap.set("n", "<Leader>l", function()
                 require("telescope.builtin").live_grep()
-                end, {
-                    desc = "Live grep",
-                    silent = true,
+            end, {
+                desc = "Live grep",
+                silent = true,
             })
             vim.keymap.set("n", "<Leader>b", function()
                 require("telescope.builtin").buffers()
-                end, {
-                    desc = "Buffers",
-                    silent = true,
+            end, {
+                desc = "Buffers",
+                silent = true,
             })
             vim.keymap.set("n", "<Leader>d", function()
                 require("telescope.builtin").diagnostics()
-                end, {
-                    desc = "Diagnostics",
-                    silent = true,
+            end, {
+                desc = "Diagnostics",
+                silent = true,
             })
             vim.keymap.set("n", "<Leader>o", function()
                 require("telescope.builtin").oldfiles()
-                end, {
-                    desc = "Lists previously open files",
-                    silent = true,
+            end, {
+                desc = "Lists previously open files",
+                silent = true,
             })
             vim.keymap.set("n", "<Leader>f", function()
                 require("telescope").extensions.file_browser.file_browser({
@@ -326,49 +326,51 @@ require("lazy").setup({
                     initial_mode = "insert",
                     layout_config = { height = 40 },
                 })
-                end, {
-                    desc = "File browser",
-                    silent = true,
+            end, {
+                desc = "File browser",
+                silent = true,
             })
             vim.keymap.set("n", "<Leader>m", function()
                 require("telescope.builtin").marks()
-                end, {
-                    desc = "Lists vim marks and their value, jumps to the mark on `<cr>`",
-                    silent = true,
+            end, {
+                desc = "Lists vim marks and their value, jumps to the mark on `<cr>`",
+                silent = true,
             })
             vim.api.nvim_create_user_command("Help", function()
                 require("telescope.builtin").help_tags()
-                end, { desc = "Lists available help tags and opens a new window with the relevant help info on `<cr>`" })
+            end, {
+                desc = "Lists available help tags and opens a new window with the relevant help info on `<cr>`",
+            })
             vim.api.nvim_create_user_command("History", function()
                 require("telescope").extensions.noice.noice({})
-                end, { desc = "Shows the message history" })
+            end, { desc = "Shows the message history" })
             vim.api.nvim_create_user_command("Commits", function()
                 require("telescope.builtin").git_commits()
-                end, { desc = "Lists commits for current directory with diff preview" })
+            end, { desc = "Lists commits for current directory with diff preview" })
             vim.api.nvim_create_user_command("Status", function()
                 require("telescope.builtin").git_status()
-                end, { desc = "Lists git status for current directory" })
+            end, { desc = "Lists git status for current directory" })
             vim.api.nvim_create_user_command("Commands", function()
                 require("telescope.builtin").commands()
-                end, { desc = "Lists available plugin/user commands and runs them on `<cr>`" })
+            end, { desc = "Lists available plugin/user commands and runs them on `<cr>`" })
             vim.api.nvim_create_user_command("CommandHistory", function()
                 require("telescope.builtin").command_history()
-                end, { desc = "Lists commands that were excuted recently, and reruns them on `<cr>`" })
+            end, { desc = "Lists commands that were excuted recently, and reruns them on `<cr>`" })
             vim.keymap.set("n", "q:", function()
                 require("telescope.builtin").command_history()
-                end, {
-                    desc = "Lists commands that were excuted recently, and reruns them on `<cr>`",
-                    silent = true,
+            end, {
+                desc = "Lists commands that were excuted recently, and reruns them on `<cr>`",
+                silent = true,
             })
             vim.api.nvim_create_user_command("SearchHistory", function()
                 require("telescope.builtin").search_history()
-                end, { desc = "Lists searches that were excuted recently, and reruns them on `<cr>`" })
+            end, { desc = "Lists searches that were excuted recently, and reruns them on `<cr>`" })
             vim.api.nvim_create_user_command("JumpList", function()
                 require("telescope.builtin").jumplist()
-                end, { desc = "Lists items from Vim's jumplist, jumps to location on `<cr>`" })
+            end, { desc = "Lists items from Vim's jumplist, jumps to location on `<cr>`" })
             vim.api.nvim_create_user_command("Reg", function()
                 require("telescope.builtin").registers()
-                end, { desc = "Lists vim registers, pastes the contents of the register on `<cr>`" })
+            end, { desc = "Lists vim registers, pastes the contents of the register on `<cr>`" })
         end,
         config = function()
             local actions = require("telescope.actions")
@@ -524,7 +526,7 @@ require("lazy").setup({
                         else
                             fallback()
                         end
-                        end, { "i", "s" }),
+                    end, { "i", "s" }),
                     ["<CR>"] = cmp.mapping.confirm({
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true,
@@ -536,9 +538,9 @@ require("lazy").setup({
                     { name = "vsnip" },
                     { name = "nvim_lsp_signature_help" },
                     { name = "treesitter " },
-                    }, {
-                        { name = "buffer" },
-                        { name = "luasnip" },
+                }, {
+                    { name = "buffer" },
+                    { name = "luasnip" },
                 }),
                 formatting = {
                     format = lspkind.cmp_format({
@@ -558,13 +560,13 @@ require("lazy").setup({
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = cmp.config.sources({
                     { name = "path" },
-                    }, {
-                        {
-                            name = "cmdline",
-                            option = {
-                                ignore_cmds = { "Man", "!" },
-                            },
+                }, {
+                    {
+                        name = "cmdline",
+                        option = {
+                            ignore_cmds = { "Man", "!" },
                         },
+                    },
                 }),
             })
             local snip = luasnip.snippet
@@ -574,9 +576,9 @@ require("lazy").setup({
                 cpp = {
                     snip({
                         trig = "std",
-                        }, {
-                            text({ "#include <bits/stdc++.h>", "using namespace std;", "" }),
-                            insert(0),
+                    }, {
+                        text({ "#include <bits/stdc++.h>", "using namespace std;", "" }),
+                        insert(0),
                     }),
                 },
             })
@@ -639,13 +641,35 @@ require("lazy").setup({
         lazy = true,
         event = { "CursorHold", "CursorHoldI" },
         config = function()
+            local biome = function()
+                local util = require("formatter.util")
+                return {
+                    exe = "biome",
+                    args = {
+                        "format",
+                        "--stdin-file-path",
+                        util.escape_path(util.get_current_buffer_file_path()),
+                    },
+                    stdin = true,
+                }
+            end
+            local stylua = function()
+                local util = require("formatter.util")
+                return {
+                    exe = "stylua",
+                    args = {
+                        "--indent-type",
+                        "Spaces",
+                    },
+                }
+            end
             require("formatter").setup({
                 filetype = {
-                    javascript = { require("formatter.filetypes.javascript").biome },
-                    javascriptreact = { require("formatter.filetypes.javascriptreact").biome },
-                    typescript = { require("formatter.filetypes.typescript").biome },
-                    typescriptreact = { require("formatter.filetypes.typescriptreact").biome },
-                    lua = { require("formatter.filetypes.lua").stylua },
+                    javascript = { biome },
+                    javascriptreact = { biome },
+                    typescript = { biome },
+                    typescriptreact = { biome },
+                    lua = { stylua },
                     ["*"] = {
                         require("formatter.filetypes.any").remove_trainling_whitespace,
                     },
@@ -708,9 +732,9 @@ require("lazy").setup({
         init = function()
             vim.keymap.set("n", "<Leader>v", function()
                 require("nvim-navbuddy").open()
-                end, {
-                    desc = "Open Navbuddy",
-                    silent = true,
+            end, {
+                desc = "Open Navbuddy",
+                silent = true,
             })
         end,
         config = function()
@@ -835,27 +859,27 @@ require("lazy").setup({
         init = function()
             vim.keymap.set("n", "gr", function()
                 require("lspsaga.rename"):lsp_rename()
-                end, {
-                    desc = "Rename symbol under cursor",
-                    silent = true,
+            end, {
+                desc = "Rename symbol under cursor",
+                silent = true,
             })
             vim.keymap.set("n", "K", function()
                 require("lspsaga.hover"):render_hover_doc()
-                end, {
-                    desc = "Show hover doc",
-                    silent = true,
+            end, {
+                desc = "Show hover doc",
+                silent = true,
             })
             vim.keymap.set("n", "ge", function()
                 require("lspsaga.diagnostic.show"):show_diagnostics({ line = true })
-                end, {
-                    desc = "Show diagnostics",
-                    silent = true,
+            end, {
+                desc = "Show diagnostics",
+                silent = true,
             })
             vim.keymap.set("n", "gx", function()
                 require("lspsaga.codeaction"):code_action()
-                end, {
-                    desc = "Run code actions",
-                    silent = true,
+            end, {
+                desc = "Run code actions",
+                silent = true,
             })
         end,
         config = function()
@@ -903,22 +927,22 @@ require("lazy").setup({
             vim.keymap.set("n", "<leader>ca", function()
                 local actions = require("CopilotChat.actions")
                 require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-                end, {
-                    desc = "Copilot Chat Prompt Action List",
-                    silent = true,
+            end, {
+                desc = "Copilot Chat Prompt Action List",
+                silent = true,
             })
             vim.keymap.set("v", "<Leader>ch", function()
                 require("CopilotChat").open()
-                end, {
-                    desc = "Copilot Chat",
-                    silent = true,
+            end, {
+                desc = "Copilot Chat",
+                silent = true,
             })
             vim.keymap.set("v", "<leader>ca", function()
                 local actions = require("CopilotChat.actions")
                 require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-                end, {
-                    desc = "Copilot Chat Prompt Action List",
-                    silent = true,
+            end, {
+                desc = "Copilot Chat Prompt Action List",
+                silent = true,
             })
         end,
         config = function()
