@@ -9,9 +9,11 @@ leader_map()
 ---- helper
 
 local function map(mode, lhs, rhs, opts)
-  local options = { noremap = true }
-  if opts then options = vim.tbl_extend("force", options, opts) end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+    local options = { noremap = true }
+    if opts then
+        options = vim.tbl_extend("force", options, opts)
+    end
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 local g = vim.g
@@ -39,7 +41,7 @@ map("n", "<Left>", "<C-w><", { silent = true })
 map("n", "<Down>", "<C-w>-", { silent = true })
 map("n", "<Up>", "<C-w>+", { silent = true })
 map("n", "<Right>", "<C-w>>", { silent = true })
-map("n", "t!", "<C-w>T", { silent = true})
+map("n", "t!", "<C-w>T", { silent = true })
 
 ---- save end quit
 
@@ -52,7 +54,7 @@ map("n", "U", "<C-r>")
 
 ---- highlight
 
-map("n", "<Leader><Esc>", ":<C-u>nohlsearch<CR>", { silent = true})
+map("n", "<Leader><Esc>", ":<C-u>nohlsearch<CR>", { silent = true })
 
 ---- source %
 
@@ -91,23 +93,23 @@ map("n", "<Leader><CR>", "o<ESC>")
 
 ---- lsp
 
-vim.keymap.set("n", "gj", function ()
+vim.keymap.set("n", "gj", function()
     vim.diagnostic.goto_next()
 end, {
-        desc = "Go to next diagnostic",
-    })
-vim.keymap.set("n", "gk", function ()
+    desc = "Go to next diagnostic",
+})
+vim.keymap.set("n", "gk", function()
     vim.diagnostic.goto_prev()
 end, {
-        desc = "Go to previous diagnostic",
-    })
-vim.keymap.set("n", "gd", function ()
+    desc = "Go to previous diagnostic",
+})
+vim.keymap.set("n", "gd", function()
     vim.lsp.buf.definition()
 end, {
-        desc = "Go to definition",
-    })
-vim.keymap.set("n", "gf", function ()
+    desc = "Go to definition",
+})
+vim.keymap.set("n", "gf", function()
     vim.lsp.buf.references()
 end, {
-        desc = "Go to references",
-    })
+    desc = "Go to references",
+})

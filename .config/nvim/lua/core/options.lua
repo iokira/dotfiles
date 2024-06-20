@@ -37,7 +37,7 @@ local function load_options()
         shada = "!,'300,<50,@100,s10,h",
         shell = "zsh",
         shiftwidth = 4,
-        shortmess = 'I',
+        shortmess = "I",
         showcmd = true,
         showmatch = true,
         showtabline = 1,
