@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # const
 readonly DOTFILES_PATH=$HOME/dotfiles
 readonly REMOTE_URL="https://github.com/iokira/dotfiles.git"
@@ -57,9 +59,9 @@ has() {
 # detect os type
 detect_os() {
     UNAME=$(uname)
-    if [ $UNAME == 'Darwin' ]; then
+    if [ "$UNAME" == 'Darwin' ]; then
         OS='macOS'
-    elif [ $UNAME == 'Linux' ]; then
+    elif [ "$UNAME" == 'Linux' ]; then
         OS='Linux'
     else
         echo 'Who are you?'
@@ -86,10 +88,10 @@ install() {
 # download dotfiles
 download_dotfiles() {
     arrow "Downloading dotfiles"
-    cd $HOME
-    if [ ! -d $DOTFILES_PATH ]; then
+    cd "$HOME"
+    if [ ! -d "$DOTFILES_PATH" ]; then
         if has git; then
-            git clone --recursive $REMOTE_URL $DOTFILES_PATH
+            git clone --recursive $REMOTE_URL "$DOTFILES_PATH"
         else
             error "Please install git first and then run."
             exit 1
@@ -108,7 +110,7 @@ download_dotfiles() {
 install_brew() {
     install brew /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" </dev/null
     if [ $(grep 'eval "$(/opt/homebrew/bin/brew shellenv)"' ~/.zprofile | wc -l) -eq 0 ]; then
-        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>$HOME/.zprofile
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$HOME"/.zprofile
     fi
     eval "$(/opt/homebrew/bin/brew shellenv)"
 }
@@ -116,31 +118,31 @@ install_brew() {
 # install git
 install_git() {
     install git brew install git
-    ln -snfv $DOTFILES_PATH/.gitconfig $HOME/.gitconfig
+    ln -snfv "$DOTFILES_PATH"/.gitconfig "$HOME"/.gitconfig
 }
 
 # install wezterm
 install_wezterm() {
     install wezterm brew install --cask wezterm
-    mkdir -p $HOME/.config/wezterm
-    ln -snfv $DOTFILES_PATH/.config/wezterm/wezterm.lua $HOME/.config/wezterm/wezterm.lua
-    ln -snfv $DOTFILES_PATH/.config/wezterm/lua $HOME/.config/wezterm/lua
+    mkdir -p "$HOME"/.config/wezterm
+    ln -snfv "$DOTFILES_PATH"/.config/wezterm/wezterm.lua "$HOME"/.config/wezterm/wezterm.lua
+    ln -snfv "$DOTFILES_PATH"/.config/wezterm/lua "$HOME"/.config/wezterm/lua
 }
 
 # install tmux
 install_tmux() {
     install tmux brew install tmux
-    mkdir -p $HOME/.config/tmux
-    ln -snfv $DOTFILES_PATH/.config/tmux/tmux.conf $HOME/.config/tmux/tmux.conf
+    mkdir -p "$HOME"/.config/tmux
+    ln -snfv "$DOTFILES_PATH"/.config/tmux/tmux.conf "$HOME"/.config/tmux/tmux.conf
 }
 
 # install zsh plugins and link zsh config
 install_zsh() {
     arrow "Installing zsh plugins and linking zsh config."
-    ln -snfv $DOTFILES_PATH/.config/zsh/.zshrc $HOME/.zshrc
-    mkdir -p $HOME/.config/zsh/plugins
-    if [ ! -d $HOME/.config/zsh/plugins/zsh-syntax-highlighting ]; then
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.config/zsh/plugins/zsh-syntax-highlighting
+    ln -snfv "$DOTFILES_PATH"/.config/zsh/.zshrc "$HOME"/.zshrc
+    mkdir -p "$HOME"/.config/zsh/plugins
+    if [ ! -d "$HOME"/.config/zsh/plugins/zsh-syntax-highlighting ]; then
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME"/.config/zsh/plugins/zsh-syntax-highlighting
         success "Successfully install zsh plugins."
     else
         bold "zsh plugins already installed."
@@ -150,14 +152,14 @@ install_zsh() {
 # install neovim
 install_neovim() {
     install nvim brew install neovim
-    mkdir -p $HOME/.config/nvim
-    ln -snfv $DOTFILES_PATH/.config/nvim/init.lua $HOME/.config/nvim/init.lua
-    ln -snfv $DOTFILES_PATH/.config/nvim/lua $HOME/.config/nvim/lua
-    ln -snfv $DOTFILES_PATH/.config/nvim/.luarc.json $HOME/.config/nvim/.luarc.json
+    mkdir -p "$HOME"/.config/nvim
+    ln -snfv "$DOTFILES_PATH"/.config/nvim/init.lua "$HOME"/.config/nvim/init.lua
+    ln -snfv "$DOTFILES_PATH"/.config/nvim/lua "$HOME"/.config/nvim/lua
+    ln -snfv "$DOTFILES_PATH"/.config/nvim/.luarc.json "$HOME"/.config/nvim/.luarc.json
     tempfile=$(mktemp) &&
-        curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/master/termwiz/data/wezterm.terminfo &&
-        tic -x -o ~/.terminfo $tempfile &&
-        rm $tempfile
+        curl -o "$tempfile" https://raw.githubusercontent.com/wez/wezterm/master/termwiz/data/wezterm.terminfo &&
+        tic -x -o ~/.terminfo "$tempfile" &&
+        rm "$tempfile"
 }
 
 # install ripgrep
@@ -173,7 +175,7 @@ install_eza() {
 # install starship
 install_starship() {
     install starship brew install starship
-    ln -snfv $DOTFILES_PATH/.config/starship/starship.toml $HOME/.config/starship.toml
+    ln -snfv "$DOTFILES_PATH"/.config/starship/starship.toml "$HOME"/.config/starship.toml
 }
 
 # install bat
@@ -190,7 +192,7 @@ install_httpie() {
 install_go() {
     install go brew install go
     if [ $(grep 'export PATH=$HOME/go/bin:$PATH' ~/.zprofile | wc -l) -eq 0 ]; then
-        echo 'export PATH=$HOME/go/bin:$PATH' >>$HOME/.zprofile
+        echo 'export PATH=$HOME/go/bin:$PATH' >> "$HOME"/.zprofile
     fi
     export PATH=$HOME/go/bin:$PATH
 }
@@ -203,10 +205,10 @@ install_vim_startuptime() {
 # install jetbrains mono
 install_jetbrains_mono() {
     arrow "Installing JetBrainsMono"
-    if [ ! -d $HOME/Library/Fonts/JetBrainsMono ]; then
-        mkdir -p $HOME/Library/Fonts/JetBrainsMono
+    if [ ! -d "$HOME"/Library/Fonts/JetBrainsMono ]; then
+        mkdir -p "$HOME"/Library/Fonts/JetBrainsMono
         curl -fLO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip
-        unzip JetBrainsMono.zip -d $HOME/Library/Fonts/JetBrainsMono
+        unzip JetBrainsMono.zip -d "$HOME"/Library/Fonts/JetBrainsMono
         rm -f JetBrainsMono.zip
     else
         bold "JetBrainsMono is already exists."
