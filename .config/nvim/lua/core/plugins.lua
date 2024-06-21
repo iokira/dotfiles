@@ -654,7 +654,6 @@ require("lazy").setup({
                 }
             end
             local stylua = function()
-                local util = require("formatter.util")
                 return {
                     exe = "stylua",
                     args = {
@@ -664,7 +663,6 @@ require("lazy").setup({
                 }
             end
             local shfmt = function()
-                local util = require("formatter.util")
                 return {
                     exe = "shfmt",
                     args = {
