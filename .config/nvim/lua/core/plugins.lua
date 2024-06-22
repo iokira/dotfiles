@@ -270,7 +270,7 @@ require("lazy").setup({
         dependencies = {
             { "nvim-lua/plenary.nvim" },
             { "nvim-telescope/telescope-file-browser.nvim" },
-            { "kyazdani42/nvim-web-devicons" },
+            { "nvim-tree/nvim-web-devicons" },
         },
         init = function()
             local function telescope_buffer_dir()
