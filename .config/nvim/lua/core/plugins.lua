@@ -861,7 +861,7 @@ require("lazy").setup({
     {
         "kylechui/nvim-surround",
         lazy = true,
-        event = "InsertEnter",
+        event = { "CursorHold", "CursorHoldI" },
         config = function()
             require("nvim-surround").setup()
         end,
