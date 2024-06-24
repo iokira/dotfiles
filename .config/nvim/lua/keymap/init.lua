@@ -93,6 +93,26 @@ map("n", "<Leader><CR>", "o<ESC>")
 
 ---- lsp
 
+vim.keymap.set("n", "K", function()
+    vim.lsp.buf.hover()
+end, {
+    desc = "Show hover",
+})
+vim.keymap.set("n", "gr", function()
+    vim.lsp.buf.rename()
+end, {
+    desc = "Rename",
+})
+vim.keymap.set("n", "gx", function()
+    vim.lsp.buf.code_action()
+end, {
+    desc = "Code action",
+})
+vim.keymap.set("n", "ge", function()
+    vim.diagnostic.open_float()
+end, {
+    desc = "Open diagnostic float",
+})
 vim.keymap.set("n", "gj", function()
     vim.diagnostic.goto_next()
 end, {
