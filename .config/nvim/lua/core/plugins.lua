@@ -252,11 +252,11 @@ require("lazy").setup({
     -- `<Leader>s` - Find files
     -- `<Leader>g` - Git ls-files
     -- `<Leader>l` - Live grep
-    -- `<Leader>b` - Buffers
     -- `<Leader>d` - Diagnostics
     -- `<Leader>o` - Lists previously open files
     -- `<Leader>f` - File browser
-    -- `<Leader>m` - Lists vim marks and their value, jumps to the mark on `<cr>`
+    -- `:Buffers` - Buffers
+    -- `:Marks` - Lists vim marks and their value, jumps to the mark on `<cr>`
     -- `:Help` - Help tags
     -- `:History` - Noice history
     -- `:Commits` - Git commits
@@ -300,12 +300,6 @@ require("lazy").setup({
                 desc = "Live grep",
                 silent = true,
             })
-            vim.keymap.set("n", "<Leader>b", function()
-                require("telescope.builtin").buffers()
-            end, {
-                desc = "Buffers",
-                silent = true,
-            })
             vim.keymap.set("n", "<Leader>d", function()
                 require("telescope.builtin").diagnostics()
             end, {
@@ -333,11 +327,15 @@ require("lazy").setup({
                 desc = "File browser",
                 silent = true,
             })
-            vim.keymap.set("n", "<Leader>m", function()
+            vim.api.nvim_create_user_command("Buffers", function()
+                require("telescope.builtin").buffers()
+            end, {
+                desc = "Buffers",
+            })
+            vim.api.nvim_create_user_command("Marks", function()
                 require("telescope.builtin").marks()
             end, {
                 desc = "Lists vim marks and their value, jumps to the mark on `<cr>`",
-                silent = true,
             })
             vim.api.nvim_create_user_command("Help", function()
                 require("telescope.builtin").help_tags()
