@@ -878,48 +878,6 @@ require("lazy").setup({
         end,
     },
 
-    -- lspsaga.nvim
-    -- improve lsp experience in neovim
-    {
-        "nvimdev/lspsaga.nvim",
-        lazy = true,
-        event = { "LspAttach" },
-        dependencies = { "neovim/nvim-lspconfig" },
-        init = function()
-            vim.keymap.set("n", "gr", function()
-                require("lspsaga.rename"):lsp_rename()
-            end, {
-                desc = "Rename symbol under cursor",
-                silent = true,
-            })
-            vim.keymap.set("n", "K", function()
-                require("lspsaga.hover"):render_hover_doc()
-            end, {
-                desc = "Show hover doc",
-                silent = true,
-            })
-            vim.keymap.set("n", "ge", function()
-                require("lspsaga.diagnostic.show"):show_diagnostics({ line = true })
-            end, {
-                desc = "Show diagnostics",
-                silent = true,
-            })
-            vim.keymap.set("n", "gx", function()
-                require("lspsaga.codeaction"):code_action()
-            end, {
-                desc = "Run code actions",
-                silent = true,
-            })
-        end,
-        config = function()
-            local status, saga = pcall(require, "lspsaga")
-            if not status then
-                return
-            end
-            saga.setup()
-        end,
-    },
-
     -- copilot.vim
     -- GitHub Copilot for Vim and Neovim
     {
