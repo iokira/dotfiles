@@ -264,7 +264,7 @@ require("lazy").setup({
     -- `:Commands` - Commands
     -- `:CommandHistory` - Command history
     -- `:SearchHistory` - Search history
-    -- `:JumpList` - Vim's jumplist
+    -- `:Jumps` - Vim's jumplist
     -- `:Reg` - :reg
     {
         "nvim-telescope/telescope.nvim",
@@ -366,7 +366,7 @@ require("lazy").setup({
             vim.api.nvim_create_user_command("SearchHistory", function()
                 require("telescope.builtin").search_history()
             end, { desc = "Lists searches that were excuted recently, and reruns them on `<cr>`" })
-            vim.api.nvim_create_user_command("JumpList", function()
+            vim.api.nvim_create_user_command("Jumps", function()
                 require("telescope.builtin").jumplist()
             end, { desc = "Lists items from Vim's jumplist, jumps to location on `<cr>`" })
             vim.api.nvim_create_user_command("Reg", function()
