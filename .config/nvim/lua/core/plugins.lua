@@ -888,8 +888,6 @@ require("lazy").setup({
 
     -- CopilotChat.nvim
     -- Copilot Chat for Neovim
-    -- `<Leader>ch` - Copilot Chat
-    -- `<Leader>ca` - Copilot Chat Prompt Action List
     {
         "CopilotC-Nvim/CopilotChat.nvim",
         lazy = true,
@@ -899,39 +897,6 @@ require("lazy").setup({
             { "github/copilot.vim" },
             { "nvim-lua/plenary.nvim" },
         },
-        init = function()
-            vim.keymap.set("n", "<Leader>ch", function()
-                require("CopilotChat").open({
-                    window = {
-                        layout = "float",
-                        relative = "cursor",
-                        width = 1,
-                        height = 0.4,
-                        row = 1,
-                    },
-                })
-            end)
-            vim.keymap.set("n", "<leader>ca", function()
-                local actions = require("CopilotChat.actions")
-                require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-            end, {
-                desc = "Copilot Chat Prompt Action List",
-                silent = true,
-            })
-            vim.keymap.set("v", "<Leader>ch", function()
-                require("CopilotChat").open()
-            end, {
-                desc = "Copilot Chat",
-                silent = true,
-            })
-            vim.keymap.set("v", "<leader>ca", function()
-                local actions = require("CopilotChat.actions")
-                require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-            end, {
-                desc = "Copilot Chat Prompt Action List",
-                silent = true,
-            })
-        end,
         config = function()
             require("CopilotChat.integrations.cmp").setup()
             require("CopilotChat").setup({
