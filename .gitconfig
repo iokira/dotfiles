@@ -17,3 +17,4 @@
 	cob = checkout -b
 	b = branch -vv
 	r = restore --staged
+	cop = checkout @{-1}
