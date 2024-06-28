@@ -4,3 +4,16 @@
 
 [init]
 	defaultbranch = main
+
+[alias]
+	s = status
+	a = add
+	c = commit -m
+	ac = commit -am
+	p = push
+	l = pull
+	d = diff
+	co = checkout
+	cob = checkout -b
+	b = branch -vv
+	r = restore --staged
