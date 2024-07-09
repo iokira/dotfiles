@@ -921,4 +921,18 @@ require("lazy").setup({
             })
         end,
     },
+
+    -- neo-tree.nvim
+    -- Neovim plugin to manage the file system and other tree like structures.
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v3.x",
+        lazy = true,
+        event = { "CmdLineEnter" },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons",
+            "MunifTanjim/nui.nvim",
+        }
+    }
 })
