@@ -146,6 +146,13 @@ install_zsh() {
     fi
 }
 
+# install fish
+install_fish() {
+    install fish brew install fish
+    mkdir -p "$HOME"/.config/fish
+    ln -snfv "$DOTFILES_PATH"/.config/fish/config.fish "$HOME"/.config/fish/config.fish
+}
+
 # install neovim
 install_neovim() {
     install nvim brew install neovim
@@ -229,6 +236,7 @@ main() {
         install_wezterm
         install_tmux
         install_zsh
+        install_fish
         install_neovim
         install_ripgrep
         install_eza
