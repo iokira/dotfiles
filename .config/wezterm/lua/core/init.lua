@@ -7,6 +7,7 @@ local function setValue(path)
     end
 end
 
+setValue("lua.core.shell")
 setValue("lua.core.font")
 setValue("lua.core.window")
 setValue("lua.keymap")
