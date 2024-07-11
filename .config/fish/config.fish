@@ -1,3 +1,7 @@
+# Welcome to fish
+
+set fish_greeting
+
 # Alias
 
 alias l "eza -la --icons"
