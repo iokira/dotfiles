@@ -2,6 +2,9 @@
 
 set fish_greeting
 
+# vi mode
+fish_vi_key_bindings
+
 # Alias
 
 alias l "eza -la --icons"
