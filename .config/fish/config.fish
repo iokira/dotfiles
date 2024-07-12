@@ -26,20 +26,20 @@ alias relogin-fish "exec fish -l"
 # PATH
 
 ## Homebrew
-set -gx PATH $PATH /opt/homebrew/bin
+fish_add_path /opt/homebrew/bin
 
 ## Go
-set -gx PATH $PATH $HOME/go/bin
+fish_add_path $HOME/go/bin
 
 ## rancher desktop
-set -gx PATH $PATH $HOME/.rd/bin
+fish_add_path $HOME/.rd/bin
 
 ## Cargo
-set -gx PATH $PATH $HOME/.cargo/bin
+fish_add_path $HOME/.cargo/bin
 
 ## volta
 set -gx VOLTA_HOME $VOLTA_HOME $HOME/.volta
-set -gx PATH $PATH $VOLTA_HOME/bin
+fish_add_path $VOLTA_HOME/bin
 
 # starship
 starship init fish | source
