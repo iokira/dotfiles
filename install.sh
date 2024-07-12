@@ -151,6 +151,7 @@ install_fish() {
     install fish brew install fish
     mkdir -p "$HOME"/.config/fish
     ln -snfv "$DOTFILES_PATH"/.config/fish/config.fish "$HOME"/.config/fish/config.fish
+    curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
 }
 
 # install neovim
