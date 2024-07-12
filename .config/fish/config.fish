@@ -3,7 +3,7 @@
 set fish_greeting
 
 # vi mode
-fish_vi_key_bindings
+fish_hybrid_key_bindings
 
 # Alias
 
