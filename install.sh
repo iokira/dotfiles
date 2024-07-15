@@ -153,6 +153,7 @@ install_fish() {
     ln -snfv "$DOTFILES_PATH"/.config/fish/config.fish "$HOME"/.config/fish/config.fish
     curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
     ln -snfv "$DOTFILES_PATH"/.config/fish/fish_plugins "$HOME"/.config/fish/fish_plugins
+    fisher update
 }
 
 # install neovim
