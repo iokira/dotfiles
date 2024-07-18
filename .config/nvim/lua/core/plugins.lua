@@ -907,11 +907,7 @@ require("lazy").setup({
                 },
                 debug = false,
                 window = {
-                    layout = "float",
                     relative = "cursor",
-                    width = 1,
-                    height = 0.4,
-                    row = 1,
                 },
                 prompts = {
                     Docs = {
