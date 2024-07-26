@@ -18,3 +18,4 @@
 	b = branch -vv
 	r = restore --staged
 	cop = checkout @{-1}
+	ds = diff --staged
