@@ -159,6 +159,7 @@ install_fish() {
 # install neovim
 install_neovim() {
     install nvim brew install neovim
+    install luarocks brew install luarocks
     mkdir -p "$HOME"/.config/nvim
     ln -snfv "$DOTFILES_PATH"/.config/nvim/init.lua "$HOME"/.config/nvim/init.lua
     ln -snfv "$DOTFILES_PATH"/.config/nvim/lua "$HOME"/.config/nvim/lua
