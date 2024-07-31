@@ -229,6 +229,11 @@ install_fzf() {
     install fzf brew install fzf
 }
 
+# link ideavimrc
+link_ideavimrc() {
+    ln -snfv "$DOTFILES_PATH"/.config/ideavimrc/.ideavimrc "$HOME"/.ideavimrc
+}
+
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
@@ -251,6 +256,7 @@ main() {
         install_vim_startuptime
         install_jetbrains_mono
         install_fzf
+        link_ideavimrc
         success "Install completed!"
     else
         error 'not supported os'
