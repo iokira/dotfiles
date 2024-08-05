@@ -43,3 +43,12 @@ fish_add_path $VOLTA_HOME/bin
 
 # starship
 starship init fish | source
+
+# fisher
+
+## fzf.fish
+
+set fzf_preview_file_cmd bat
+set fzf_preview_dir_cmd eza --all --color=always
+
+bind --mode insert \co fzf_history_opts
