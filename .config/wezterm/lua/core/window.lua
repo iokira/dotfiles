@@ -33,9 +33,9 @@ function Basename(s)
 end
 wezterm.on("format-tab-title", function(tab, _, _, _, _, _)
     local pane = tab.active_pane
-    local title = Basename(pane.foreground_process_name) .. " " .. tab.tab_index + 1
+    local title = tab.tab_index + 1 .. " " .. Basename(pane.foreground_process_name)
     if pane.is_zoomed then
-        title = Basename(pane.foreground_process_name) .. " " .. tab.tab_index + 1 .. " Z"
+        title = tab.tab_index + 1 .. " " .. Basename(pane.foreground_process_name) .. " Z"
     end
     return {
         { Text = " " .. title .. " " },
