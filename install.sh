@@ -140,9 +140,15 @@ install_zsh() {
     mkdir -p "$HOME"/.config/zsh/plugins
     if [ ! -d "$HOME"/.config/zsh/plugins/zsh-syntax-highlighting ]; then
         git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME"/.config/zsh/plugins/zsh-syntax-highlighting
-        success "Successfully install zsh plugins."
+        success "Successfully install zsh syntax highlight plugin."
     else
-        bold "zsh plugins already installed."
+        bold "zsh syntax highlight plugin already installed."
+    fi
+    if [ ! -d "$HOME"/.config/zsh/plugins/zsh-autosuggestions ]; then
+        git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME"/.config/zsh/plugins/zsh-autosuggestions
+        success "Successfully install zsh auto suggestions plugin."
+    else
+        bold "zsh auto suggestions plugin already installed."
     fi
 }
 
