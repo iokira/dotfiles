@@ -234,7 +234,7 @@ install_fzf() {
 
 # link ideavimrc
 link_ideavimrc() {
-    ln -snfv "$DOTFILES_PATH"/.config/ideavimrc/.ideavimrc "$HOME"/.ideavimrc
+    ln -snfv "$DOTFILES_PATH"/.config/ideavim/.ideavimrc "$HOME"/.ideavimrc
 }
 
 # first get sudo, then for macos, do the installation process
