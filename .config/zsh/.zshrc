@@ -36,6 +36,10 @@ cursor_mode() {
 }
 cursor_mode
 
+# fzf config
+
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+
 # fzf functions
 function fzf-select-history() {
     BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER")
