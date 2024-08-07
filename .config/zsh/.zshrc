@@ -8,7 +8,7 @@ fi
 autoload -Uz compinit
 compinit
 
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za=z} r:|[-_.]=**'
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za=z} r:|[-_.]=**'
 
 # vi mode
 bindkey -v
