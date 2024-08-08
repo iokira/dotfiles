@@ -40,6 +40,7 @@ cursor_mode
 
 # fzf config
 
+source <(fzf --zsh)
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 
 # fzf functions
