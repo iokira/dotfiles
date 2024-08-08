@@ -45,6 +45,7 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 
 # fzf functions
 bindkey '^p' fzf-history-widget
+bindkey '^g' fzf-cd-widget
 
 fb() {
     local branches branch
