@@ -44,13 +44,7 @@ source <(fzf --zsh)
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 
 # fzf functions
-function fzf-select-history() {
-    BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER")
-    CURSOR=$#BUFFER
-    zle reset-prompt
-}
-zle -N fzf-select-history
-bindkey '^p' fzf-select-history
+bindkey '^p' fzf-history-widget
 
 fb() {
     local branches branch
