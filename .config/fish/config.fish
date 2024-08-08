@@ -47,6 +47,7 @@ starship init fish | source
 # fzf
 
 fzf --fish | source
+set -gx FZF_CTRL_T_OPTS "--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 bind \cp fzf-history-widget
 bind -M insert \cp fzf-history-widget
 bind \cg fzf-cd-widget
