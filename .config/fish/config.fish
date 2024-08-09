@@ -1,5 +1,9 @@
 # Welcome to fish
 
+function hi
+    echo "Hi! I'm fish shell :)"
+end
+
 set fish_greeting
 
 # vi mode

@@ -1,3 +1,9 @@
+# Welcome to zsh
+
+hi() {
+    echo "Hi! I'm zsh shell :)"
+}
+
 # Caution! This config should be written at the beginning of the file :) by iokira
 # profiler
 if [ "$ZSHRC_PROFILE" != "" ]; then
