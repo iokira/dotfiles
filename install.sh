@@ -221,10 +221,10 @@ install_jetbrains_mono() {
         curl -fLO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip
         unzip JetBrainsMono.zip -d "$HOME"/Library/Fonts/JetBrainsMono
         rm -f JetBrainsMono.zip
+        success "Successfully installed JetBrainsMono"
     else
         bold "JetBrainsMono is already exists."
     fi
-    success "Successfully installed JetBrainsMono"
 }
 
 # install fzf
