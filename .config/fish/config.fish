@@ -41,8 +41,8 @@ fish_add_path $HOME/.rd/bin
 fish_add_path $HOME/.cargo/bin
 
 ## volta
-set -gx VOLTA_HOME $VOLTA_HOME $HOME/.volta
-fish_add_path $VOLTA_HOME/bin
+set -gx VOLTA_HOME "$HOME/.volta"
+set -gx PATH "$VOLTA_HOME/bin" $PATH
 
 # starship
 starship init fish | source
