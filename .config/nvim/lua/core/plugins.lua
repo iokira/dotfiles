@@ -214,7 +214,9 @@ require("lazy").setup({
             })
         end,
         config = function()
-            require("hop").setup()
+            require("hop").setup({
+                multi_windows = true,
+            })
         end,
     },
 
