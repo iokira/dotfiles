@@ -4,7 +4,7 @@ local os_name = vim.loop.os_uname().sysname
 
 function global:load_variables()
     self.is_mac = os_name == "Darwin"
-    self.if_linux = os_name == "Linux"
+    self.is_linux = os_name == "Linux"
     self.is_wsl = vim.fn.has("wsl") == 1
     self.vim_path = vim.fn.stdpath("config")
     local path_sep = "/"
