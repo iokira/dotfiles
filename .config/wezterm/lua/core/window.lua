@@ -1,7 +1,6 @@
 local wezterm = require("wezterm")
 local config = {}
 
-config.window_background_opacity = 1
 local mux = wezterm.mux
 wezterm.on("gui-startup", function()
     local _, _, window = mux.spawn_window({})
