@@ -887,4 +887,14 @@ require("lazy").setup({
         lazy = true,
         event = { "InsertEnter", "CursorHoldI", "CursorHold" },
     },
+
+    -- actions-preview.nvim
+    -- Fully customizeble previewer for LSP code actions.
+    {
+        "aznhe21/actions-preview.nvim",
+        lazy = true,
+        init = function()
+            vim.keymap.set({ "v", "n" }, "gx", require("actions-preview").code_actions)
+        end,
+    },
 })

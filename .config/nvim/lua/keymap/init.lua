@@ -103,11 +103,6 @@ vim.keymap.set("n", "gr", function()
 end, {
     desc = "Rename",
 })
-vim.keymap.set("n", "gx", function()
-    vim.lsp.buf.code_action()
-end, {
-    desc = "Code action",
-})
 vim.keymap.set("n", "ge", function()
     vim.diagnostic.open_float()
 end, {
