@@ -1,6 +1,7 @@
 [user]
 	name = iokira
 	email = iam.iokiller@gmail.com
+	signinkey = 9AB641EB35E5259F
 
 [init]
 	defaultbranch = main
@@ -19,3 +20,5 @@
 	r = restore --staged
 	cop = checkout @{-1}
 	ds = diff --staged
+[commit]
+	gpgsign = true
