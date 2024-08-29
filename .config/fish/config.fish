@@ -26,6 +26,10 @@ alias nvim-startuptime "vim-startuptime -vimpath nvim"
 alias shutnow "shutnow -h now"
 alias relogin "exec fish -l"
 
+# GPG
+
+export GPG_TTY=$(tty)
+
 # PATH
 
 ## Homebrew

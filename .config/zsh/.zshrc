@@ -121,6 +121,10 @@ function zsh-startuptime() {
     echo "\naverage: ${average_msec} [ms]"
 }
 
+# GPG
+
+export GPG_TTY=$(tty)
+
 # starship
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
