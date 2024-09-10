@@ -47,6 +47,8 @@ local function load_options()
         smartcase = true,
         smartindent = true,
         softtabstop = 4,
+        spell = true,
+        spelllang = "en_us,cjk",
         swapfile = true,
         tabstop = 4,
         termguicolors = true,
