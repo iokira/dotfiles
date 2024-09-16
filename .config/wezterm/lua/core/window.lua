@@ -48,6 +48,6 @@ config.window_padding = {
     bottom = 0,
 }
 config.show_new_tab_button_in_tab_bar = false
-config.default_cursor_style = "SteadyBar"
+-- config.default_cursor_style = "SteadyBar"
 
 return config
