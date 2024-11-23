@@ -20,8 +20,6 @@ local g = vim.g
 
 ---- move
 
-map("i", "jk", "<ESC>:w<CR>", { silent = true })
-map("i", "jj", "<ESC>", { silent = true })
 map("n", "<C-Up>", '"zdd<Up>"zP')
 map("n", "<C-Down>", '"zdd"zp')
 map("v", "<C-Up>", '"zx<Up>"zP`[V`]')
