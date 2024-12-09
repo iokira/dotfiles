@@ -102,7 +102,7 @@ backup_from_csv() {
 }
 
 # link symbolic link
-link() {
+link_config() {
     arrow "Linking ${1} to ${2}"
     ln -snfv "$DOTFILES_PATH"/"$1" "$HOME"/"$2"
 }
@@ -111,7 +111,7 @@ link() {
 link_from_csv() {
     arrow "Linking from csv file"
     while IFS=, read -r col1 col2; do
-        link "$col1" "$col2"
+        link_config "$col1" "$col2"
     done <"$1"
 }
 
