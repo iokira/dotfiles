@@ -29,6 +29,16 @@ The best I could think of dotfiles.
 * fzf installer
 * ideavim config
 
+## Link config files
+
+Support the creation of symbolic links to configuration files listed in the `link.csv` file.
+
+Example of how to write
+
+```csv
+$DOTFILES_PATH,$CONFIG_FILE_PATH
+```
+
 ## Supported OS
 
 * macOS (Apple silicon only)
