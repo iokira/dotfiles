@@ -87,13 +87,17 @@ install() {
 
 backup() {
     arrow "Backup ${1}"
-    cp -r "$1" "$BACKUP_PATH"
+    cp -rp "$1" "$BACKUP_PATH"/"$2"
+    arrow "$2"
 }
 
 backup_from_csv() {
-    arrow "Backup your config files"
+    TZ='Asia/Tokyo'
+    datetime=$(date '+%Y%m%d%H%M%S%z')
+    arrow "Backup your config files to $DOTFILES_PATH/$datetime"
+    mkdir -p "$BACKUP_PATH"/"$datetime"
     while IFS=, read -r col1 col2; do
-        backup "$col2"
+        backup "$col2" "$datetime"
     done <"$1"
 }
 
