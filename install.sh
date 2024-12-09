@@ -3,6 +3,7 @@
 # const
 readonly DOTFILES_PATH=$HOME/dotfiles
 readonly REMOTE_URL="https://github.com/iokira/dotfiles.git"
+readonly BACKUP_PATH=$DOTFILES_PATH/backup
 readonly CSV_FILE=$DOTFILES_PATH/link.csv
 
 # color settings
@@ -82,6 +83,18 @@ install() {
             error "An unexpected error occurred when trying to install ${1}."
         fi
     fi
+}
+
+backup() {
+    arrow "Backup ${1}"
+    cp -r "$1" "$BACKUP_PATH"
+}
+
+backup_from_csv() {
+    arrow "Backup your config files"
+    while IFS=, read -r col1 col2; do
+        backup "$col2"
+    done <"$1"
 }
 
 # link symbolic link
@@ -243,6 +256,7 @@ main() {
     detect_os
     if [ $OS = 'macOS' ]; then
         download_dotfiles
+        backup_from_csv "$CSV_FILE"
         link_from_csv "$CSV_FILE"
         install_brew
         install_git
