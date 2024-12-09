@@ -3,6 +3,7 @@
 # const
 readonly DOTFILES_PATH=$HOME/dotfiles
 readonly REMOTE_URL="https://github.com/iokira/dotfiles.git"
+readonly CSV_FILE=$DOTFILES_PATH/link.csv
 
 # color settings
 if which tput >/dev/null 2>&1; then
@@ -83,6 +84,20 @@ install() {
     fi
 }
 
+# link symbolic link
+link() {
+    arrow "Linking ${1} to ${2}"
+    ln -snfv "$DOTFILES_PATH"/"$1" "$HOME"/"$2"
+}
+
+# link from csv file
+link_from_csv() {
+    arrow "Linking from csv file"
+    while IFS=, read -r col1 col2; do
+        link "$col1" "$col2"
+    done <"$1"
+}
+
 # download dotfiles
 download_dotfiles() {
     arrow "Downloading dotfiles"
@@ -115,28 +130,23 @@ install_brew() {
 # install git
 install_git() {
     install git brew install git
-    ln -snfv "$DOTFILES_PATH"/.gitconfig "$HOME"/.gitconfig
 }
 
 # install wezterm
 install_wezterm() {
     install wezterm brew install --cask wezterm
     mkdir -p "$HOME"/.config/wezterm
-    ln -snfv "$DOTFILES_PATH"/.config/wezterm/wezterm.lua "$HOME"/.config/wezterm/wezterm.lua
-    ln -snfv "$DOTFILES_PATH"/.config/wezterm/lua "$HOME"/.config/wezterm/lua
 }
 
 # install tmux
 install_tmux() {
     install tmux brew install tmux
     mkdir -p "$HOME"/.config/tmux
-    ln -snfv "$DOTFILES_PATH"/.config/tmux/tmux.conf "$HOME"/.config/tmux/tmux.conf
 }
 
 # install zsh plugins and link zsh config
 install_zsh() {
     arrow "Installing zsh plugins and linking zsh config."
-    ln -snfv "$DOTFILES_PATH"/.config/zsh/.zshrc "$HOME"/.zshrc
     mkdir -p "$HOME"/.config/zsh/plugins
     if [ ! -d "$HOME"/.config/zsh/plugins/zsh-syntax-highlighting ]; then
         git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME"/.config/zsh/plugins/zsh-syntax-highlighting
@@ -156,7 +166,6 @@ install_zsh() {
 install_fish() {
     install fish brew install fish
     mkdir -p "$HOME"/.config/fish
-    ln -snfv "$DOTFILES_PATH"/.config/fish/config.fish "$HOME"/.config/fish/config.fish
 }
 
 # install neovim
@@ -164,9 +173,6 @@ install_neovim() {
     install nvim brew install neovim
     install luarocks brew install luarocks
     mkdir -p "$HOME"/.config/nvim
-    ln -snfv "$DOTFILES_PATH"/.config/nvim/init.lua "$HOME"/.config/nvim/init.lua
-    ln -snfv "$DOTFILES_PATH"/.config/nvim/lua "$HOME"/.config/nvim/lua
-    ln -snfv "$DOTFILES_PATH"/.config/nvim/.luarc.json "$HOME"/.config/nvim/.luarc.json
     tempfile=$(mktemp) &&
         curl -o "$tempfile" https://raw.githubusercontent.com/wez/wezterm/master/termwiz/data/wezterm.terminfo &&
         tic -x -o ~/.terminfo "$tempfile" &&
@@ -186,7 +192,6 @@ install_eza() {
 # install starship
 install_starship() {
     install starship brew install starship
-    ln -snfv "$DOTFILES_PATH"/.config/starship/starship.toml "$HOME"/.config/starship.toml
 }
 
 # install bat
@@ -232,17 +237,13 @@ install_fzf() {
     install fzf brew install fzf
 }
 
-# link ideavimrc
-link_ideavimrc() {
-    ln -snfv "$DOTFILES_PATH"/.config/ideavim/.ideavimrc "$HOME"/.ideavimrc
-}
-
 # first get sudo, then for macos, do the installation process
 main() {
     sudo echo ''
     detect_os
     if [ $OS = 'macOS' ]; then
         download_dotfiles
+        link_from_csv "$CSV_FILE"
         install_brew
         install_git
         install_wezterm
@@ -259,7 +260,6 @@ main() {
         install_vim_startuptime
         install_jetbrains_mono
         install_fzf
-        link_ideavimrc
         success "Install completed!"
     else
         error 'not supported os'
