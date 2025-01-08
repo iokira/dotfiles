@@ -880,14 +880,6 @@ require("lazy").setup({
         end,
     },
 
-    -- copilot.vim
-    -- GitHub Copilot for Vim and Neovim
-    {
-        "github/copilot.vim",
-        lazy = true,
-        event = { "InsertEnter", "CursorHoldI", "CursorHold" },
-    },
-
     -- actions-preview.nvim
     -- Fully customizeble previewer for LSP code actions.
     {
