@@ -1,3 +1,9 @@
+# Welcome to zsh
+
+hi() {
+    echo "Hi! I'm zsh shell :)"
+}
+
 # Caution! This config should be written at the beginning of the file :) by iokira
 # profiler
 if [ "$ZSHRC_PROFILE" != "" ]; then
@@ -7,6 +13,8 @@ fi
 # comp
 autoload -Uz compinit
 compinit
+
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}' 'r:|[-_.]=**'
 
 # vi mode
 bindkey -v
@@ -36,25 +44,26 @@ cursor_mode() {
 }
 cursor_mode
 
-# fzf functions
-function fzf-select-history() {
-    BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER" --reverse)
-    CURSOR=$#BUFFER
-    zle reset-prompt
-}
-zle -N fzf-select-history
-bindkey '^p' fzf-select-history
+# fzf config
 
-fd() {
-    local dir
-    dir=$(find ${1:-.} -path '*/\.git*' -prune -o -type d -print 2> /dev/null | fzf +m) && cd "$dir"
-}
+source <(fzf --zsh)
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+
+# fzf functions
+bindkey '^p' fzf-history-widget
+bindkey '^g' fzf-cd-widget
 
 fb() {
     local branches branch
     branches=$(git branch -vv) &&
     branch=$(echo "$branches" | fzf +m) &&
     git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}
+
+fd() {
+    local dir
+    dir=$(find ${1:-.} -path '*/\.git*' -prune -o -type d -print 2> /dev/null | fzf +m) && cd "$dir"
 }
 
 fl() {
@@ -92,23 +101,6 @@ alias cp='cp -iv'
 alias nvim='env TERM=wezterm nvim'
 alias v='env TERM=wezterm nvim'
 alias g='git'
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit -m'
-alias gac='git add --all && git commit -m'
-alias gp='git push'
-alias gl='git pull'
-alias gd='git diff'
-alias gco='git checkout'
-alias gcob='git checkout -b'
-alias gb='git branch -vv'
-alias dp='docker ps'
-alias dc='docker compose'
-alias dcu='docker compose up'
-alias dcd='docker compose down'
-alias dcl='docker compose logs -f'
-alias dce-'docker compose exec'
-alias dcb='docker compose build'
 alias nvim-startuptime='vim-startuptime -vimpath nvim'
 alias shutnow='shutdown -h now'
 alias relogin='exec zsh -l'
@@ -129,9 +121,15 @@ function zsh-startuptime() {
     echo "\naverage: ${average_msec} [ms]"
 }
 
+# GPG
+
+export GPG_TTY=$(tty)
+
 # starship
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
 
 # plugins
 source $HOME/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '^f' autosuggest-accept

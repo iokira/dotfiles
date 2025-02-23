@@ -1,0 +1,52 @@
+set number relativenumber
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set inccommand=split
+set wrapscan
+set showmatch matchtime=1
+set expandtab
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set guioptions+=a
+set title
+set display=lastline
+set scrolloff=3
+set pumheight=3
+set cursorline
+set autoindent
+set smartindent
+set cindent
+set showcmd
+set regexpengine=1
+set list listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
+set nobackup
+set wildmenu wildmode=list:longest,full
+set clipboard+=unnamed
+set redrawtime=10000
+set re=0
+set hidden
+set fileformat=unix
+set fileencodings=utf-8,sjis
+set spell
+inoremap jk <esc>
+nnoremap U <c-r>
+nnoremap + <C-a>
+nnoremap - <C-x>
+nnoremap sh <C-w>h
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l
+
+nnoremap gj :action GotoNextError<CR>
+nnoremap gk :action GotoPreviousError<CR>
+
+set surround
+
+let mapleader=" "
+set easymotion
+map <Leader> <Plug>(easymotion-prefix)
+map <Leader>w <Plug>(easymotion-bd-w)
+map <Leader>l <Plug>(easymotion-bd-jk)

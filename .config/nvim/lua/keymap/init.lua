@@ -9,17 +9,17 @@ leader_map()
 ---- helper
 
 local function map(mode, lhs, rhs, opts)
-  local options = { noremap = true }
-  if opts then options = vim.tbl_extend("force", options, opts) end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+    local options = { noremap = true }
+    if opts then
+        options = vim.tbl_extend("force", options, opts)
+    end
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 local g = vim.g
 
 ---- move
 
-map("i", "jk", "<ESC>:w<CR>", { silent = true })
-map("i", "jj", "<ESC>", { silent = true })
 map("n", "<C-Up>", '"zdd<Up>"zP')
 map("n", "<C-Down>", '"zdd"zp')
 map("v", "<C-Up>", '"zx<Up>"zP`[V`]')
@@ -39,7 +39,7 @@ map("n", "<Left>", "<C-w><", { silent = true })
 map("n", "<Down>", "<C-w>-", { silent = true })
 map("n", "<Up>", "<C-w>+", { silent = true })
 map("n", "<Right>", "<C-w>>", { silent = true })
-map("n", "t!", "<C-w>T", { silent = true})
+map("n", "t!", "<C-w>T", { silent = true })
 
 ---- save end quit
 
@@ -52,7 +52,7 @@ map("n", "U", "<C-r>")
 
 ---- highlight
 
-map("n", "<Leader><Esc>", ":<C-u>nohlsearch<CR>", { silent = true})
+map("n", "<Leader><Esc>", ":<C-u>nohlsearch<CR>", { silent = true })
 
 ---- source %
 
@@ -91,15 +91,38 @@ map("n", "<Leader><CR>", "o<ESC>")
 
 ---- lsp
 
-vim.keymap.set("n", "gj", function ()
+vim.keymap.set("n", "K", function()
+    vim.lsp.buf.hover()
+end, {
+    desc = "Show hover",
+})
+vim.keymap.set("n", "gr", function()
+    vim.lsp.buf.rename()
+end, {
+    desc = "Rename",
+})
+vim.keymap.set("n", "ge", function()
+    vim.diagnostic.open_float()
+end, {
+    desc = "Open diagnostic float",
+})
+vim.keymap.set("n", "gj", function()
     vim.diagnostic.goto_next()
-end)
-vim.keymap.set("n", "gk", function ()
+end, {
+    desc = "Go to next diagnostic",
+})
+vim.keymap.set("n", "gk", function()
     vim.diagnostic.goto_prev()
-end)
-vim.keymap.set("n", "gd", function ()
+end, {
+    desc = "Go to previous diagnostic",
+})
+vim.keymap.set("n", "gd", function()
     vim.lsp.buf.definition()
-end)
-vim.keymap.set("n", "gf", function ()
+end, {
+    desc = "Go to definition",
+})
+vim.keymap.set("n", "gf", function()
     vim.lsp.buf.references()
-end)
+end, {
+    desc = "Go to references",
+})

@@ -6,7 +6,7 @@ The best I could think of dotfiles.
 
 * Editor: Neovim;
 * Prompt: starship;
-* Shell: zsh;
+* Shell: fish;
 * Terminal: wezterm;
 
 ## Contents
@@ -16,7 +16,7 @@ The best I could think of dotfiles.
 * wezterm config and installer
 * tmux config and installer
 * zsh config
-* zplug installer
+* fish config and installer
 * neovim config and installer
 * ripgrep installer
 * eza installer
@@ -27,6 +27,17 @@ The best I could think of dotfiles.
 * vim-startuptime installer
 * jetbrains mono installer
 * fzf installer
+* ideavim config
+
+## Link config files
+
+Support the creation of symbolic links to configuration files listed in the `link.csv` file.
+
+Example of how to write
+
+```csv
+$DOTFILES_PATH,$CONFIG_FILE_PATH
+```
 
 ## Supported OS
 

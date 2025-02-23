@@ -1,6 +1,24 @@
 [user]
 	name = iokira
 	email = iam.iokiller@gmail.com
+	signinkey = 9AB641EB35E5259F
 
 [init]
 	defaultbranch = main
+
+[alias]
+	s = status
+	a = add
+	c = commit -m
+	ac = commit -am
+	p = push
+	l = pull
+	d = diff
+	co = checkout
+	cob = checkout -b
+	b = branch -vv
+	r = restore --staged
+	cop = checkout @{-1}
+	ds = diff --staged
+[commit]
+	gpgsign = true

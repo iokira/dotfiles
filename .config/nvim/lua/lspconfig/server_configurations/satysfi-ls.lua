@@ -1,10 +1,10 @@
-local util = require 'lspconfig.util'
+local util = require("lspconfig.util")
 
 return {
     default_config = {
-        cmd = { 'satysfi-language-server' },
-        filetypes = { 'satysfi' },
-        root_dir = util.root_pattern('.git'),
+        cmd = { "satysfi-language-server" },
+        filetypes = { "satysfi" },
+        root_dir = util.root_pattern(".git"),
         single_file_support = true,
     },
     docs = {

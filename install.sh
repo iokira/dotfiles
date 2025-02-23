@@ -1,6 +1,10 @@
+#!/bin/bash
+
 # const
 readonly DOTFILES_PATH=$HOME/dotfiles
 readonly REMOTE_URL="https://github.com/iokira/dotfiles.git"
+readonly BACKUP_PATH=$DOTFILES_PATH/backup
+readonly CSV_FILE=$DOTFILES_PATH/link.csv
 
 # color settings
 if which tput >/dev/null 2>&1; then
@@ -9,14 +13,12 @@ fi
 if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
     RED="$(tput setaf 1)"
     GREEN="$(tput setaf 2)"
-    YELLOW="$(tput setaf 3)"
     BLUE="$(tput setaf 6)"
     BOLD="$(tput bold)"
     NORMAL="$(tput sgr0)"
 else
     RED=""
     GREEN=""
-    YELLOW=""
     BLUE=""
     BOLD=""
     NORMAL=""
@@ -51,15 +53,15 @@ bold() {
 
 # check for the existence #1
 has() {
-    type "$1" > /dev/null 2>&1
+    type "$1" >/dev/null 2>&1
 }
 
 # detect os type
 detect_os() {
     UNAME=$(uname)
-    if [ $UNAME == 'Darwin' ]; then
+    if [ "$UNAME" == 'Darwin' ]; then
         OS='macOS'
-    elif [ $UNAME == 'Linux' ]; then
+    elif [ "$UNAME" == 'Linux' ]; then
         OS='Linux'
     else
         echo 'Who are you?'
@@ -83,16 +85,45 @@ install() {
     fi
 }
 
+backup() {
+    arrow "Backup ${1}"
+    cp -rp "$1" "$BACKUP_PATH"/"$2"
+    arrow "$2"
+}
+
+backup_from_csv() {
+    TZ='Asia/Tokyo'
+    datetime=$(date '+%Y%m%d%H%M%S%z')
+    arrow "Backup your config files to $DOTFILES_PATH/$datetime"
+    mkdir -p "$BACKUP_PATH"/"$datetime"
+    while IFS=, read -r col1 col2; do
+        backup "$col2" "$datetime"
+    done <"$1"
+}
+
+# link symbolic link
+link_config() {
+    arrow "Linking ${1} to ${2}"
+    ln -snfv "$DOTFILES_PATH"/"$1" "$HOME"/"$2"
+}
+
+# link from csv file
+link_from_csv() {
+    arrow "Linking from csv file"
+    while IFS=, read -r col1 col2; do
+        link_config "$col1" "$col2"
+    done <"$1"
+}
+
 # download dotfiles
 download_dotfiles() {
     arrow "Downloading dotfiles"
-    cd $HOME
-    if [ ! -d $DOTFILES_PATH ]; then
+    cd "$HOME"
+    if [ ! -d "$DOTFILES_PATH" ]; then
         if has git; then
-            git clone --recursive $REMOTE_URL $DOTFILES_PATH
+            git clone --recursive $REMOTE_URL "$DOTFILES_PATH"
         else
             error "Please install git first and then run."
-            exit 1
         fi
         if [ $? = 0 ]; then
             success "Successfully downloaded dotfiles."
@@ -106,9 +137,9 @@ download_dotfiles() {
 
 # install brew
 install_brew() {
-    install brew /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null
-    if [ `grep 'eval "$(/opt/homebrew/bin/brew shellenv)"' ~/.zprofile | wc -l` -eq 0 ]; then
-        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
+    install brew /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" </dev/null
+    if [ $(grep 'eval "$(/opt/homebrew/bin/brew shellenv)"' ~/.zprofile | wc -l) -eq 0 ]; then
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$HOME"/.zprofile
     fi
     eval "$(/opt/homebrew/bin/brew shellenv)"
 }
@@ -116,48 +147,53 @@ install_brew() {
 # install git
 install_git() {
     install git brew install git
-    ln -snfv $DOTFILES_PATH/.gitconfig $HOME/.gitconfig
 }
 
 # install wezterm
 install_wezterm() {
     install wezterm brew install --cask wezterm
-    mkdir -p $HOME/.config/wezterm
-    ln -snfv $DOTFILES_PATH/.config/wezterm/wezterm.lua $HOME/.config/wezterm/wezterm.lua
-    ln -snfv $DOTFILES_PATH/.config/wezterm/lua $HOME/.config/wezterm/lua
+    mkdir -p "$HOME"/.config/wezterm
 }
 
 # install tmux
 install_tmux() {
     install tmux brew install tmux
-    mkdir -p $HOME/.config/tmux
-    ln -snfv $DOTFILES_PATH/.config/tmux/tmux.conf $HOME/.config/tmux/tmux.conf
+    mkdir -p "$HOME"/.config/tmux
 }
 
 # install zsh plugins and link zsh config
 install_zsh() {
     arrow "Installing zsh plugins and linking zsh config."
-    ln -snfv $DOTFILES_PATH/.config/zsh/.zshrc $HOME/.zshrc
-    mkdir -p $HOME/.config/zsh/plugins
-    if [ ! -d $HOME/.config/zsh/plugins/zsh-syntax-highlighting ]; then
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.config/zsh/plugins/zsh-syntax-highlighting
-        success "Successfully install zsh plugins."
+    mkdir -p "$HOME"/.config/zsh/plugins
+    if [ ! -d "$HOME"/.config/zsh/plugins/zsh-syntax-highlighting ]; then
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME"/.config/zsh/plugins/zsh-syntax-highlighting
+        success "Successfully install zsh syntax highlight plugin."
     else
-        bold "zsh plugins already installed."
+        bold "zsh syntax highlight plugin already installed."
     fi
+    if [ ! -d "$HOME"/.config/zsh/plugins/zsh-autosuggestions ]; then
+        git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME"/.config/zsh/plugins/zsh-autosuggestions
+        success "Successfully install zsh auto suggestions plugin."
+    else
+        bold "zsh auto suggestions plugin already installed."
+    fi
+}
+
+# install fish
+install_fish() {
+    install fish brew install fish
+    mkdir -p "$HOME"/.config/fish
 }
 
 # install neovim
 install_neovim() {
     install nvim brew install neovim
-    mkdir -p $HOME/.config/nvim
-    ln -snfv $DOTFILES_PATH/.config/nvim/init.lua $HOME/.config/nvim/init.lua
-    ln -snfv $DOTFILES_PATH/.config/nvim/lua $HOME/.config/nvim/lua
-    ln -snfv $DOTFILES_PATH/.config/nvim/.luarc.json $HOME/.config/nvim/.luarc.json
-    tempfile=$(mktemp) \
-        && curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/master/termwiz/data/wezterm.terminfo \
-        && tic -x -o ~/.terminfo $tempfile \
-        && rm $tempfile
+    install luarocks brew install luarocks
+    mkdir -p "$HOME"/.config/nvim
+    tempfile=$(mktemp) &&
+        curl -o "$tempfile" https://raw.githubusercontent.com/wez/wezterm/master/termwiz/data/wezterm.terminfo &&
+        tic -x -o ~/.terminfo "$tempfile" &&
+        rm "$tempfile"
 }
 
 # install ripgrep
@@ -173,7 +209,6 @@ install_eza() {
 # install starship
 install_starship() {
     install starship brew install starship
-    ln -snfv $DOTFILES_PATH/.config/starship/starship.toml $HOME/.config/starship.toml
 }
 
 # install bat
@@ -189,8 +224,8 @@ install_httpie() {
 # install go
 install_go() {
     install go brew install go
-    if [ `grep 'export PATH=$HOME/go/bin:$PATH' ~/.zprofile | wc -l` -eq 0 ]; then
-        echo 'export PATH=$HOME/go/bin:$PATH' >> $HOME/.zprofile
+    if [ $(grep 'export PATH=$HOME/go/bin:$PATH' ~/.zprofile | wc -l) -eq 0 ]; then
+        echo 'export PATH=$HOME/go/bin:$PATH' >> "$HOME"/.zprofile
     fi
     export PATH=$HOME/go/bin:$PATH
 }
@@ -203,15 +238,15 @@ install_vim_startuptime() {
 # install jetbrains mono
 install_jetbrains_mono() {
     arrow "Installing JetBrainsMono"
-    if [ ! -d $HOME/Library/Fonts/JetBrainsMono ]; then
-        mkdir -p $HOME/Library/Fonts/JetBrainsMono
+    if [ ! -d "$HOME"/Library/Fonts/JetBrainsMono ]; then
+        mkdir -p "$HOME"/Library/Fonts/JetBrainsMono
         curl -fLO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip
-        unzip JetBrainsMono.zip -d $HOME/Library/Fonts/JetBrainsMono
+        unzip JetBrainsMono.zip -d "$HOME"/Library/Fonts/JetBrainsMono
         rm -f JetBrainsMono.zip
+        success "Successfully installed JetBrainsMono"
     else
         bold "JetBrainsMono is already exists."
     fi
-    success "Successfully installed JetBrainsMono"
 }
 
 # install fzf
@@ -225,11 +260,14 @@ main() {
     detect_os
     if [ $OS = 'macOS' ]; then
         download_dotfiles
+        backup_from_csv "$CSV_FILE"
+        link_from_csv "$CSV_FILE"
         install_brew
         install_git
         install_wezterm
         install_tmux
         install_zsh
+        install_fish
         install_neovim
         install_ripgrep
         install_eza
@@ -249,15 +287,14 @@ main() {
 # argument handling
 while [ $# -gt 0 ]; do
     case ${1} in
-        --debug|-d)
-            set -uex
-            ;;
-        --help|-h)
-            helpmsg
-            exit 1
-            ;;
-        *)
-            ;;
+    --debug | -d)
+        set -uex
+        ;;
+    --help | -h)
+        helpmsg
+        exit 1
+        ;;
+    *) ;;
     esac
     shift
 done
