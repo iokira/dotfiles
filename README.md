@@ -63,6 +63,8 @@ https://github.com/ayamir/nvimdots
 
 ## License
 
-Copyright (c) 2021 - 2024 iokira
+MIT
+
+Copyright (c) 2021 - 2025 iokira
 License under the MIT license.
 
