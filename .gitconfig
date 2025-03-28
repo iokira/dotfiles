@@ -20,5 +20,6 @@
 	r = restore --staged
 	cop = checkout @{-1}
 	ds = diff --staged
+	su = submodule update
 [commit]
 	gpgsign = true
