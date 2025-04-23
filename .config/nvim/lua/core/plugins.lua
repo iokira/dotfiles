@@ -889,4 +889,12 @@ require("lazy").setup({
             vim.keymap.set({ "v", "n" }, "gx", require("actions-preview").code_actions)
         end,
     },
+
+    -- copilot.vim
+    -- Neovim plugin for GitHub Copilot
+    {
+        "github/copilot.vim",
+        lazy = true,
+        event = { "InsertEnter" },
+    }
 })
