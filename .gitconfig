@@ -21,5 +21,6 @@
 	cop = checkout @{-1}
 	ds = diff --staged
 	su = submodule update
+	fp = fetch --prune
 [commit]
 	gpgsign = true
