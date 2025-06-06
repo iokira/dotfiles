@@ -77,3 +77,11 @@ function fl
     fi
     }; f {}' | grep -o "[a-f0-9]\{7\}" | tr '\n' ' '
 end
+
+function fb
+    git branch -vv | fzf +m | awk '{print $1}' | xargs git checkout
+end
+
+function fga
+    git status -s | fzf --multi --preview 'echo {} | cut -c 4- | xargs git diff --color=always' | awk '{print $2}' | xargs git add
+end
