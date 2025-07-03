@@ -892,9 +892,9 @@ require("lazy").setup({
 
     -- copilot.vim
     -- Neovim plugin for GitHub Copilot
-    {
-        "github/copilot.vim",
-        lazy = true,
-        event = { "InsertEnter" },
-    }
+    -- {
+    --     "github/copilot.vim",
+    --     lazy = true,
+    --     event = { "InsertEnter" },
+    -- }
 })
