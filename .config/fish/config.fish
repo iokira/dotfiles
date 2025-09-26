@@ -85,3 +85,7 @@ end
 function fga
     git status -s | fzf --multi --preview 'echo {} | cut -c 4- | xargs git diff --color=always' | awk '{print $2}' | xargs git add
 end
+
+function gbd
+    git branch --list $argv[1] --format '%(refname:short)' | xargs git branch -D
+end
