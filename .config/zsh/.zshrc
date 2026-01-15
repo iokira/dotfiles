@@ -121,6 +121,10 @@ function zsh-startuptime() {
     echo "\naverage: ${average_msec} [ms]"
 }
 
+function gbd() {
+    git branch --list "$1" --format '%(refname:short)' | xargs git branch -D
+}
+
 # GPG
 
 export GPG_TTY=$(tty)
