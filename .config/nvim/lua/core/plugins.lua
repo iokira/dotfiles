@@ -611,9 +611,6 @@ require("lazy").setup({
                         end
                     end
                     local capabilities = require("cmp_nvim_lsp").default_capabilities()
-                    mason_lspconfig.setup({
-                        automatic_enable = true,
-                    })
                     mason.setup({
                         ui = {
                             border = "single",
@@ -625,6 +622,9 @@ require("lazy").setup({
                             "biome",
                             "stylua",
                         },
+                    })
+                    mason_lspconfig.setup({
+                        automatic_enable = true,
                     })
                 end,
             },
