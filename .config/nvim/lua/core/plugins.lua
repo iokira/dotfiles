@@ -611,20 +611,22 @@ require("lazy").setup({
                         end
                     end
                     local capabilities = require("cmp_nvim_lsp").default_capabilities()
+                    local ensure_installed = {
+                        "lua_ls",
+                        "rust_analyzer",
+                        "ts_ls",
+                        "biome",
+                        "stylua",
+                    }
                     mason.setup({
                         ui = {
                             border = "single",
                         },
-                        ensure_installed = {
-                            "lua_ls",
-                            "rust_analyzer",
-                            "ts_ls",
-                            "biome",
-                            "stylua",
-                        },
+                        ensure_installed = ensure_installed,
                     })
                     mason_lspconfig.setup({
                         automatic_enable = true,
+                        ensure_installed = ensure_installed,
                     })
                 end,
             },
