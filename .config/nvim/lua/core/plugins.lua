@@ -540,7 +540,7 @@ require("lazy").setup({
                     { name = "path" },
                     { name = "vsnip" },
                     { name = "nvim_lsp_signature_help" },
-                    { name = "treesitter " },
+                    { name = "treesitter" },
                 }, {
                     { name = "buffer" },
                     { name = "luasnip" },
