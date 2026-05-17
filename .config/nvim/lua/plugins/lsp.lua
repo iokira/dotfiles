@@ -115,33 +115,18 @@ return {
             {
                 "williamboman/mason-lspconfig.nvim",
                 config = function()
-                    local mason = require("mason")
-                    local mason_lspconfig = require("mason-lspconfig")
-                    local navic = require("nvim-navic")
-                    local navbuddy = require("nvim-navbuddy")
-                    local on_attach = function(client, bufnr)
-                        if client.server_capabilities.documentSymbolProvider then
-                            navic.attach(client, bufnr)
-                            navbuddy.attach(client, bufnr)
-                        end
-                    end
-                    local capabilities = require("cmp_nvim_lsp").default_capabilities()
-                    local ensure_installed = {
-                        "lua_ls",
-                        "rust_analyzer",
-                        "ts_ls",
-                        "biome",
-                        "stylua",
-                    }
-                    mason.setup({
+                    require("mason").setup({
                         ui = {
                             border = "single",
                         },
-                        ensure_installed = ensure_installed,
                     })
-                    mason_lspconfig.setup({
+                    require("mason-lspconfig").setup({
                         automatic_enable = true,
-                        ensure_installed = ensure_installed,
+                        ensure_installed = {
+                            "lua_ls",
+                            "rust_analyzer",
+                            "ts_ls",
+                        },
                     })
                 end,
             },
