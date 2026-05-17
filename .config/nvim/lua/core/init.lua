@@ -49,11 +49,27 @@ local leader_map = function()
     vim.api.nvim_set_keymap("x", " ", "", { noremap = true })
 end
 
+local bootstrap_lazy = function()
+    local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+    if not (vim.uv or vim.loop).fs_stat(lazypath) then
+        vim.fn.system({
+            "git",
+            "clone",
+            "--filter=blob:none",
+            "https://github.com/folke/lazy.nvim.git",
+            "--branch=stable",
+            lazypath,
+        })
+    end
+    vim.opt.rtp:prepend(lazypath)
+    require("lazy").setup({ import = "plugins" })
+end
+
 local load_core = function()
     createdir()
     disable_distribution_plugins()
     leader_map()
-    require("core.plugins")
+    bootstrap_lazy()
     require("core.options")
     require("keymap")
     require("modules")
