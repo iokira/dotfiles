@@ -71,7 +71,6 @@ detect_os() {
 
 # if $1 does not exist, run $2
 install() {
-    arrow "Installing ${1}"
     if has "$1"; then
         bold "${1} is already exists."
     else

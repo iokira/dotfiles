@@ -23,7 +23,7 @@ alias nvim "env TERM=wezterm nvim"
 alias v "env TERM=wezterm nvim"
 alias g "git"
 alias nvim-startuptime "vim-startuptime -vimpath nvim"
-alias shutnow "shutnow -h now"
+alias shutnow "shutdown -h now"
 alias relogin "exec fish -l"
 
 # GPG
