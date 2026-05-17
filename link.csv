@@ -8,3 +8,4 @@
 .config/nvim/lua,.config/nvim/lua
 .config/nvim/.luarc.json,.config/nvim/.luarc.json
 .config/starship/starship.toml,.config/starship.toml
+.config/ideavim/.ideavimrc,.ideavimrc
