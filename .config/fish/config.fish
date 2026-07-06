@@ -89,3 +89,17 @@ end
 function gbd
     git branch --list $argv[1] --format '%(refname:short)' | xargs git branch -D
 end
+
+function fd --description 'Select a child directory with fzf and cd'
+    set -l dir (
+        command find . -mindepth 1 -maxdepth 1 -type d |
+        string replace -r '^\./' '' |
+        sort |
+        fzf --prompt='cd> ' --height=40% --reverse
+    )
+
+    if test -n "$dir"
+        cd -- "$dir"
+    end
+end
+
