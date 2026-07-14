@@ -129,11 +129,14 @@ function gbd() {
 
 export GPG_TTY=$(tty)
 
+# Go
+export PATH="$HOME/go/bin:$PATH"
+
 # starship
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
 
 # plugins
-source $HOME/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $HOME/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 bindkey '^f' autosuggest-accept

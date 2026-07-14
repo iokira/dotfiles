@@ -1,0 +1,220 @@
+#!/bin/sh
+
+set -eu
+
+REPOSITORY_DIR=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd -P)
+BREWFILE="$REPOSITORY_DIR/Brewfile"
+STOW_DIR="$REPOSITORY_DIR/stow"
+STOW_PACKAGE=home
+TARGET_DIR=${DOTFILES_TARGET:-"$HOME"}
+TERMINFO_URL=https://raw.githubusercontent.com/wezterm/wezterm/main/termwiz/data/wezterm.terminfo
+
+if [ -t 1 ] && [ "${TERM:-dumb}" != "dumb" ] && [ -z "${NO_COLOR+x}" ]; then
+    BLUE=$(printf '\033[34m')
+    GREEN=$(printf '\033[32m')
+    YELLOW=$(printf '\033[33m')
+    RED=$(printf '\033[31m')
+    BOLD=$(printf '\033[1m')
+    RESET=$(printf '\033[0m')
+else
+    BLUE=
+    GREEN=
+    YELLOW=
+    RED=
+    BOLD=
+    RESET=
+fi
+
+section() {
+    printf '\n%s==>%s %s%s%s\n' "$BLUE" "$RESET" "$BOLD" "$1" "$RESET"
+}
+
+success() {
+    printf '    %s✓%s %s\n' "$GREEN" "$RESET" "$1"
+}
+
+warning() {
+    printf '    %s!%s %s\n' "$YELLOW" "$RESET" "$1" >&2
+}
+
+fail() {
+    printf '    %s✗%s %s\n' "$RED" "$RESET" "$1" >&2
+    exit 1
+}
+
+finish() {
+    printf '\n%s✓%s %s%s%s\n' "$GREEN" "$RESET" "$BOLD" "$1" "$RESET"
+}
+
+usage() {
+    cat <<'EOF'
+Usage: dotfiles <command>
+
+Commands:
+  plan       Preview link changes
+  install    Install packages and link dotfiles
+  uninstall  Remove links managed by GNU Stow
+  help       Show this help
+EOF
+}
+
+check_platform() {
+    [ "$(uname -s)" = "Darwin" ] || fail "Only macOS is supported."
+    [ "$(uname -m)" = "arm64" ] || fail "Only Apple silicon is supported."
+}
+
+ensure_homebrew() {
+    if command -v brew >/dev/null 2>&1; then
+        eval "$(brew shellenv)"
+        success "Homebrew is ready"
+        return
+    fi
+
+    command -v curl >/dev/null 2>&1 || fail "curl is required to install Homebrew."
+    section "Installing Homebrew"
+    if ! homebrew_installer=$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh); then
+        fail "Could not download the Homebrew installer."
+    fi
+    if ! NONINTERACTIVE=1 /bin/bash -c "$homebrew_installer"; then
+        fail "Could not install Homebrew."
+    fi
+
+    [ -x /opt/homebrew/bin/brew ] || fail "Homebrew installation failed."
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    success "Homebrew installed"
+}
+
+install_packages() {
+    section "Installing packages"
+    [ -f "$BREWFILE" ] || fail "Brewfile does not exist: $BREWFILE"
+    if brew bundle check --no-upgrade --file="$BREWFILE" >/dev/null 2>&1; then
+        success "Brewfile is already satisfied"
+        return
+    fi
+
+    if ! brew bundle install --no-upgrade --file="$BREWFILE"; then
+        fail "Could not install the Brewfile dependencies."
+    fi
+    success "Packages installed"
+}
+
+install_terminfo() {
+    section "Installing WezTerm terminfo"
+    if infocmp wezterm >/dev/null 2>&1; then
+        success "WezTerm terminfo is already installed"
+        return
+    fi
+
+    command -v curl >/dev/null 2>&1 || fail "curl is required to install WezTerm terminfo."
+    command -v tic >/dev/null 2>&1 || fail "tic is required to install WezTerm terminfo."
+
+    tempfile=$(mktemp "${TMPDIR:-/tmp}/wezterm.terminfo.XXXXXX")
+    if curl -fsSL -o "$tempfile" "$TERMINFO_URL" && tic -x -o "$HOME/.terminfo" "$tempfile"; then
+        rm -f "$tempfile"
+        success "WezTerm terminfo installed"
+    else
+        rm -f "$tempfile"
+        fail "Could not install WezTerm terminfo."
+    fi
+}
+
+require_stow() {
+    command -v stow >/dev/null 2>&1 || fail "GNU Stow is not installed. Run: dotfiles install"
+    [ -d "$TARGET_DIR" ] || fail "Target directory does not exist: $TARGET_DIR"
+    [ -d "$STOW_DIR/$STOW_PACKAGE" ] || fail "Stow package does not exist: $STOW_DIR/$STOW_PACKAGE"
+}
+
+remove_legacy_links() {
+    migrated=0
+    while IFS='|' read -r source destination; do
+        target=$TARGET_DIR/$destination
+        [ -L "$target" ] || continue
+        link=$(readlink "$target")
+        case $link in
+        "$REPOSITORY_DIR/$source" | "$HOME/dotfiles/$source")
+            unlink "$target" || fail "Could not remove legacy link: $target"
+            migrated=1
+            ;;
+        esac
+    done <<'EOF'
+.gitconfig|.gitconfig
+.config/wezterm/wezterm.lua|.config/wezterm/wezterm.lua
+.config/wezterm/lua|.config/wezterm/lua
+.config/tmux/tmux.conf|.config/tmux/tmux.conf
+.config/zsh/.zshrc|.zshrc
+.config/fish/config.fish|.config/fish/config.fish
+.config/nvim/init.lua|.config/nvim/init.lua
+.config/nvim/lua|.config/nvim/lua
+.config/nvim/.luarc.json|.config/nvim/.luarc.json
+.config/starship/starship.toml|.config/starship.toml
+.config/ideavim/.ideavimrc|.ideavimrc
+EOF
+    [ "$migrated" -eq 0 ] || success "Legacy links migrated"
+}
+
+plan() {
+    require_stow
+    section "Planned link changes"
+    if output=$(stow --dir="$STOW_DIR" --target="$TARGET_DIR" --no-folding --simulate --verbose=1 --stow "$STOW_PACKAGE" 2>&1); then
+        output=$(printf '%s\n' "$output" | sed '/^WARNING: in simulation mode/d')
+        if [ -n "$output" ]; then
+            printf '%s\n' "$output" | sed 's/^/    /'
+        else
+            success "No link changes"
+        fi
+    else
+        printf '%s\n' "$output" >&2
+        fail "Could not build a link plan. No files were changed."
+    fi
+    finish "No files were changed"
+}
+
+install() {
+    started_at=$(date +%s)
+    check_platform
+
+    section "Checking environment"
+    ensure_homebrew
+    install_packages
+    install_terminfo
+    require_stow
+
+    section "Linking dotfiles"
+    remove_legacy_links
+    if ! stow --dir="$STOW_DIR" --target="$TARGET_DIR" --no-folding --verbose=0 --restow "$STOW_PACKAGE"; then
+        fail "Could not link dotfiles."
+    fi
+    success "Dotfiles linked"
+
+    elapsed=$(($(date +%s) - started_at))
+    finish "Installation completed in ${elapsed}s"
+}
+
+uninstall() {
+    require_stow
+    section "Unlinking dotfiles"
+    if ! stow --dir="$STOW_DIR" --target="$TARGET_DIR" --no-folding --verbose=1 --delete "$STOW_PACKAGE"; then
+        fail "Could not unlink dotfiles."
+    fi
+    finish "Dotfiles unlinked; packages were left installed"
+}
+
+case ${1:-help} in
+plan)
+    plan
+    ;;
+install)
+    install
+    ;;
+uninstall)
+    uninstall
+    ;;
+help | --help | -h)
+    usage
+    ;;
+*)
+    warning "Unknown command: $1"
+    usage >&2
+    exit 2
+    ;;
+esac
