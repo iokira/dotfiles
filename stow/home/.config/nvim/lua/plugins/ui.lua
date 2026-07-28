@@ -169,16 +169,6 @@ return {
         end,
     },
 
-    -- nvim-colorizer
-    {
-        "norcalli/nvim-colorizer.lua",
-        lazy = true,
-        event = { "BufReadPre", "BufAdd", "BufNewFile" },
-        config = function()
-            require("colorizer").setup()
-        end,
-    },
-
     -- hlchunk.nvim
     {
         "shellRaining/hlchunk.nvim",
