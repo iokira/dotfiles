@@ -204,6 +204,9 @@ return {
         "SmiteshP/nvim-navbuddy",
         lazy = true,
         event = { "CursorHold", "CursorHoldI" },
+        dependencies = {
+            { "MunifTanjim/nui.nvim" },
+        },
         init = function()
             vim.keymap.set("n", "<Leader>v", function()
                 require("nvim-navbuddy").open()
